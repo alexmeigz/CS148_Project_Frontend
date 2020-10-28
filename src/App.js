@@ -8,11 +8,11 @@ function App() {
     return (
         <main>
             <Switch>
-		<Route path="/" component={Home} exact />
+		        <Route path="/" component={Home} exact />
                 <Route path="/creds" component={CredsForm} />
-	        <Route component={Error} />
+	            <Route component={Error} />
             </Switch>
-	    <Navbar />
+	        <Navbar />
         </main>
     );
 };
