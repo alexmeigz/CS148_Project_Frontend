@@ -9,8 +9,17 @@ function NavigationBar() {
         // TODO
         <div>
             <Link to="/">Home</Link>
-            <Link to="/home">LoggedInHome</Link>
-            
+            {" "}
+            <Link to="/maps">Maps</Link>
+            {" "}
+            <Link to="/vendors">Vendors</Link>
+            {" "}
+            <Link to="/recipes">Recipes</Link>
+            {" "}
+            <Link to="/products">Products</Link>
+            {" "}
+            <Link to="/login">Login</Link>
+
 
         </div>
     );
