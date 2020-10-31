@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-function DefaultHomePage () {
+function ProductsPage () {
     return (
         // TODO
         <div>
