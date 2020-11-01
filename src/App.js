@@ -13,6 +13,9 @@ import VendorsPage from './components/pages/VendorsPage';
 import RecipesPage from './components/pages/RecipesPage'
 import ProductsPage from './components/pages/ProductsPage';
 import LoginPage from "./components/pages/LoginPage";
+import ContactUsPage from "./components/pages/ContactUsPage";
+
+import ErrorPage from './components/pages/ErrorPage';
 
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 
@@ -28,8 +31,9 @@ function App() {
                 <Route path="/recipes" component={RecipesPage}  />
                 <Route path="/products" component={ProductsPage} />
                 <Route path="/login" component={LoginPage} />
+                <Route path="/contact-us" component={ContactUsPage} />
                 {/* <Route path="/home" component={LoggedInHomePage} /> */}
-	            <Route component={Error} />
+	            <Route component={ErrorPage} />
             </Switch>
             <ContactUsFooter />
         </main>
