@@ -14,52 +14,47 @@ function ProductForm(props) {
     function handleChange(evt) { //updating form elements, nested function
         const name = evt.target.name //defined in render
         const value = evt.target.value //defined in render
-	//because we are using a single state object above to hold multiple properties, we must save off the current state first (b/c we are only updating part of the object).  To do this, we "spread" state via ...state and add it to the new copy of state that updateState is creating, followed by any updates we want:
-	updateState({
-            ...state,
-            [name]: value
-        })
+	  //because we are using a single state object above to hold multiple properties, we must save off the current state first (b/c we are only updating part of the object).  To do this, we "spread" state via ...state and add it to the new copy of state that updateState is creating, followed by any updates we want:
+	  updateState({
+        ...state,
+        [name]: value
+      })
     }
 
     const saveCreds = (evt) => {  //send creds to backend, nested arrow function
-	evt.preventDefault();
-        alert(`Submitting ${state.product_name}, ${state.subscription}, and ${state.price}`)
+	    evt.preventDefault();
+      alert(`Submitting ${state.product_name}, ${state.subscription}, and ${state.price}`)
 	
-        let server = "http://localhost:8118/api"
-        if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-            server = "https://cjk-flasktest.herokuapp.com/api"
-	}
-        if (process.env.NODE_ENV !== 'development') {
-            server = "https://cjk-flasktest.herokuapp.com/api"
+      let server = "http://localhost:8118/api"
+      if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
+        server = "http://localhost:8118/api"
+	  }
+      if (process.env.NODE_ENV !== 'development') {
+        server = "http://localhost:8118/api"
     }
-	console.log("server = "+server)
-    const url = `${server}/product/`
-    console.log(url)
-	const bd = JSON.stringify(
-        { 
-            "product_name" : state.product_name, 
-            "subscription" : state.subscription,
-            "price" : state.price,
-        })
+	  console.log("server = "+server)
+    const url = `${server}/product/?product_name=${state.product_name}`
+      + `&subscription=${state.subscription}&price=${state.price}`
     fetch(url, 
-        {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },           
-            body: bd     
-        })
-        .then(response => {
-            console.log(response.json())
-            response.json()
-            }) 
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },           
+        body: {}   
+      })
+      .then(response => response.json()) 
 	    .then(data => {
-		    console.log("SaveCreds saveCreds: Fetch Response data: ")
-		    console.log(data) //don't log an object WITH a string else the conversion won't work and object will not be dumped
-		    alert('response: ' + data["MESSAGE"])
-      }).catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
-      console.log("Hello World")
+        console.log(data) //log response
+        if(data["message"] == "Product created successfully!"){
+          console.log("Success") //Need to add Redirect after creating Product
+        }
+        else{
+          console.log("Failed")
+        }
+      })
+      .catch((error) => console.log("Product creation error: "+ error))
     }
 
     //See this example on Creating Custom Hooks at  https://rangle.io/blog/simplifying-controlled-inputs-with-hooks/ to preclude the need to add a function handleChange for each onChange event
