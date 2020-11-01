@@ -2,12 +2,21 @@
 // Engineer: Joseph Ng
 
 import React from "react";
+import {Link} from "react-router-dom";
+
+import "./ContactUsFooter.css"
 
 function ContactUsFooter() {
     return (
         // TODO
-        <div>
-            <h1>[Contact Us Info]</h1>
+        <div >
+            <footer className="footer">
+                <ul>
+                    <li className="email" >Email: placeholder@placeholder.com</li>
+                    <li className="address">Address: placeholder</li>
+                    <li className="contact-us"><Link to="/contact-us">Contact Us</Link></li>
+                </ul>
+            </footer>
         </div>
     );
 };
