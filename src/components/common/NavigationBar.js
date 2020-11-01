@@ -8,7 +8,6 @@ import './NavigationBar.css'
 
 function NavigationBar() {
     return (
-        // TODO
         <div>
             <ul className="navigation-bar">
                 <li className="logo"><img
