@@ -4,23 +4,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './NavigationBar.css'
+
 function NavigationBar() {
     return (
         // TODO
         <div>
-            <Link to="/">Home</Link>
-            {" "}
-            <Link to="/maps">Maps</Link>
-            {" "}
-            <Link to="/vendors">Vendors</Link>
-            {" "}
-            <Link to="/recipes">Recipes</Link>
-            {" "}
-            <Link to="/products">Products</Link>
-            {" "}
-            <Link to="/login">Login</Link>
-
-
+            <ul className="navigation-bar">
+                <li className="logo"><img
+                    src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAPDw0PDxAPDw8PDw0NDw8PDw8PDQ0PFREWFhURFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OFRAQGC4gHR0tLS0rLisrLi0tLS0rLS0tKy0tLSsrLS0tLSsrLS0tKy0tLSsrLS0tLSstLSsrLS0tLf/AABEIAJ8BPgMBEQACEQEDEQH/xAAbAAEBAAMBAQEAAAAAAAAAAAAAAQIDBAUGB//EADkQAAIBAgMECAQEBQUAAAAAAAABAgMRBAUhEjFBUQYiUmFxgZGhBxMUsSMyQtFDYpLB8BYXM1Ny/8QAGgEBAQADAQEAAAAAAAAAAAAAAAECAwQFBv/EADARAQACAgAEBAMHBQEAAAAAAAABAgMRBBIhMQUTQVEyQmEUInGRobHRFYHB4fBS/9oADAMBAAIRAxEAPwD9lMlUABQAEAAUABAKAAAAIAAABsCAUAKAAAQAAAAAAFAlgFgAAAAAASwCwFAoACAUAAQFsBLAAIBSAUABEUCAAACwUAFQJoCqERCqoAAAAAAAACAAAAAAAAUAAAAAAACkQAWAJALFCxAAoEsAYEAAVAAFgAEAoEKqgQIWCrYABAFgAAAAAAAFiAUAKAAWIhYBYBYBYABQJcABQAEAALAAKgAAAAAWAWAWAAcmNzOhQdONetSouo1Gmqk4w23eySv3sk3rE8sz1ZRWZ7Q6zJAAwIAAWAWAWAAAIBSAEUAAAAAAAAAAMABAAC4AAgKAAAAAAABQIAA/M+kFb5lfE0sWq1Jue2nsXi6MZ2g6cn1Zaa3W66vZux81xOPJXiJvl7TPT16Q9XDNZxxFXT0WxWJw+Nhg6XXwDWxCnJpyopRctuE9+lknDdbVWekvV4XiNzyd3PnxRrnfoZ6LjAAACAAAAAAIgBAAFuAAoAABAFwFwAFAgFAgEYFAAUAAAAAAACAGyq/PfiPj9mvRpuO3FUW2lpOLnJ3a/pjoeB4pPNmrXfwx+7u4TpEp8OsylXrzhUatSp3pNJqU07JqSeqav/nHo4CKxk79dLxUzyP0M9dwAC4C4ACAUCAAKRACAAAFQAAAuAAgACgAAEuAuAAoAAAAAAKBAAACOy1eiWrb3JCbajcj8bz7FvFYyrUX5XO0e6EdI+yPkc+bzLWye/7O/FGofddBMAoU6lZrrTfy4t79lav1dv6T0vBcP3bZZ9ekf5/X9mHFX6xV9We65CwAAAAAQAAAEQAAAAACgAAACALgW4AAAAgAABQAABcAAAXAlwAHz3TTNVQw8qcX+JVWzbiocX/b1PI8U4qK08ms9bd/pH+27FSZnb85wFK8rnzmW2o07aw/WsloKnhqEUrfhxk/GXWfu2fYcBj5OGx1+n7uDLO7zLuOtgAAAEAoEAAABEAAACgQCgAAAABAAFAAQAAQACoAAAXAXAAABJnXceVmeaqCahv3bX7c2fM+JeO6mcXDTufW3t+H8uzDw0z1t+T4jNacq0nOTbb3cbHg0zTvczuZ7y7PLjTiw2Fa3czO+SJOV+n5dVU6NKS4wj5NKzXqmfdcJljJgpePWHlZI5bTEuk6WKoIBQCAUCAAAAiAAAAAoAABAOTNMzpYWk6teTjTUoQuoyk3KTtFWS4tpcjC94pWbW7QyrWbTqChmlKaTjLfzTPPr4xwczrn/OJbbcNlj0bXi4dr0TM7eKcJX59/gx8i/sn1kO/0NX9Y4f03+TL7PdY4qHO3kbaeJ8Nb5tf2YzgvDbGpF7mn5nVTPiv8NolhNLR3hkbmKALAUABAKmAAAANVavGG968lvOPiuOw8NG7z19vVspitftDxcyzTR3ezHsp6y8T43j/F83FzNKfdp9P8vRw8PFOveXzmIxe07yenBcjgpj1GodMQ5XiU9xt5NEtmH1X+amN+7F9h0Yk/ktP9NSSXg0n92z6/wG8zw0xPpM/y83i41ff0ewe25QCFUAoACAUCACIAAAAAAAAAPz/4zYhRwWHjL5ypvF0qlWVJ2ShTjJ2nzW04O38t+Bz8TM8kxXvPSNtuKPvbn0eDlVWWzFwqScbKzUm7o+J4isbmLV6vXpPR7dDG1Vun7HFNYjt0bekuuObVVwjL2LEzHqxnHWW+lnnbi13rU2RktH1Yzhj0l20M0pT3SS8dGbIzzHdrnDLvpYl8Je90duHxDLT4by0WxR6w6IY18Un7M9HH4zkj4oif0arcPX0bVjFxTXoztp4xin4qzH6tU8PPpLP6mHO3kzpr4lw1vm1/ZhOC/syVaPaj6o2xxeCfnj82Pl29l+ZHtR9UZfacP/uPzhOS3sjrR7UfVGM8ZgjvePzWMdvZjLEwXH0TNN/EuGr82/wZRhvPo1TxyW5N+Ohx5fG8Vfgrv8ejZXhpnvLjxGYOz1UV3ae54vE+N5r9Kzr8HTThqx6PExmbLVR6z58DxrRkyzu8uutIh8/isXKUryfruOrHirEdGTTOd9WZRGuiJBiTb1cHSvb1NVa89tMZfZ5HR2KMb/rbn5PReyT8z7bwvD5XDxv16/w8ribc2Sfo9A9FoAAFAhVAAABcARAAAAAAAACAacZhKdaEqdWEakJLWMldP9mYZMdb15bR0ZVtNZ3D4HPuj30P4lG7w7aVt7pPgn3cn5b9/wAx4h4fbHPNHWv6x+P8vR4fPF+k93lwxZ5E4nZtvhidDXOM23Qrp7zCaLtm4xfiTcwsS2Upzj+WbXmYzr2NuulmlaO+0vHeZRMx2ljNKy6qed9qLXgXzLwxnDHpLojm9N80Xz7R6MfJltWZU+0X7T9GPlSrx9PtofaI/wCg8qzCWaUl+oefPpC+VLRUzmmt12YzkvPaGUYnJWzmT/LG3ezXNLW+KWUUiHn1as6j60nblwMoitezJr0Rl1lHPVd2bINtKRlti68FhXJ933MZmZnUI+pyjLdt3a6q/M+fcj2fDOA8ydz2hzZ83LHTu+lR9W8wuAYC4FAjLCg2gFAI0AIgAAAAKBAKBAJcKxqQUk4ySlGScZJq6knvTXFGNoi0TE9pInXWHyGcdE0rzw6bV23Tu3KPdHmu7f4nznG+FXrPPh6x7esfh/23oYeKiel+/u+aq0JRbTT00fd4nh766npLs7sFcDZGsyTVW2Ncwmi7boVzCaG2aqriY8ql0OptbLmDaWXMdV2xaReqbIJFnYspomk21zrGUVNtG2zZpibNxsdWGwjlq9F9zHczOoH0uU5ZtWbVoLjz7kez4d4bOT71vhcubPFOkd30dOKikkkktyPqaUrSIrWNQ820zM7lmZoAAAACFUAAUAAIgAAgAAAAlwI2FYOojHZpg66JMrpg8VEx5mXK5MdRoV1+JHW1lOLtNefHzOPieFwZ/jjr7x3bcd707S+dxnR613SnGa7MupP13P2PEz+E3r1x239J7uynEb+KHiYrDTpu04yj/wClo/B7meffDkp8ddN8WiezRE1yy2zSa3MxGcWyToVSJoZbRNBtMaEAoRGgCgNjZCh5GM2HXg8Nty2YRc5ckr273yMseHLmty467Y2vFesy+ny3Jdm0qrTfYT0Xi/2PpeB8Hri1bL1n2cOXipnpV7KstFoluS0SR7saiNQ45VMyFuBSooCwAABCqAAAAiKBAAAABAIFa6hBxV9oxlm8+q5GqWcacs6rNVttkaaZ4mxqtLOIc1XMrGm1mcQ4cRndr8u/iaLXZRDw8XmtJ67CT5w6vnZaexyXpS3oz5pcFTpBsbusuUkr+pp+xVt2XzNMf9Y0Y/8AJGUe9Jy+xP6XefhlPOh00OluCn/GjF/zPZ+9jXbwzia/Ltl59Pd6NHNcPP8ALVg/CSZzW4bNXvWWUZKz6t8cVSe6pH1Nc4snsy5oV4ml24jy7+xzQwnmNCO+rFeLSMo4fLPaspzx7uSp0lwcdPnQk1wjLafpE2xwHET8umPm192NPpJCbSpxdn+p6Jf3NlfDrfNKebHo9PC4um7Obc+6+zH219zsxcDir3jbCcky97CZ0opRglFcopRXoetiyckarGoc9q77u+nnNzorla5o78PmKkb6321TV2wrXNkMG1SKKmEZXKFwLcBcqpcAAAoC4EuAIgBQIAAWAjQVrlTTJoaamGT4E0u3NUwCZhNIZRZy1cpTMJxRLOMjhxGQpmq3DwzjK8zE9F9rmabcJtlGZ5lfodJ7jVPBMvOhyT6CzfEfY7eknmVc9T4fSfFehfs2SPVPMq4q3w5nyi/Ivl547Sc1HBW+G8v+teSLzcRBqktH+31Vfpl5SaHmZ/Y5aI/h/V7En4ykTzM3sctEXQCa/he1yTlznLR10ehtSP8ADt5GuYy27svuvSw3RypG3VfoSMVl3D1MPk9RcGbIw2Y80PQoZdPkbYxSxm70KOBlobYxMZs9PCYZo3VpprtL1aKsbYa5dMWZIzTCMkyi3AXKq3AAAAC4FsRAABQABAAAACARhUsQRoCOIGLpomjbB0kNG0+Uho2Okho2nyVyGl2joLkTRtPp1yGoNp9NHkhynMfSx5IcsHMjwkeSHKcyfRx5IcsLzSn0UeQ5TmT6NckOVNslhUXRtnGgNJtsVMqM1EoysBbAGiwAVUAAoAABkiIoEAoAABAAAABAIACgEAWIJYBYBYBYBYBYBYoWIFghYKWAbIQ2Si2AWAtgFgFgIVQCgAAADJMiKAAAQAAAAAIAAAAAEAAApYAELALBQgWKgAAWAAAAAABQAAAVUAtgJYC2AgFIgAAoC4AAAAgFAgAAAAgFAgUCAACgQAAAAAAAABQIBQAAAygFAKAAxA//2Q==" 
+                    alt="Logo"/>
+                </li>
+                <li className="navigation-links">
+                    <ul>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/maps">Maps</Link></li>
+                        <li><Link to="/vendors">Vendors</Link></li>
+                        <li><Link to="/recipes">Recipes</Link></li>
+                        <li><Link to="/products">Products</Link></li>
+                        <li><Link to="/login">Login</Link></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     );
 };
