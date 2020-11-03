@@ -10,10 +10,12 @@ function NavigationBar() {
     return (
         <div>
             <ul className="navigation-bar">
-                <li className="logo"><img
-                    src="https://www.ideasmama.com/wp-content/uploads/pepega.jpg" 
-                    alt="Logo"/>
-                </li>
+                <Link to="/">
+                    <li className="logo"><img
+                        src="https://www.ideasmama.com/wp-content/uploads/pepega.jpg" 
+                        alt="Logo"/>
+                    </li>
+                </Link>
                 <li className="navigation-links">
                     <ul>
                         <li><Link to="/">Home</Link></li>
