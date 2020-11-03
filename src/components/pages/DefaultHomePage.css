@@ -9,7 +9,7 @@
     display: block;
     justify-content: center;
     align-items: center;
-    margin: auto;
+    margin: 0px;
     width: 100%;
     max-height: 500px;
     object-fit: cover; 
