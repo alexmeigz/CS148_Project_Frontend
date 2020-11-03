@@ -8,7 +8,6 @@ import "./ContactUsFooter.css"
 
 function ContactUsFooter() {
     return (
-        // TODO
         <div >
             <footer className="footer">
                 <ul>

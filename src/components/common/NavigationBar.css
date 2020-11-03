@@ -1,6 +1,7 @@
 /* Engineer: Joseph Ng */
 
 .navigation-bar {
+    position: relative;
     list-style-type: none;
     margin: 0;
     padding: 0;
