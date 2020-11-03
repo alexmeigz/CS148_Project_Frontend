@@ -11,11 +11,13 @@
 
 .logo {
     float: left;
+
 }
 
 .logo img {
-    max-width: 25%;
-    height: auto;
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
 }
 
 .navigation-links ul {
