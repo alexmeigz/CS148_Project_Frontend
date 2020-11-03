@@ -1,2 +1,66 @@
 /* Engineer: Joseph Ng */
 
+.background {
+    background-color: #333; 
+}
+
+.banner {
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover; 
+}
+
+hr {
+    position: relative;
+    margin: 0px;
+    margin-bottom: -1px;
+    padding: 0px;
+    overflow: hidden;
+    color:  #333;
+    background-color: #333;
+    height: 5px;
+
+}
+
+.recipes {
+    position: relative;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    /* display: block; */
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 500px;
+    object-fit: cover; 
+    opacity: 50%;
+}
+
+.recipes:hover {
+    opacity: 100%;
+}
+
+.products {
+    position: relative;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    /* display: block; */
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 500px;
+    object-fit: cover;
+    opacity: 50%;
+}
+
+.products:hover {
+    opacity: 100%;
+}
