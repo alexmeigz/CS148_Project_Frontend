@@ -1,0 +1,56 @@
+/* Engineer: Joseph Ng */
+
+.navigation-bar {
+    position: relative;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    width: 100%;
+}
+
+.logo {
+    float: left;
+
+}
+
+.logo img {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+}
+
+.navigation-links ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    float: right;
+}
+
+.navigation-links ul li{
+    float: left;
+}
+
+.navigation-links ul li:last-child {
+    border-left: 1px solid #bbb;
+  }
+  
+.navigation-links a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+  
+/* Change the link color to #111 (black) on hover */
+.navigation-links a:hover {
+    background-color: #111;
+}
+
+/* .active {
+    background-color: #4CAF50;
+} */

@@ -1,0 +1,128 @@
+/* Engineer: Joseph Ng */
+
+.background {
+    background-color: #333; 
+}
+
+.banner {
+    position: relative;
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    width: 100%;
+    height: 500px;
+    object-fit: cover; 
+}
+
+/* hr {
+    position: relative;
+    margin: 0px;
+    margin-bottom: -1px;
+    padding: 0px;
+    overflow: hidden;
+    color:  #333;
+    background-color: #333;
+    height: 5px;
+
+} */
+
+.recipes img {
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    /* display: block; */
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 500px;
+    object-fit: cover;
+}
+
+.recipes {
+    opacity: 50%;
+}
+
+.recipes:hover {
+    opacity: 100%;
+}
+
+.recipes h1 {
+    position: absolute;
+    top: 750px;
+    left: 25%;
+    color: white;
+    font-size: 100px;
+    text-shadow: 5px 5px black;
+    transform: translate(-50%, -60%);
+}
+
+.products img {
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    /* display: block; */
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 500px;
+    object-fit: cover;
+}
+
+.products {
+    opacity: 50%;
+}
+
+.products:hover {
+    opacity: 100%;
+}
+
+.products h1 {
+    position: absolute;
+    top: 750px;
+    left: 75%;
+    color: white;
+    font-size: 100px;
+    text-shadow: 5px 5px black;
+    transform: translate(-50%, -60%);
+}
+
+.maps img {
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    /* display: block; */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+.maps {
+    opacity: 50%;
+}
+
+.maps:hover {
+    opacity: 100%;
+}
+
+.maps h1 {
+    position: absolute;
+    top: 1250px;
+    left: 50%;
+    color: white;
+    font-size: 100px;
+    text-shadow: 5px 5px black;
+    transform: translate(-50%, -55%);
+}
