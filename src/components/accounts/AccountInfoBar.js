@@ -2,11 +2,13 @@
 // Engineer: Joseph Ng
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
+import "./AccountInfoBar.css";
 
 function AccountInfoBar() {
-    var accountType = "Normal";
+    // TODO: get account info from backend
+    var accountType = "Vendor (home)";
     var pendingCredits = 10;
     var credits = 20;
     return (
@@ -15,8 +17,11 @@ function AccountInfoBar() {
                 <li className="account-type">Account Type: {accountType}</li>
                 <li className="credits">
                     <ul>
-                        {accountType === "vendor" ? <li>Pending Credits: {pendingCredits}</li>:} 
-                        <li>Credits: {credits}</li>
+                        {accountType === "Vendor (resturant)" || accountType === "Vendor (home)"
+                            ? <li>Pending Credits: ${pendingCredits}</li>
+                            : null
+                        } 
+                        <li>Credits: ${credits}</li>
                     </ul>
                 </li>
             </ul>

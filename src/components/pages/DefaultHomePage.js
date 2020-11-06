@@ -6,12 +6,14 @@ import { Link } from 'react-router-dom';
 
 import "./DefaultHomePage.css"
 
-
+import AccountInfoBar from "../accounts/AccountInfoBar"
 
 function DefaultHomePage () {
     return (
         // TODO: add text on top of images
         <div className="background">
+            
+            <AccountInfoBar />
             
             <img className="banner"
                 src="https://www.helpguide.org/wp-content/uploads/table-with-grains-vegetables-fruit-768.jpg"
