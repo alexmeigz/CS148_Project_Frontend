@@ -1,0 +1,22 @@
+/* Engineer: Joseph Ng */
+
+.footer {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+}
+
+.footer ul {
+    list-style-type: none;
+}
+
+.contact-us a {
+    color: white;
+}
