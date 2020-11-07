@@ -47,7 +47,7 @@ function ProductForm(props) {
       .then(response => response.json()) 
 	    .then(data => {
         console.log(data) //log response
-        if(data["message"] == "Product created successfully!"){
+        if(data["message"] === "Product created successfully!"){
           console.log("Success") //Need to add Redirect after creating Product
         }
         else{
