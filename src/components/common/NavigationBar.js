@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import './NavigationBar.css'
 
-function NavigationBar() {
+function NavigationBar(props) {
     return (
         <div>
             <ul className="navigation-bar">
@@ -23,7 +23,12 @@ function NavigationBar() {
                         <li><Link to="/vendors">Vendors</Link></li>
                         <li><Link to="/recipes">Recipes</Link></li>
                         <li><Link to="/products">Products</Link></li>
-                        <li><Link to="/login">Login</Link></li>
+                        <li>
+                            {!(props.isLoggedIn === "LoggedIn")
+                                ? <Link to="/login">Login</Link>
+                                : <Link to="/logout">Logout</Link>
+                            }
+                        </li>
                     </ul>
                 </li>
             </ul>

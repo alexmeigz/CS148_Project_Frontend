@@ -3,11 +3,20 @@
 
 import React from 'react';
 
-function MapsPage () {
+import NavigationBar from '../common/NavigationBar';
+import ContactUsFooter from "../common/ContactUsFooter";
+import AccountInfoBar from "../common/AccountInfoBar"
+
+function MapsPage (props) {
     return (
-        // TODO
+        // TODO:
         <div>
+            <NavigationBar isLoggedIn={props.isLoggedIn? "LoggedIn": null}/>
+            {props.isLoggedIn ? <AccountInfoBar /> : null}
+
             <h1>[MapsPage]</h1>
+
+            <ContactUsFooter />
         </div>
     );
 };
