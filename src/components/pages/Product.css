@@ -1,8 +1,9 @@
 @import url("../common/Fonts.css");
 
 .container{
-    margin-left: 10%;
-    width: 80%;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 90%;
     min-width: 800px;
     font-family: 'Big Shoulders Inline Text';
     color: black !important;
