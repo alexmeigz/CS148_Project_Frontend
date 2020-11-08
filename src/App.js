@@ -26,7 +26,7 @@ import ErrorPage from './components/pages/ErrorPage';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 
 function App() {
-    const isLoggedIn = false; // testing conditional rendering
+    const isLoggedIn = true; // testing conditional rendering
     return (
         // TODO: Change to new Nutriflix components
         <main>
