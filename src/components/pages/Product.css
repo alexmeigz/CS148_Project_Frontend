@@ -23,6 +23,8 @@
 .product_panel{
     float: left;
     width: 70%;
+    overflow-y: scroll;
+    height: 500px;
     /* height: 500px; change to auto or remove this line*/
 }
 
