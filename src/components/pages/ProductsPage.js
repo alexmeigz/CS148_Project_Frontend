@@ -47,7 +47,9 @@ function ProductsPage () {
                 </div>
                 <div className="product_pane">
                     <img className="product_image" 
-                        src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"/>
+                        src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"
+                        alt=""
+                    />
                     <div className="product_description">
                         <div className="row">
                             <div className="product_name">
@@ -78,7 +80,9 @@ function ProductsPage () {
            
                 <div className="product_pane">
                     <img className="product_image" 
-                        src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"/>
+                        src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"
+                        alt=""
+                    />
                     <div className="product_description">
                         <div className="row">
                             <div className="product_name">
@@ -109,7 +113,9 @@ function ProductsPage () {
            
                 <div className="product_pane">
                     <img className="product_image" 
-                        src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"/>
+                        src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"
+                        alt=""
+                    />
                     <div className="product_description">
                         <div className="row">
                             <div className="product_name">
