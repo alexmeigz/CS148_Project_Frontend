@@ -1,0 +1,94 @@
+@import url("../common/Fonts.css");
+
+.container{
+    margin-left: 10%;
+    width: 80%;
+    min-width: 800px;
+    font-family: 'Big Shoulders Inline Text';
+    color: black !important;
+}
+
+.header{
+    margin-top: 30px;
+    text-align: center;
+}
+
+.side_panel{
+    float: left;
+    width: 30%;
+    height: 500px;
+    background-color: red;
+}
+
+.product_panel{
+    float: left;
+    width: 70%;
+    height: 500px;
+}
+
+.title{
+    font-size: 30px;
+    margin: 20px;
+}
+
+.product_pane{
+    margin: 10px;
+    min-height: 220px;
+}
+
+.product_image {
+    margin: 10px;
+    float: left;
+    width: 200px;
+    height: auto;
+}
+
+.product_description {
+    margin: 10px;
+    float: left;
+    width: calc(100% - 250px);
+}
+
+.product_name {
+    margin: 10px 10px 10px 20px;
+    float: left;
+    width: calc(85% - 30px);
+    font-size: 24px;
+}
+
+.product_price {
+    margin: 10px;
+    float: left;
+    width: calc(15% - 20px);
+    font-size: 24px;
+}
+
+.product_caption{
+    margin: 10px 10px 30px 10px;
+    float: left;
+    font-size: 18px;
+}
+
+.subscription{
+    margin: 10px;
+    float: left;
+    width: calc(33% - 20px);
+    font-size: 18px;
+    text-align: left;
+}
+
+.list_date{
+    margin: 10px;
+    float: left;
+    width: calc(33% - 20px);
+    font-size: 18px;
+    text-align: center;
+}
+
+.location{
+    margin: 10px;
+    float: left;
+    width: calc(33% - 20px);
+    font-size: 18px;
+    text-align: right;
+}
