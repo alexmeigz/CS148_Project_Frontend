@@ -23,7 +23,7 @@
 .product_panel{
     float: left;
     width: 70%;
-    height: 500px;
+    /* height: auto; this line is making problems with the footer*/
 }
 
 .title{

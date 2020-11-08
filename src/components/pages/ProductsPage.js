@@ -2,6 +2,7 @@
 // Engineer: Joseph Ng, Alex Mei
 
 import React, { useState } from 'react';
+
 import "./Product.css"
 
 import NavigationBar from '../common/NavigationBar';
@@ -43,11 +44,13 @@ function ProductsPage (props) {
         <div>
             <NavigationBar isLoggedIn={props.isLoggedIn? "LoggedIn": null}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
+            
             <div className="container">
                 <h1 className="header"> Products </h1>
                 <div className="side_panel">
                     <input onChange={search}></input>
                 </div>
+                
                 <div className="product_panel">
                     <div className="title">
                         Product Results (Total: {Object.keys(results).length})
@@ -152,12 +155,12 @@ function ProductsPage (props) {
                     </div>
             
             
-            
+                
                 </div>
+                
             
-                <ContactUsFooter />
             </div>
-
+            <ContactUsFooter />
         </div>
     );
 };
