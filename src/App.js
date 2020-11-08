@@ -17,6 +17,7 @@ import LoginPage from "./components/pages/LoginPage";
 import LogoutPage from "./components/pages/LogoutPage";
 import ContactUsPage from "./components/pages/ContactUsPage";
 import MyProfilePage from "./components/pages/MyProfilePage";
+import MyProductsPage from "./components/pages/MyProductsPage";
 
 import ErrorPage from './components/pages/ErrorPage';
 // import ContactUsFooter from './components/common/ContactUsFooter';
@@ -53,9 +54,21 @@ function App() {
                 <Route path="/contact-us">
                     <ContactUsPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
                 </Route>
-                <Route path="/my-profile">
-                    <MyProfilePage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
-                </Route>
+
+                {/* Must be signed in to access pages */}
+                {isLoggedIn 
+                    ? (<Route path="/my-profile">
+                        <MyProfilePage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                    </Route>)
+                    : null
+                }
+                {isLoggedIn
+                    ? (<Route path="/my-products">
+                        <MyProductsPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                    </Route>)
+                    : null
+                }
+                
 	            <Route>
                     <ErrorPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
                 </Route>

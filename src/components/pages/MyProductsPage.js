@@ -1,4 +1,4 @@
-// ProductsPage.js
+// MyProductsPage.js
 // Engineer: Joseph Ng
 
 import React from 'react';
@@ -7,20 +7,20 @@ import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar";
 
+import ProductForm from "../CreateProduct";
 
-
-function ProductsPage (props) {
+function MyProductsPage (props) {
     return (
         // TODO
         <div>
             <NavigationBar isLoggedIn={props.isLoggedIn? "LoggedIn": null}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
-            
-            {/* Import from Alex's branch */}
-            
+
+            <ProductForm />
+
             <ContactUsFooter />
         </div>
     );
 };
 
-export default ProductsPage;
+export default MyProductsPage;
