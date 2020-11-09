@@ -13,7 +13,7 @@ import AccountInfoBar from "../common/AccountInfoBar";
 function MyProfilePage (props) {
     return (
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn? "LoggedIn": null}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
 
             <h1>[MyProfilePage]</h1>

@@ -11,7 +11,7 @@ function LoginPage (props) {
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn? "LoggedIn": null}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
 
             <h1>[LoginPage]</h1>

@@ -42,7 +42,7 @@ function ProductsPage (props) {
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn? "LoggedIn": null}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
             
             <div className="container">

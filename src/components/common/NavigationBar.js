@@ -24,17 +24,17 @@ function NavigationBar(props) {
                         <li><Link to="/vendors">Vendors</Link></li>
                         <li><Link to="/recipes">Recipes</Link></li>
                         <li><Link to="/products">Products</Link></li>
-                        <li className="profile">{props.isLoggedIn === "LoggedIn"
+                        <li className="profile">{props.isLoggedIn
                                 ? <Link to="/my-profile">My Profile</Link>
                                 : null
                             }
                         </li>
-                        <li>{(props.isLoggedIn === "LoggedIn") && (accountType === "Vendor (Resturant)" || accountType === "Vendor (Home)")
+                        <li>{(props.isLoggedIn) && (accountType === "Vendor (Resturant)" || accountType === "Vendor (Home)")
                                 ? <Link to="/my-products">My Products</Link>
                                 : null
                             }
                         </li>
-                        <li>{!(props.isLoggedIn === "LoggedIn")
+                        <li>{!(props.isLoggedIn)
                                 ? <Link to="/login">Login</Link>
                                 : <Link to="/logout">Logout</Link>
                             }

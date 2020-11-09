@@ -32,28 +32,28 @@ function App() {
         <main>
             <Switch>
 		        <Route path="/" exact>
-                    <DefaultHomePage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                    <DefaultHomePage isLoggedIn={isLoggedIn}/>
                 </Route>
                 <Route path="/maps">
-                    <MapsPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                    <MapsPage isLoggedIn={isLoggedIn}/>
                 </Route>
                 <Route path="/vendors">
-                    <VendorsPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                    <VendorsPage isLoggedIn={isLoggedIn}/>
                 </Route>
                 <Route path="/recipes">
-                    <RecipesPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                    <RecipesPage isLoggedIn={isLoggedIn}/>
                 </Route>
                 <Route path="/products">
-                    <ProductsPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                    <ProductsPage isLoggedIn={isLoggedIn}/>
                 </Route>
                 <Route path="/login">
-                    <LoginPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                    <LoginPage isLoggedIn={isLoggedIn}/>
                 </Route>
                 <Route path="/logout">
-                    <LogoutPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                    <LogoutPage isLoggedIn={isLoggedIn}/>
                 </Route>
                 <Route path="/contact-us">
-                    <ContactUsPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                    <ContactUsPage isLoggedIn={isLoggedIn}/>
                 </Route>
 
                 {/* Must be signed in to access pages */}

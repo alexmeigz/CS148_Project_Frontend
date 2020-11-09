@@ -15,7 +15,7 @@ function DefaultHomePage (props) {
     return (
         // TODO: add text on top of images
         <div className="background">
-            <NavigationBar isLoggedIn={props.isLoggedIn? "LoggedIn": null}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
             
             <img className="banner"
