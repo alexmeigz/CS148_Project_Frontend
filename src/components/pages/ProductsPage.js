@@ -73,36 +73,41 @@ function ProductsPage (props) {
     
 
     return (
-        <div className="container">
-            <h1 className="header"> Products </h1>
-            <div className="side_panel">
-                <input className="search_bar" placeholder="Search products..." onKeyDown={search} />
-                <div className="title">
-                    Filters
-                </div>
-                <div className="filters"> 
-                    <FilterOption name="Single Purchase" param="subscription" value="" 
-                        filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription} 
-                    />
-                    <FilterOption name="Subscription Based" param="subscription" value="true" 
-                        filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription}
-                    />
-                </div>
-            </div>
-            <div className="product_panel">
-                <div className="title">
-                    Product Results (Total: {Object.keys(results).length})
-                </div>
-                {Object.values(results).map(product => (
-                    <ProductPane 
-                        name={product["product_name"]} 
-                        price={product["price"]}
-                        list_date={product["list_date"]}
-                        location={product["location"]}
-                        subscription={product["subscription"]}
-                        caption={product["caption"]}
+        <div>
+            <NavigationBar isLoggedIn={props.isLoggedIn}/>
+            {props.isLoggedIn ? <AccountInfoBar /> : null}
+
+            <div className="container">
+                <h1 className="header"> Products </h1>
+                <div className="side_panel">
+                    <input className="search_bar" placeholder="Search products..." onKeyDown={search} />
+                    <div className="title">
+                        Filters
+                    </div>
+                    <div className="filters"> 
+                        <FilterOption name="Single Purchase" param="subscription" value="" 
+                            filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription} 
                         />
-                ))}
+                        <FilterOption name="Subscription Based" param="subscription" value="true" 
+                            filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription}
+                        />
+                    </div>
+                </div>
+                <div className="product_panel">
+                    <div className="title">
+                        Product Results (Total: {Object.keys(results).length})
+                    </div>
+                    {Object.values(results).map(product => (
+                        <ProductPane 
+                            name={product["product_name"]} 
+                            price={product["price"]}
+                            list_date={product["list_date"]}
+                            location={product["location"]}
+                            subscription={product["subscription"]}
+                            caption={product["caption"]}
+                            />
+                    ))}
+                </div>
             </div>
             <ContactUsFooter />
         </div>
