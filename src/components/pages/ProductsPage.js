@@ -69,7 +69,7 @@ function ProductsPage () {
 
     return (
         <div className="container">
-            <h1 className="header"> Products </h1>
+            <h1> Products </h1>
             <div className="side_panel">
                 <input className="search_bar" placeholder="Search products..." onKeyDown={search} />
                 <div className="title">

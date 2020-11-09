@@ -17,7 +17,7 @@ import ContactUsPage from "./components/pages/ContactUsPage";
 
 import ErrorPage from './components/pages/ErrorPage';
 
-//import ProductForm from './components/CreateProduct';
+import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 
 function App() {
@@ -33,8 +33,12 @@ function App() {
                 <Route path="/products" component={ProductsPage} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/contact-us" component={ContactUsPage} />
+                <Route path="/createproduct" component={ProductForm} />
                 {/* <Route path="/home" component={LoggedInHomePage} /> */}
 	            <Route component={ErrorPage} />
+
+                {/*temporary*/}
+                
             </Switch>
             <ContactUsFooter />
         </main>
