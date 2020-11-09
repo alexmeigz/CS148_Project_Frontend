@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import "./Product.css"
 import ProductPane from "./ProductPane.js"
-//import FilterOption from "./FilterOption.js"
+import FilterOption from "./FilterOption.js"
 
 function ProductsPage () {    
     let server = "http://localhost:8118/api"
@@ -60,9 +60,7 @@ function ProductsPage () {
             })
         .then(response => response.json()) 
         .then(data => {
-            console.log("Data: ")
             setResults(data)
-            console.log(results)
         })
         .catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
     }
@@ -70,7 +68,6 @@ function ProductsPage () {
     
 
     return (
-        // TODO
         <div className="container">
             <h1 className="header"> Products </h1>
             <div className="side_panel">
@@ -79,33 +76,12 @@ function ProductsPage () {
                     Filters
                 </div>
                 <div className="filters"> 
-                    <div className="filter_option">
-                        <input type="checkbox" name="Single Purchase" 
-                            onChange={(e) => {
-                                if(e.target.checked){
-                                    setFilters({
-                                        ...filters,
-                                        subscription: false
-                                    }, filter("subscription", "false"))
-                                }
-                                else if(filters.subscription === false){
-                                    setFilters({
-                                        ...filters,
-                                        subscription: null
-                                    }, filter(null, null))
-                                }
-                            }} />
-                        <label for="Single Purchase" className="filter_label"> Single Purchase </label> 
-                        <br />
-                    </div>
-                    <div className="filter_option">
-                        <input type="checkbox" name="Subscription Based" onClick={(e) => {
-                                //setQuery(query["Subscription"] = false)
-                                filter(e)
-                            }} />
-                        <label for="Subscription Based" className="filter_label"> Subscription Based </label> 
-                        <br />
-                    </div>
+                    <FilterOption name="Single Purchase" param="subscription" value="" 
+                        filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription} 
+                    />
+                    <FilterOption name="Subscription Based" param="subscription" value="true" 
+                        filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription}
+                    />
                 </div>
             </div>
             <div className="product_panel">
