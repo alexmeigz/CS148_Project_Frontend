@@ -95,6 +95,7 @@ function ProductsPage () {
                         list_date={product["list_date"]}
                         location={product["location"]}
                         subscription={product["subscription"]}
+                        caption={product["caption"]}
                         />
                 ))}
             </div>

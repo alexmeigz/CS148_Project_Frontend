@@ -19,7 +19,7 @@ function ProductPane(args) {
                 </div>
                 <div className="row">
                     <div className="product_caption">
-                        High-quality, nutritious french toast that is well within the budget of a college student! Now that's the way I like it!
+                        {args["caption"]}
                     </div>
                 </div>
                 <div className="row">
