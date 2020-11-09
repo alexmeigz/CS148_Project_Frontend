@@ -92,23 +92,62 @@ function ProductsPage (props) {
                             filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription}
                         />
                     </div>
-                    <div className="product_panel">
-                        <div className="title">
-                            Product Results (Total: {Object.keys(results).length})
-                        </div>
-                        {Object.values(results).map(product => (
-                            <ProductPane 
-                                name={product["product_name"]} 
-                                price={product["price"]}
-                                list_date={product["list_date"]}
-                                location={product["location"]}
-                                subscription={product["subscription"]}
-                                caption={product["caption"]}
-                                />
-                        ))}
-                    </div>
                 </div>
-                
+                <div className="product_panel">
+                    <div className="title">
+                        Product Results (Total: {Object.keys(results).length})
+                    </div>
+                    {Object.values(results).map(product => (
+                        <ProductPane 
+                            name={product["product_name"]} 
+                            price={product["price"]}
+                            list_date={product["list_date"]}
+                            location={product["location"]}
+                            subscription={product["subscription"]}
+                            caption={product["caption"]}
+                            />
+                    ))}
+                    {/* <ProductPane 
+                        name="Test Name" 
+                        price={10.99}
+                        list_date="nov"
+                        location="Santa Barbara"
+                        subscription={true}
+                        caption="caption"
+                        />
+                    <ProductPane 
+                        name="Test Name" 
+                        price={10.99}
+                        list_date="nov"
+                        location="Santa Barbara"
+                        subscription={true}
+                        caption="caption"
+                        />
+                    <ProductPane 
+                        name="Test Name" 
+                        price={10.99}
+                        list_date="nov"
+                        location="Santa Barbara"
+                        subscription={true}
+                        caption="caption"
+                        />
+                    <ProductPane 
+                        name="Test Name" 
+                        price={10.99}
+                        list_date="nov"
+                        location="Santa Barbara"
+                        subscription={true}
+                        caption="caption"
+                        />
+                    <ProductPane 
+                        name="Test Name" 
+                        price={10.99}
+                        list_date="nov"
+                        location="Santa Barbara"
+                        subscription={true}
+                        caption="caption"
+                        /> */}
+                </div>
             </div>
             <ContactUsFooter />
         </div>
