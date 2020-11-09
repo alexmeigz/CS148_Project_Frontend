@@ -11,22 +11,20 @@
 
 .header{
     margin-top: 30px;
+    font-size: 36px;
     text-align: center;
 }
 
 .side_panel{
+    margin: 20px 10px 10px 10px;
     float: left;
-    width: 30%;
-    height: 500px;
-    background-color: red;
+    width: calc(30% - 20px);
+    min-height: 100vh;
 }
 
 .product_panel{
     float: left;
     width: 70%;
-    overflow-y: scroll;
-    height: 500px;
-    /* height: 500px; change to auto or remove this line*/
 }
 
 .title{
@@ -64,12 +62,15 @@
     float: left;
     width: calc(15% - 20px);
     font-size: 24px;
+    text-align: right;
 }
 
 .product_caption{
     margin: 10px 10px 30px 10px;
     float: left;
+    width: calc(100% - 20px);
     font-size: 18px;
+    text-align: justify;
 }
 
 .subscription{
@@ -94,4 +95,19 @@
     width: calc(33% - 20px);
     font-size: 18px;
     text-align: right;
+}
+
+.search_bar{
+    margin: 10px;
+    float: center;
+    width: 90%;
+    height: 20px;
+}
+
+.filter_option{
+    margin: 10px 10px 10px 20px;
+}
+
+.filter_label{
+    font-size: 18px;
 }

@@ -4,6 +4,8 @@
 import React, { useState } from 'react';
 
 import "./Product.css"
+import ProductPane from "./ProductPane.js"
+import FilterOption from "./FilterOption.js"
 
 import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
@@ -19,146 +21,88 @@ function ProductsPage (props) {
     }
     const url = `${server}/product/?display_all=True`
     
-    const [results, setResults] = useState(0);
+    const [results, setResults] = useState({});
+    const [query, setQuery] = useState("");
+    const [filters, setFilters] = useState({
+        subscription : null
+    });
 
-    function search(){
-        fetch(url, {
+    function search(e){
+        if(e.key === "Enter"){
+            setQuery(e.target.value)
+            let newUrl = url + `&product_name=${e.target.value}`
+            if(filters["subscription"] != null){
+                newUrl += `&subscription=${filters["subscription"]}`
+            }
+            fetch(newUrl, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },              
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                setResults(data)
+            })
+            .catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
+        }
+    }
+
+    function filter(param, value){
+        console.log(query)
+        let newUrl = url + `&product_name=${query}`
+        if(param != null){
+            newUrl += `&${param}=${value}`
+        }
+        console.log(newUrl)
+        fetch(newUrl, {
             method: 'GET',
             headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },              
-        })
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },              
+            })
         .then(response => response.json()) 
         .then(data => {
-            console.log("Data: ")
             setResults(data)
-            console.log(results)
         })
         .catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
     }
     
+    
 
     return (
-        // TODO
-        <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn}/>
-            {props.isLoggedIn ? <AccountInfoBar /> : null}
-            
-            <div className="container">
-                <h1 className="header"> Products </h1>
-                <div className="side_panel">
-                    <input onChange={search}></input>
+        <div className="container">
+            <h1 className="header"> Products </h1>
+            <div className="side_panel">
+                <input className="search_bar" placeholder="Search products..." onKeyDown={search} />
+                <div className="title">
+                    Filters
                 </div>
-                
-                <div className="product_panel">
-                    <div className="title">
-                        Product Results (Total: {Object.keys(results).length})
-                    </div>
-                    <div className="product_pane">
-                        <img className="product_image" 
-                            src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"
-                            alt=""
-                        />
-                        <div className="product_description">
-                            <div className="row">
-                                <div className="product_name">
-                                    Vanilla French Toast
-                                </div>
-                                <div className="product_price">
-                                    $12
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="product_caption">
-                                    High-quality, nutritious french toast that is well within the budget of a college student! Now that's the way I like it!
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="subscription">
-                                    Subscription Product
-                                </div>
-                                <div className="list_date">
-                                    Listed 11.01.2020
-                                </div>
-                                <div className="location">
-                                    Santa Barbara, CA
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <div className="product_pane">
-                        <img className="product_image" 
-                            src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"
-                            alt=""
-                        />
-                        <div className="product_description">
-                            <div className="row">
-                                <div className="product_name">
-                                    Vanilla French Toast
-                                </div>
-                                <div className="product_price">
-                                    $12
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="product_caption">
-                                    High-quality, nutritious french toast that is well within the budget of a college student! Now that's the way I like it!
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="subscription">
-                                    Subscription Product
-                                </div>
-                                <div className="list_date">
-                                    Listed 11.01.2020
-                                </div>
-                                <div className="location">
-                                    Santa Barbara, CA
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <div className="product_pane">
-                        <img className="product_image" 
-                            src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"
-                            alt=""
-                        />
-                        <div className="product_description">
-                            <div className="row">
-                                <div className="product_name">
-                                    Vanilla French Toast
-                                </div>
-                                <div className="product_price">
-                                    $12
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="product_caption">
-                                    High-quality, nutritious french toast that is well within the budget of a college student! Now that's the way I like it!
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="subscription">
-                                    Subscription Product
-                                </div>
-                                <div className="list_date">
-                                    Listed 11.01.2020
-                                </div>
-                                <div className="location">
-                                    Santa Barbara, CA
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-            
-                
+                <div className="filters"> 
+                    <FilterOption name="Single Purchase" param="subscription" value="" 
+                        filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription} 
+                    />
+                    <FilterOption name="Subscription Based" param="subscription" value="true" 
+                        filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription}
+                    />
                 </div>
-                
-            
+            </div>
+            <div className="product_panel">
+                <div className="title">
+                    Product Results (Total: {Object.keys(results).length})
+                </div>
+                {Object.values(results).map(product => (
+                    <ProductPane 
+                        name={product["product_name"]} 
+                        price={product["price"]}
+                        list_date={product["list_date"]}
+                        location={product["location"]}
+                        subscription={product["subscription"]}
+                        caption={product["caption"]}
+                        />
+                ))}
             </div>
             <ContactUsFooter />
         </div>
