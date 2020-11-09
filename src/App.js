@@ -22,7 +22,7 @@ import MyProductsPage from "./components/pages/MyProductsPage";
 import ErrorPage from './components/pages/ErrorPage';
 // import ContactUsFooter from './components/common/ContactUsFooter';
 
-//import ProductForm from './components/CreateProduct';
+import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 
 function App() {
@@ -59,19 +59,23 @@ function App() {
                 {/* Must be signed in to access pages */}
                 {isLoggedIn 
                     ? (<Route path="/my-profile">
-                        <MyProfilePage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                        <MyProfilePage isLoggedIn={isLoggedIn}/>
                     </Route>)
                     : null
                 }
                 {isLoggedIn
                     ? (<Route path="/my-products">
-                        <MyProductsPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                        <MyProductsPage isLoggedIn={isLoggedIn}/>
                     </Route>)
                     : null
                 }
                 
+                <Route path="/create-product">
+                    <ProductForm isLoggedIn={isLoggedIn}/>
+                </Route>
+
 	            <Route>
-                    <ErrorPage isLoggedIn={isLoggedIn? "LoggedIn": null}/>
+                    <ErrorPage isLoggedIn={isLoggedIn}/>
                 </Route>
             </Switch>
         </main>
