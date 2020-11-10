@@ -5,7 +5,7 @@ import React from 'react';
 
 function LoggedInHomePage () {
     return (
-        // TODO
+        // Use DefaultHomePage instead with conditional rendering
         <div>
             <h1>[LoggedInHomePage]</h1>
         </div>

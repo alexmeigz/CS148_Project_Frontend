@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-function ProductPane(args) {
+function ProductPane(props) {
     return (
         <div className="product_pane">
             <img className="product_image" alt="Product"
@@ -11,31 +11,31 @@ function ProductPane(args) {
             <div className="product_description">
                 <div className="row">
                     <div className="product_name">
-                        {args["name"]}
+                        {props["name"]}
                     </div>
                     <div className="product_price">
-                        ${args["price"]}
+                        ${props["price"]}
                     </div>
                 </div>
                 <div className="row">
                     <div className="product_caption">
-                        {args["caption"]}
+                        {props["caption"]}
                     </div>
                 </div>
                 <div className="row">
                     <div className="subscription">
-                        {(args["subscription"] && "Subscription Based") || "Single Purchase"}
+                        {(props["subscription"] && "Subscription Based") || "Single Purchase"}
                     </div>
                     <div className="list_date">
-                        Listed {args["list_date"]}
+                        Listed {props["list_date"]}
                     </div>
                     <div className="location">
-                        {args["location"] || "No Location Listed"}
+                        {props["location"] || "No Location Listed"}
                     </div>
                 </div>
             </div>
         </div>
-    );
+    ); 
 };
 
 export default ProductPane;

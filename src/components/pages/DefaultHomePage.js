@@ -6,12 +6,17 @@ import { Link } from 'react-router-dom';
 
 import "./DefaultHomePage.css"
 
+import NavigationBar from '../common/NavigationBar';
+import ContactUsFooter from "../common/ContactUsFooter";
+import AccountInfoBar from "../common/AccountInfoBar"
 
-
-function DefaultHomePage () {
+function DefaultHomePage (props) {
+    // TODO: get account info from backend
     return (
         // TODO: add text on top of images
         <div className="background">
+            <NavigationBar isLoggedIn={props.isLoggedIn}/>
+            {props.isLoggedIn ? <AccountInfoBar /> : null}
             
             <img className="banner"
                 src="https://www.helpguide.org/wp-content/uploads/table-with-grains-vegetables-fruit-768.jpg"
@@ -43,6 +48,8 @@ function DefaultHomePage () {
                 />
                 <h1>Maps</h1>
             </Link>
+
+            <ContactUsFooter />
         </div>
     );
 };

@@ -1,24 +1,27 @@
-// VendorsPage.js
+// MyProfilePage.js
 // Engineer: Joseph Ng
 
 import React from 'react';
+// import { Link } from 'react-router-dom';
+
+// import "./MyProfilePage.css"
 
 import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar";
 
-function VendorsPage (props) {
+function MyProfilePage (props) {
     return (
-        // TODO
         <div>
             <NavigationBar isLoggedIn={props.isLoggedIn}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
 
-            <h1>[VendorsPage]</h1>
+            <h1>[MyProfilePage]</h1>
 
             <ContactUsFooter />
+            
         </div>
     );
 };
 
-export default VendorsPage;
+export default MyProfilePage;
