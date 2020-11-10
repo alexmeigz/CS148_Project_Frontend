@@ -131,7 +131,7 @@ function ProductsList (props) {
                         </button>
                     ))}
                     {/* Remove below (testing only) */}
-                    <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
+                    {/* <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
                         name: "Test Name1",
                         price: 10.99,
                         list_date: "nov",
@@ -181,7 +181,7 @@ function ProductsList (props) {
                             subscription={true}
                             caption="caption"
                         />
-                    </button>
+                    </button> */}
                     {/* remove above (testing only) */}
                 </div>
             </div>}
