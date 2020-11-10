@@ -98,3 +98,27 @@
 .filter_label{
     font-size: 18px;
 }
+
+.product_panel_button {
+    background: none;
+    width: 100%;
+    border-width: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.product_panel_button:active {
+    border: none;
+}
+
+.product_back_button {
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 70px;
+    height: 50px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.product_back_button:active {
+    border: none;
+}

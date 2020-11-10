@@ -84,10 +84,13 @@ function ProductsList (props) {
 
     return (
         <div>
+            {/* clicking/back button toggles between product list view and individual product display */}
             {!isListView
-            ? <div><button onClick={(e) => changeView(e, "product-view")}>Back</button>
+
+            ? <div><button className="product_back_button" onClick={(e) => changeView(e, "product-view")}>Back</button>
                 {productView}
             </div>
+
             : <div className="container">
                 <h1> Products </h1>
                 <div className="side_panel">
@@ -109,7 +112,7 @@ function ProductsList (props) {
                         Product Results (Total: {Object.keys(results).length})
                     </div>
                     {Object.values(results).map(product => (
-                        <button onClick={(e) => changeView(e, "product-pane", {
+                        <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
                             name: product["product_name"],
                             price: product["price"],
                             list_date: product["list_date"],
@@ -128,13 +131,13 @@ function ProductsList (props) {
                         </button>
                     ))}
                     {/* Remove below (testing only) */}
-                    <button onClick={(e) => changeView(e, "product-pane", {
+                    <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
                         name: "Test Name1",
                         price: 10.99,
                         list_date: "nov",
                         location: "Santa Barbara",
                         subscription: true,
-                        caption: "caption",
+                        caption: "This is a long testing caption and stuff",
                     })}>
                         <ProductPane 
                             name="Test Name1" 
@@ -142,10 +145,10 @@ function ProductsList (props) {
                             list_date="nov"
                             location="Santa Barbara"
                             subscription={true}
-                            caption="caption"
+                            caption="This is a long testing caption and stuff"
                         />
                     </button>
-                    <button onClick={(e) => changeView(e, "product-pane", {
+                    <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
                         name: "Test Name2",
                         price: 10.99,
                         list_date: "nov",
@@ -162,7 +165,7 @@ function ProductsList (props) {
                             caption="caption"
                         />
                     </button>
-                    <button onClick={(e) => changeView(e, "product-pane", {
+                    <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
                         name: "Test Name3",
                         price: 10.99,
                         list_date: "nov",

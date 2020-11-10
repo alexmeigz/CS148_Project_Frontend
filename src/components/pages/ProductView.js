@@ -9,35 +9,36 @@ import React from "react";
 
 // import ProductPane from "./ProductPane.js"
 
-import "./Product.css"
+import "./ProductView.css"
 
 function ProductView(props) {
+
     return (
-        <div className="product-view">
-            <img className="product_image" alt="Product"
+        <div className="product-pane">
+            <img className="product-image" alt="Product"
                 src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"/>
-            <div className="product_description">
+            <div className="product-description">
                 <div className="row">
-                    <div className="product_name">
+                    <div className="product-name">
                         {props.productData["name"]}
                     </div>
-                    <div className="product_price">
+                    <div className="product-price">
                         ${props.productData["price"]}
                     </div>
                 </div>
                 <div className="row">
-                    <div className="product_caption">
+                    <div className="product-caption">
                         {props.productData["caption"]}
                     </div>
                 </div>
                 <div className="row">
-                    <div className="subscription">
+                    <div className="product-subscription">
                         {(props.productData["subscription"] && "Subscription Based") || "Single Purchase"}
                     </div>
-                    <div className="list_date">
+                    <div className="list-date">
                         Listed {props.productData["list_date"]}
                     </div>
-                    <div className="location">
+                    <div className="product-location">
                         {props.productData["location"] || "No Location Listed"}
                     </div>
                 </div>
