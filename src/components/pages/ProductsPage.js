@@ -1,154 +1,23 @@
 // ProductsPage.js
-// Engineer: Joseph Ng, Alex Mei
+// Engineer: Joseph Ng
 
-import React, { useState } from 'react';
-
-import "./Product.css"
-import ProductPane from "./ProductPane.js"
-import FilterOption from "./FilterOption.js"
+import React from 'react';
 
 import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
-import AccountInfoBar from "../common/AccountInfoBar"
+import AccountInfoBar from "../common/AccountInfoBar";
 
-function ProductsPage (props) {    
-    let server = "http://localhost:8118/api"
-    if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-        server = "http://localhost:8118/api"
-	}
-    if (process.env.NODE_ENV !== 'development') {
-        server = "http://localhost:8118/api"
-    }
-    const url = `${server}/product/?display_all=True`
-    
-    const [results, setResults] = useState({});
-    const [query, setQuery] = useState("");
-    const [filters, setFilters] = useState({
-        subscription : null
-    });
+import ProductsList from "./ProductsList";
 
-    function search(e){
-        if(e.key === "Enter"){
-            setQuery(e.target.value)
-            let newUrl = url + `&product_name=${e.target.value}`
-            if(filters["subscription"] != null){
-                newUrl += `&subscription=${filters["subscription"]}`
-            }
-            fetch(newUrl, {
-                method: 'GET',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },              
-            })
-            .then(response => response.json()) 
-            .then(data => {
-                setResults(data)
-            })
-            .catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
-        }
-    }
-
-    function filter(param, value){
-        console.log(query)
-        let newUrl = url + `&product_name=${query}`
-        if(param != null){
-            newUrl += `&${param}=${value}`
-        }
-        console.log(newUrl)
-        fetch(newUrl, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },              
-            })
-        .then(response => response.json()) 
-        .then(data => {
-            setResults(data)
-        })
-        .catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
-    }
-    
-    
-
+function ProductsPage (props) {
     return (
+        // TODO
         <div>
             <NavigationBar isLoggedIn={props.isLoggedIn}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
-            
-            <div className="container">
-                <h1> Products </h1>
-                <div className="side_panel">
-                    <input className="search_bar" placeholder="Search products..." onKeyDown={search} />
-                    <div className="title">
-                        Filters
-                    </div>
-                    <div className="filters"> 
-                        <FilterOption name="Single Purchase" param="subscription" value="" 
-                            filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription} 
-                        />
-                        <FilterOption name="Subscription Based" param="subscription" value="true" 
-                            filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription}
-                        />
-                    </div>
-                </div>
-                <div className="product_panel">
-                    <div className="title">
-                        Product Results (Total: {Object.keys(results).length})
-                    </div>
-                    {Object.values(results).map(product => (
-                        <ProductPane 
-                            name={product["product_name"]} 
-                            price={product["price"]}
-                            list_date={product["list_date"]}
-                            location={product["location"]}
-                            subscription={product["subscription"]}
-                            caption={product["caption"]}
-                            />
-                    ))}
-                    {/* <ProductPane 
-                        name="Test Name" 
-                        price={10.99}
-                        list_date="nov"
-                        location="Santa Barbara"
-                        subscription={true}
-                        caption="caption"
-                        />
-                    <ProductPane 
-                        name="Test Name" 
-                        price={10.99}
-                        list_date="nov"
-                        location="Santa Barbara"
-                        subscription={true}
-                        caption="caption"
-                        />
-                    <ProductPane 
-                        name="Test Name" 
-                        price={10.99}
-                        list_date="nov"
-                        location="Santa Barbara"
-                        subscription={true}
-                        caption="caption"
-                        />
-                    <ProductPane 
-                        name="Test Name" 
-                        price={10.99}
-                        list_date="nov"
-                        location="Santa Barbara"
-                        subscription={true}
-                        caption="caption"
-                        />
-                    <ProductPane 
-                        name="Test Name" 
-                        price={10.99}
-                        list_date="nov"
-                        location="Santa Barbara"
-                        subscription={true}
-                        caption="caption"
-                        /> */}
-                </div>
-            </div>
+
+            <ProductsList />
+
             <ContactUsFooter />
         </div>
     );
