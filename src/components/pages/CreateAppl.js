@@ -53,7 +53,7 @@ function ApplForm(props) {
             })
             .then(response => response.json())
             .then(data => {
-                if (data["message"] === "Application created successfully!") {
+                if (data["message"] === "Application sent successfully!") {
                     alert(`${data["message"]}`)
                     //Need to add Redirect after creating Product
                 }
@@ -69,7 +69,7 @@ function ApplForm(props) {
             <h1> Create Application </h1>
             <form onSubmit={submitForm}>
                 <div className="form_input">
-                    <label className="form_label" for="restName"> Restaurant/Business Name: </label>
+                    <label className="form_label" for="restName"> Business Name: </label>
                     <input className="form_field" type="text" value={state.restName} name="restName" onChange={handleChange} />
                 </div>
 
