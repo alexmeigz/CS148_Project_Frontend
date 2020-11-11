@@ -1,0 +1,68 @@
+@import url("../common/Base.css");
+
+.product-pane{
+    margin: 50px;
+    margin-top: 30px;
+}
+
+.product-image {
+    margin-bottom: 50px;
+    float: left;
+    width: 30%;
+    height: auto;
+    min-width: 200px;
+}
+
+.product-description {
+    margin: 20px;
+    float: left;
+    width: 65%;
+}
+
+.product-name {
+    margin: 10px 10px 10px 10px;
+    float: left;
+    width: calc(85% - 30px);
+    font-size: 40px;
+}
+
+.product-price {
+    margin: 10px;
+    float: left;
+    width: calc(15% - 20px);
+    font-size: 30px;
+    text-align: right;
+}
+
+.product-caption{
+    margin: 10px 10px 30px 10px;
+    float: left;
+    width: calc(100% - 20px);
+    font-size: 25px;
+    text-align: justify;
+    min-height: 200px;
+}
+
+.product-subscription{
+    margin: 10px;
+    float: left;
+    width: calc(33% - 20px);
+    font-size: 25px;
+    text-align: left;
+}
+
+.list-date{
+    margin: 10px;
+    float: left;
+    width: calc(33% - 20px);
+    font-size: 25px;
+    text-align: center;
+}
+
+.product-location{
+    margin: 10px;
+    float: left;
+    width: calc(33% - 20px);
+    font-size: 25px;
+    text-align: right;
+}

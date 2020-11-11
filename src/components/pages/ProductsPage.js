@@ -3,11 +3,22 @@
 
 import React from 'react';
 
-function ProductsPage () {
+import NavigationBar from '../common/NavigationBar';
+import ContactUsFooter from "../common/ContactUsFooter";
+import AccountInfoBar from "../common/AccountInfoBar";
+
+import ProductsList from "./ProductsList";
+
+function ProductsPage (props) {
     return (
         // TODO
         <div>
-            <h1>[ProductsPage]</h1>
+            <NavigationBar isLoggedIn={props.isLoggedIn}/>
+            {props.isLoggedIn ? <AccountInfoBar /> : null}
+
+            <ProductsList />
+
+            <ContactUsFooter />
         </div>
     );
 };

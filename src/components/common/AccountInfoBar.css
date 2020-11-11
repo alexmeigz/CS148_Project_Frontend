@@ -1,0 +1,42 @@
+/* Engineer: Joseph Ng */
+
+.account-info-bar {
+    position: relative;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #777;
+    width: 100%;
+}
+
+.account-type {
+    float: left;
+    padding: 14px 16px;
+}
+
+.credits {
+    float: right;
+}
+
+.credits ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    float: right;
+}
+
+.credits ul li{
+    float: left;
+    padding: 14px 16px;
+}
+
+  
+.credits a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}

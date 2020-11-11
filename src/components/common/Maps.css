@@ -1,0 +1,41 @@
+@import url("./Base.css");
+
+/* ADAPTED FROM https://github.com/milespratt/bingmaps-react */
+
+.maps__container {
+    display: grid;
+    grid-template-columns: minmax(320px, 1fr) 2fr;
+    grid-gap: 50px;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 50px;
+  }
+  
+  .map__card {
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    height: 100%;
+    width: 100%;
+  }
+  
+  @media (max-width: 800px), (max-height: 600px) {
+    .maps__container {
+      grid-template-columns: 1fr;
+      grid-template-rows: min-content calc(100% - 100px);
+      grid-template-areas:
+        "header"
+        "map";
+      grid-gap: 0px;
+      overflow: hidden;
+      overflow-y: scroll;
+      height: 100%;
+      padding: 0;
+    }
+    .map__card {
+      grid-area: map;
+      padding: 0px;
+    }
+  }
+  

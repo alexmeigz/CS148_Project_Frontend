@@ -43,13 +43,13 @@
     object-fit: cover;
 }
 
-.recipes {
+/* .recipes {
     opacity: 50%;
 }
 
 .recipes:hover {
     opacity: 100%;
-}
+} */
 
 .recipes h1 {
     position: absolute;
@@ -76,13 +76,13 @@
     object-fit: cover;
 }
 
-.products {
+/* .products {
     opacity: 50%;
 }
 
 .products:hover {
     opacity: 100%;
-}
+} */
 
 .products h1 {
     position: absolute;
@@ -109,13 +109,13 @@
     object-fit: cover;
 }
 
-.maps {
+/* .maps {
     opacity: 50%;
 }
 
 .maps:hover {
     opacity: 100%;
-}
+} */
 
 .maps h1 {
     position: absolute;

@@ -1,0 +1,124 @@
+@import url("../common/Base.css");
+
+.side_panel{
+    margin: 20px 10px 10px 10px;
+    float: left;
+    width: calc(30% - 20px);
+    min-height: 100vh;
+}
+
+.product_panel{
+    float: left;
+    width: 70%;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.title{
+    font-size: 30px;
+    margin: 20px;
+}
+
+.product_pane{
+    margin: 10px;
+    min-height: 220px;
+}
+
+.product_image {
+    margin: 10px;
+    float: left;
+    width: 200px;
+    height: auto;
+}
+
+.product_description {
+    margin: 10px;
+    float: left;
+    width: calc(100% - 250px);
+}
+
+.product_name {
+    margin: 10px 10px 10px 20px;
+    float: left;
+    width: calc(85% - 30px);
+    font-size: 24px;
+}
+
+.product_price {
+    margin: 10px;
+    float: left;
+    width: calc(15% - 20px);
+    font-size: 24px;
+    text-align: right;
+}
+
+.product_caption{
+    margin: 10px 10px 30px 10px;
+    float: left;
+    width: calc(100% - 20px);
+    font-size: 18px;
+    text-align: justify;
+}
+
+.subscription{
+    margin: 10px;
+    float: left;
+    width: calc(33% - 20px);
+    font-size: 18px;
+    text-align: left;
+}
+
+.list_date{
+    margin: 10px;
+    float: left;
+    width: calc(33% - 20px);
+    font-size: 18px;
+    text-align: center;
+}
+
+.location{
+    margin: 10px;
+    float: left;
+    width: calc(33% - 20px);
+    font-size: 18px;
+    text-align: right;
+}
+
+.search_bar{
+    margin: 10px;
+    float: center;
+    width: 90%;
+    height: 20px;
+}
+
+.filter_option{
+    margin: 10px 10px 10px 20px;
+}
+
+.filter_label{
+    font-size: 18px;
+}
+
+.product_panel_button {
+    background: none;
+    width: 100%;
+    border-width: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.product_panel_button:active {
+    border: none;
+}
+
+.product_back_button {
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 70px;
+    height: 50px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.product_back_button:active {
+    border: none;
+}
