@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <script type='text/javascript'>
+        var map;
+
+        function initMap() {
+            map = new Microsoft.Maps.Map('#myMap', {
+                credentials: 'Al6xM6_6DfVwdCAvRULkiOWrW0SYTDfS13YApD5QUruQJ-fIi4IuobDFRNzHeFQB',
+                center: new Microsoft.Maps.Location(39, -85),
+                zoom: 5
+            });
+        }
+    </script>
+
+    <!-- Bing Maps Script Reference -->
+    <script src="https://www.bing.com/api/maps/mapcontrol?callback=initMap" async defer></script>
+</head>
+
+<body>
+    <div id='myMap' style='position:relative;width:100%'></div>
+</body>
+
+</html>
