@@ -5,12 +5,12 @@ function ApplForm(props) {
     //The hard brackets are "array deconstruction" operator
     //updateState (name it anything you want) is a function we'll use to update this state object below
     const [state, updateState] = useState({
-        product_name: "",
-        subscription: "",
-        price: "",
-        caption: "",
-        location: "",
-        vendor_id: 243
+        restName: "",
+        // subscription: "",
+        vendorType: "",
+        reason: "",
+        busLocation: "",
+        user_id: 243
     })
     //Remember that updating state means we make a complete new copy and overwrite the exisiting state
     //Remember that React.useState on state objects requires that we copy the existing state upon each update (using the "spread" operator ...state) -- see below
