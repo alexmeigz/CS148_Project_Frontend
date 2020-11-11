@@ -9,6 +9,7 @@ import React from 'react';
 import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar";
+import ApplForm from "./CreateAppl";
 
 function MyProfilePage (props) {
     return (
@@ -16,7 +17,7 @@ function MyProfilePage (props) {
             <NavigationBar isLoggedIn={props.isLoggedIn}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
 
-            <h1>[MyProfilePage]</h1>
+            <ApplForm />
 
             <ContactUsFooter />
             
