@@ -18,6 +18,7 @@ import LogoutPage from "./components/pages/LogoutPage";
 import ContactUsPage from "./components/pages/ContactUsPage";
 import MyProfilePage from "./components/pages/MyProfilePage";
 import MyProductsPage from "./components/pages/MyProductsPage";
+import MyApplPage from "./components/pages/MyApplPage";
 
 import ErrorPage from './components/pages/ErrorPage';
 // import ContactUsFooter from './components/common/ContactUsFooter';
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/contact-us">
                     <ContactUsPage isLoggedIn={isLoggedIn}/>
                 </Route>
+                
 
                 {/* Must be signed in to access pages */}
                 {isLoggedIn 
@@ -72,6 +74,9 @@ function App() {
                 
                 <Route path="/create-product">
                     <ProductForm isLoggedIn={isLoggedIn}/>
+                </Route>
+                <Route path="/vendor-apply">
+                    <MyApplPage isLoggedIn={isLoggedIn}/>
                 </Route>
 
 	            <Route>
