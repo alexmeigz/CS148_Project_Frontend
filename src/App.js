@@ -19,6 +19,7 @@ import ContactUsPage from "./components/pages/ContactUsPage";
 import MyProfilePage from "./components/pages/MyProfilePage";
 import MyProductsPage from "./components/pages/MyProductsPage";
 import MyApplPage from "./components/pages/MyApplPage";
+import CreateUserPage from "./components/pages/CreateUserPage";
 
 import ErrorPage from './components/pages/ErrorPage';
 // import ContactUsFooter from './components/common/ContactUsFooter';
@@ -68,6 +69,13 @@ function App() {
                 {isLoggedIn
                     ? (<Route path="/my-products">
                         <MyProductsPage isLoggedIn={isLoggedIn}/>
+                    </Route>)
+                    : null
+                }
+                {/*PRANAV: temporary create user tab on navbar*/}
+                {isLoggedIn
+                    ? (<Route path="/create-user">
+                        <CreateUserPage isLoggedIn={isLoggedIn}/>
                     </Route>)
                     : null
                 }
