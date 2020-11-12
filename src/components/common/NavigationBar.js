@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import './NavigationBar.css'
 
 function NavigationBar(props) {
-    var accountType = "Vendor (Home)";
+    var accountType = "Home";
     return (
         <div>
             <ul className="navigation-bar">
@@ -29,10 +29,10 @@ function NavigationBar(props) {
                             : null
                         }
                         </li>
-                        <li>{(props.isLoggedIn) && (accountType === "Vendor (Resturant)" || accountType === "Vendor (Home)")
-                            ? <Link to="/my-products">My Products</Link>
-                            : null
-                        }
+                        <li>{(props.isLoggedIn) && (accountType === "Home" || accountType === "Resturant")
+                                ? <Link to="/my-products">My Products</Link>
+                                : null
+                            }
                         </li>
                         <li>{!(props.isLoggedIn)
                             ? <Link to="/login">Login</Link>

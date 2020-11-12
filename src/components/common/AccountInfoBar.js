@@ -8,7 +8,7 @@ import "./AccountInfoBar.css";
 
 function AccountInfoBar() {
     // TODO: get account info from backend
-    var accountType = "Vendor (Home)";
+    var accountType = "Home";
     var pendingCredits = 10;
     var credits = 20;
     return (
@@ -17,7 +17,7 @@ function AccountInfoBar() {
                 <li className="account-type">Account Type: {accountType}</li>
                 <li className="credits">
                     <ul>
-                        {accountType === "Vendor (Resturant)" || accountType === "Vendor (Home)"
+                        {accountType === "Resturant" || accountType === "Home"
                             ? <li>Pending Credits: ${pendingCredits}</li>
                             : null
                         } 
