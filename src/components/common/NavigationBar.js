@@ -29,11 +29,6 @@ function NavigationBar(props) {
                             : null
                         }
                         </li>
-                        <li>{(props.isLoggedIn)
-                            ? <Link to="/">My Application</Link>
-                            : null
-                        }
-                        </li>
                         <li>{(props.isLoggedIn) && (accountType === "Vendor (Resturant)" || accountType === "Vendor (Home)")
                             ? <Link to="/my-products">My Products</Link>
                             : null
