@@ -7,14 +7,14 @@ import { Link } from 'react-router-dom';
 import './NavigationBar.css'
 
 function NavigationBar(props) {
-    var accountType = "Vendor (Home)";
+    var accountType = "Home";
     return (
         <div>
             <ul className="navigation-bar">
                 <Link to="/">
                     <li className="logo"><img
-                        src="https://www.ideasmama.com/wp-content/uploads/pepega.jpg" 
-                        alt="Logo"/>
+                        src="https://www.ideasmama.com/wp-content/uploads/pepega.jpg"
+                        alt="Logo" />
                     </li>
                 </Link>
                 <li className="navigation-links">
@@ -25,11 +25,11 @@ function NavigationBar(props) {
                         <li><Link to="/recipes">Recipes</Link></li>
                         <li><Link to="/products">Products</Link></li>
                         <li className="profile">{props.isLoggedIn
-                                ? <Link to="/my-profile">My Profile</Link>
-                                : null
-                            }
+                            ? <Link to="/my-profile">My Profile</Link>
+                            : null
+                        }
                         </li>
-                        <li>{(props.isLoggedIn) && (accountType === "Vendor (Resturant)" || accountType === "Vendor (Home)")
+                        <li>{(props.isLoggedIn) && (accountType === "Home" || accountType === "Resturant")
                                 ? <Link to="/my-products">My Products</Link>
                                 : null
                             }
