@@ -7,6 +7,9 @@ import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar";
 
+
+import LoginForm from "./LoginForm";
+
 function LoginPage (props) {
     return (
         // TODO
@@ -14,7 +17,7 @@ function LoginPage (props) {
             <NavigationBar isLoggedIn={props.isLoggedIn}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
 
-            <h1>[LoginPage]</h1>
+            <LoginForm />
 
             <ContactUsFooter />
         </div>
