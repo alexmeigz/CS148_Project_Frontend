@@ -6,7 +6,7 @@ function UserForm(props) {
     //updateState (name it anything you want) is a function we'll use to update this state object below
     const [state, updateState] = useState({
         username: "",
-        password: "",
+        password_hash: "",
         email: "",
         account_type: "",
         vendor_location: "",
@@ -54,13 +54,13 @@ function UserForm(props) {
 	    .then(data => {
         if(data["message"] === "User created successfully!"){
           alert(`${data["message"]}`)
-          //Need to add Redirect after creating Product
+          //Need to add Redirect after creating User
         }
         else{
           alert(`Error creating user: ${data["message"]}`)
         }
       })
-      .catch((error) => console.log("Usercreation error: "+ error))
+      .catch((error) => console.log("User Creation error: "+ error))
     }
 
     return (
@@ -68,30 +68,30 @@ function UserForm(props) {
         <h1> Create Account </h1>
         <form onSubmit={submitForm}>
         <div className="form_input">
-          <label className="form_label" for="product_name"> Username: </label>  
+          <label className="form_label" for="username"> Username: </label>  
           <input className="form_field" type="text" value={state.username} name="username" onChange={handleChange} />
         </div>
         
         <div className="form_input">
-          <label className="form_label" for="subscription"> Subscription Product? </label>         
-          <input className="form_field" type="text" value={state.subscription} name="subscription" onChange={handleChange} />
+          <label className="form_label" for="password_hash"> Password: </label>         
+          <input className="form_field" type="text" value={state.subscription} name="password_hash" onChange={handleChange} />
         </div>
         
         <div className="form_input">
-          <label className="form_label" for="price"> Price: </label>         
-          <input className="form_field" type="text" value={state.price} name="price" onChange={handleChange} />
+          <label className="form_label" for="email"> Email: </label>         
+          <input className="form_field" type="text" value={state.price} name="email" onChange={handleChange} />
           <br /> 
         </div>
-        
+        {/*Change this account_type field so that user can only select options for account type instead of  typing it*/}
         <div className="form_input">
-          <label className="form_label" for="location"> Location: </label>         
-          <input className="form_field" type="text" value={state.location} name="location" onChange={handleChange} />
+          <label className="form_label" for="account_type"> Account Type: </label>         
+          <input className="form_field" type="text" value={state.location} name="account_type" onChange={handleChange} />
           <br /> 
         </div>
-        
+        {/*Have this vendor location field come only if account_type == vendor*/}
         <div className="form_input">
-          <label className="form_label" for="caption"> Caption: </label>         
-          <input className="form_field" type="text" value={state.caption} name="caption" onChange={handleChange} />
+          <label className="form_label" for="vendor_location"> Vendor Location: </label>         
+          <input className="form_field" type="text" value={state.caption} name="vendor_location" onChange={handleChange} />
           <br /> 
         </div>
         
@@ -100,4 +100,4 @@ function UserForm(props) {
       </div>
     )
 }
-export default ProductForm;
+export default UserForm;

@@ -36,7 +36,8 @@ function NavigationBar(props) {
                         </li>
                         <li>{!(props.isLoggedIn)
                                 ? <Link to="/login">Login</Link>
-                                : <Link to="/logout">Logout</Link>
+                                : <div><Link to="/logout">Logout</Link>
+                                  <Link to="/create-user">Create Account</Link></div>
                             }
                         </li>
                     </ul>
