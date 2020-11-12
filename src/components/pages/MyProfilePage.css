@@ -1,0 +1,49 @@
+@import url("../common/Base.css");
+
+.vendor-application-button {
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.vendor-application-back-button {
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 70px;
+    height: 50px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.user-info {
+    margin: 30px;
+}
+
+.profile-picture {
+    width: 30%;
+    height: auto;
+    margin: 20px;
+    float: left;
+}
+
+.user-details {
+    width: 60%;
+    height: auto;
+    margin: 10px;
+    float: right;
+}
+p {
+    height: 20px;
+    font-size: 20px;
+}
+
+.refresh-info {
+    margin-left: 20px;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    border-width: 1px;
+}
