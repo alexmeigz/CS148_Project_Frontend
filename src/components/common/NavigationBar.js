@@ -37,8 +37,9 @@ function NavigationBar(props) {
                         <li>{!(props.isLoggedIn)
                                 ? <Link to="/login">Login</Link>
                                 : <div><Link to="/logout">Logout</Link>
-                                  <Link to="/create-user">Create Account</Link></div>
-                            }{/*move this create account tab on navbar elsewhere*/}
+                                  <Link to="/create-user">Create Account</Link>
+                                  <Link to="/login">Login</Link> </div>
+                            }{/*PRANAV: move this create account tab on navbar elsewhere, TAKE OUT THIS LOGIN COMPONENT AFTER TESTING, REDUNDANT*/}
                         </li>
                     </ul>
                 </li>

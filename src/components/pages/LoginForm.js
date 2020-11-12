@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 //import Input from "../common/InputComponent.js"
 
-function UserForm(props) {
+function LoginForm(props) {
     //The hard brackets are "array deconstruction" operator
     //updateState (name it anything you want) is a function we'll use to update this state object below
     const [state, updateState] = useState({
         username: "",
         password_hash: "",
-        email: "",
-        account_type: "",
-        vendor_location: "",
     })
     //Remember that updating state means we make a complete new copy and overwrite the exisiting state
     //Remember that React.useState on state objects requires that we copy the existing state upon each update (using the "spread" operator ...state) -- see below
@@ -26,12 +23,12 @@ function UserForm(props) {
 
     const submitForm = (evt) => {  //send creds to backend, nested arrow function
 	    evt.preventDefault();
-      let server = "http://localhost:8118/api"
+      let server = "https://nutriflix-flask-backend.herokuapp.com/api"
       if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-        server = "http://localhost:8118/api"
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
 	  }
       if (process.env.NODE_ENV !== 'development') {
-        server = "http://localhost:8118/api"
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
     
     
@@ -44,7 +41,7 @@ function UserForm(props) {
 
     fetch(url, 
       {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -52,52 +49,35 @@ function UserForm(props) {
       })
       .then(response => response.json()) 
 	    .then(data => {
-        if(data["message"] === "User created successfully!"){
+        if(data["message"] === "User logged in successfully!"){
           alert(`${data["message"]}`)
           //Need to add Redirect after creating User
         }
         else{
-          alert(`Error creating user: ${data["message"]}`)
+          alert(`Error logging in user: ${data["message"]}`)
         }
       })
-      .catch((error) => console.log("User Creation error: "+ error))
+      .catch((error) => console.log("User login error: "+ error))
     }
 
     return (
       <div className="container">
-        <h1> Create Account </h1>
+        <h1> Log In to your Account</h1>
         <form onSubmit={submitForm}>
         <div className="form_input">
           <label className="form_label" for="username"> Username: </label>  
           <input className="form_field" type="text" value={state.username} name="username" onChange={handleChange} />
         </div>
-        
+
         <div className="form_input">
-          <label className="form_label" for="password_hash"> Password: </label>         
+          <label className="form_label" for="password_hash"> Password: </label>  
           <input className="form_field" type="text" value={state.password_hash} name="password_hash" onChange={handleChange} />
         </div>
         
-        <div className="form_input">
-          <label className="form_label" for="email"> Email: </label>         
-          <input className="form_field" type="text" value={state.email} name="email" onChange={handleChange} />
-          <br /> 
-        </div>
-        {/*Change this account_type field so that user can only select options for account type instead of  typing it*/}
-        <div className="form_input">
-          <label className="form_label" for="account_type"> Account Type: </label>         
-          <input className="form_field" type="text" value={state.account_type} name="account_type" onChange={handleChange} />
-          <br /> 
-        </div>
-        {/*Have this vendor location field come only if account_type == vendor*/}
-        <div className="form_input">
-          <label className="form_label" for="vendor_location"> Vendor Location: </label>         
-          <input className="form_field" type="text" value={state.vendor_location} name="vendor_location" onChange={handleChange} />
-          <br /> 
-        </div>
         
-        <input className="form_submit" type="submit" value="Submit" />
+        <input className="form_submit" type="submit" value="Login in" />
       </form>
       </div>
     )
 }
-export default UserForm;
+export default LoginForm;
