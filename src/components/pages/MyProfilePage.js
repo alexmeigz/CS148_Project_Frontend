@@ -37,7 +37,7 @@ function MyProfilePage (props) {
             {isProfileView 
             ? <div>
                 <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button>
-                <ProfileView user={props.user}/>
+                <ProfileView user={props.user} onUserChange={handleUserChange}/>
             </div>
             : <div>
                 <button className="vendor-application-back-button" onClick={toggleView}>Back</button>
