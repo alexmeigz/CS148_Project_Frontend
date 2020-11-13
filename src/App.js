@@ -1,7 +1,7 @@
 // App.js
 // Modified by: Joseph Ng
 
-import React from 'react';
+import React, { useState }from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // import NavigationBar from './components/common/NavigationBar';
@@ -28,67 +28,81 @@ import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 
 function App() {
-    const isLoggedIn = true; // testing conditional rendering
+    // eslint-disable-next-line
+    var id=2;
+    // eslint-disable-next-line
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // testing conditional rendering
+    // eslint-disable-next-line
+    const [user, setUser] = useState({})
+
+    function handleLoginChange(value) {
+        setIsLoggedIn(value);
+    }
+    // eslint-disable-next-line
+    function handleUserChange(value) {
+        setUser(value);
+    }
+
     return (
         // TODO: Change to new Nutriflix components
         <main>
             <Switch>
 		        <Route path="/" exact>
-                    <DefaultHomePage isLoggedIn={isLoggedIn}/>
+                    <DefaultHomePage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                 </Route>
                 <Route path="/maps">
-                    <MapsPage isLoggedIn={isLoggedIn}/>
+                    <MapsPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                 </Route>
                 <Route path="/vendors">
-                    <VendorsPage isLoggedIn={isLoggedIn}/>
+                    <VendorsPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                 </Route>
                 <Route path="/recipes">
-                    <RecipesPage isLoggedIn={isLoggedIn}/>
+                    <RecipesPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                 </Route>
                 <Route path="/products">
-                    <ProductsPage isLoggedIn={isLoggedIn}/>
+                    <ProductsPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                 </Route>
                 <Route path="/login">
-                    <LoginPage isLoggedIn={isLoggedIn}/>
+                    <LoginPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                 </Route>
                 <Route path="/logout">
-                    <LogoutPage isLoggedIn={isLoggedIn}/>
+                    <LogoutPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                 </Route>
                 <Route path="/contact-us">
-                    <ContactUsPage isLoggedIn={isLoggedIn}/>
+                    <ContactUsPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                 </Route>
                 
 
                 {/* Must be signed in to access pages */}
                 {isLoggedIn 
                     ? (<Route path="/my-profile">
-                        <MyProfilePage isLoggedIn={isLoggedIn}/>
+                        <MyProfilePage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                     </Route>)
                     : null
                 }
                 {isLoggedIn
                     ? (<Route path="/my-products">
-                        <MyProductsPage isLoggedIn={isLoggedIn}/>
+                        <MyProductsPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                     </Route>)
                     : null
                 }
                 {/*PRANAV: temporary create user tab on navbar*/}
-                {isLoggedIn
+                {!isLoggedIn
                     ? (<Route path="/create-user">
-                        <CreateUserPage isLoggedIn={isLoggedIn}/>
+                        <CreateUserPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                     </Route>)
                     : null
                 }
                 
                 <Route path="/create-product">
-                    <ProductForm isLoggedIn={isLoggedIn}/>
+                    <ProductForm isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                 </Route>
                 <Route path="/vendor-apply">
-                    <MyApplPage isLoggedIn={isLoggedIn}/>
+                    <MyApplPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                 </Route>
 
 	            <Route>
-                    <ErrorPage isLoggedIn={isLoggedIn}/>
+                    <ErrorPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
                 </Route>
             </Switch>
         </main>

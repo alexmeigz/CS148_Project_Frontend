@@ -10,10 +10,15 @@ import AccountInfoBar from "../common/AccountInfoBar";
 import UserForm from "./CreateUser";
 
 function CreateUserPage (props) {
+
+    function handleLoginChange(value) {
+        props.onLoginChange(value)
+    }
+
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
 
             <UserForm />

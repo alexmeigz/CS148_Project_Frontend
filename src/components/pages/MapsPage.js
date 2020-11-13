@@ -12,10 +12,13 @@ import BingMapsReact from "bingmaps-react";
 import "../common/Maps.css"
 
 function MapsPage(props) {
+    function handleLoginChange(value) {
+        props.onLoginChange(value)
+    }
     return (
         // TODO:
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} />
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
 
             <h1>Search Map</h1>

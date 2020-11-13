@@ -52,12 +52,18 @@ function LoginForm(props) {
         if(data["message"] === "User logged in successfully!"){
           alert(`${data["message"]}`)
           //Need to add Redirect after creating User
+          handleLoginChange(true); // Joseph: This makes the webpage in logged in state
         }
         else{
           alert(`Error logging in user: ${data["message"]}`)
         }
       })
       .catch((error) => console.log("User login error: "+ error))
+    }
+
+    // Joseph: for updating login state
+    function handleLoginChange(value) {
+      props.onLoginChange(value)
     }
 
     return (

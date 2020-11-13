@@ -21,9 +21,13 @@ function MyProfilePage (props) {
         setIsProfileView(prevIsProfileView => !prevIsProfileView);
     }
 
+    function handleLoginChange(value) {
+        props.onLoginChange(value)
+    }
+
     return (
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
 
             {isProfileView 

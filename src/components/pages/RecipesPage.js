@@ -8,10 +8,13 @@ import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar";
 
 function RecipesPage (props) {
+    function handleLoginChange(value) {
+        props.onLoginChange(value)
+    }
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
 
             <h1>[RecipesPage]</h1>

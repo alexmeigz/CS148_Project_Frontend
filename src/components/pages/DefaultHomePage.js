@@ -12,10 +12,15 @@ import AccountInfoBar from "../common/AccountInfoBar"
 
 function DefaultHomePage (props) {
     // TODO: get account info from backend
+
+    function handleLoginChange(value) {
+        props.onLoginChange(value)
+    }
+
     return (
         // TODO: add text on top of images
         <div className="background">
-            <NavigationBar isLoggedIn={props.isLoggedIn}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
             
             <img className="banner"

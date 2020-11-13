@@ -8,12 +8,22 @@ import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar"
 
 function ErrorPage (props) {
+
+    function handleLoginChange(value) {
+        props.onLoginChange(value)
+    }
+
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
 
+            <img style={{width: "50%", marginLeft: "25%"}}
+                src="https://www.ideasmama.com/wp-content/uploads/pepega.jpg"
+                alt="Error"
+                
+            />
             <h1>404: Page does not exist</h1>
 
             <ContactUsFooter />

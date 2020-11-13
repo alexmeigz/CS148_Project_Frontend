@@ -10,10 +10,13 @@ import AccountInfoBar from "../common/AccountInfoBar";
 import ProductForm from "./CreateProduct";
 
 function MyProductsPage (props) {
+    function handleLoginChange(value) {
+        props.onLoginChange(value)
+    }
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
             {props.isLoggedIn ? <AccountInfoBar /> : null}
 
             <ProductForm />
