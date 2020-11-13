@@ -21,15 +21,23 @@ function MyProfilePage (props) {
         setIsProfileView(prevIsProfileView => !prevIsProfileView);
     }
 
+    function handleLoginChange(value) {
+        props.onLoginChange(value)
+    }
+
+    function handleUserChange(value) {
+        props.onUserChange(value)
+    }
+
     return (
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn}/>
-            {props.isLoggedIn ? <AccountInfoBar /> : null}
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
+            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
 
             {isProfileView 
             ? <div>
                 <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button>
-                <ProfileView />
+                <ProfileView user={props.user} onUserChange={handleUserChange}/>
             </div>
             : <div>
                 <button className="vendor-application-back-button" onClick={toggleView}>Back</button>

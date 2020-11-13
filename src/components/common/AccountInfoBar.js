@@ -6,22 +6,22 @@ import React from 'react';
 
 import "./AccountInfoBar.css";
 
-function AccountInfoBar() {
+function AccountInfoBar(props) {
     // TODO: get account info from backend
-    var accountType = "Home";
-    var pendingCredits = 10;
-    var credits = 20;
+    // var accountType = "Home";
+    // var pendingCredits = 10;
+    // var credits = 20;
     return (
         <div>
             <ul className="account-info-bar">
-                <li className="account-type">Account Type: {accountType}</li>
+                <li className="account-type">Account Type: {props.user.account_type}</li>
                 <li className="credits">
                     <ul>
-                        {accountType === "Resturant" || accountType === "Home"
-                            ? <li>Pending Credits: ${pendingCredits}</li>
+                        {props.user.account_type === "Resturant" || props.user.account_type === "Home"
+                            ? <li>Pending Credits: $0 (Coming soon)</li>
                             : null
                         } 
-                        <li>Credits: ${credits}</li>
+                        <li>Credits: ${props.user.credits}</li>
                     </ul>
                 </li>
             </ul>

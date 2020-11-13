@@ -8,11 +8,17 @@ import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar";
 
 function RecipesPage (props) {
+    function handleLoginChange(value) {
+        props.onLoginChange(value)
+    }
+    function handleUserChange(value) {
+        props.onUserChange(value)
+    }
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn}/>
-            {props.isLoggedIn ? <AccountInfoBar /> : null}
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
+            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
 
             <h1>[RecipesPage]</h1>
 

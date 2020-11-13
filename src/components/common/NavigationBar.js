@@ -8,12 +8,18 @@ import './NavigationBar.css'
 
 function NavigationBar(props) {
     var accountType = "Home";
+
+    function handleLoginChange(value) {
+        props.onLoginChange(value)
+        // console.log(value);
+    }
+
     return (
         <div>
             <ul className="navigation-bar">
                 <Link to="/">
                     <li className="logo"><img
-                        src="https://www.ideasmama.com/wp-content/uploads/pepega.jpg"
+                        src="https://ih1.redbubble.net/image.1047402521.8408/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
                         alt="Logo" />
                     </li>
                 </Link>
@@ -34,12 +40,19 @@ function NavigationBar(props) {
                                 : null
                             }
                         </li>
-                        <li>{!(props.isLoggedIn)
-                                ? <Link to="/login">Login</Link>
-                                : <div><Link to="/logout">Logout</Link>
-                                  <Link to="/create-user">Create Account</Link>
-                                  <Link to="/login">Login</Link> </div>
-                            }{/*PRANAV: move this create account tab on navbar elsewhere, TAKE OUT THIS LOGIN COMPONENT AFTER TESTING, REDUNDANT*/}
+
+                        <li>
+                            <li>{!(props.isLoggedIn)
+                                    ? <Link to="/create-user">Create Account</Link>
+                                    : null
+                                }
+                            </li>
+
+                            <li>{!(props.isLoggedIn)
+                                    ? <Link to="/login">Login</Link> // remove "onClick={() => handleLoginChange(true)}" when not testing
+                                    : <Link onClick={() => handleLoginChange(false)} to="/logout">Logout</Link>
+                                }
+                            </li>
                         </li>
                     </ul>
                 </li>

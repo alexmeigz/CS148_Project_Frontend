@@ -7,11 +7,17 @@ import AccountInfoBar from "../common/AccountInfoBar";
 import ApplForm from "./CreateAppl";
 
 function MyApplPage(props) {
+    function handleLoginChange(value) {
+        props.onLoginChange(value)
+    }
+    function handleUserChange(value) {
+        props.onUserChange(value)
+    }
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} />
-            {props.isLoggedIn ? <AccountInfoBar /> : null}
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
+            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
 
             <ApplForm />
 

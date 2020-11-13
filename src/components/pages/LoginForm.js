@@ -5,6 +5,7 @@ function LoginForm(props) {
     //The hard brackets are "array deconstruction" operator
     //updateState (name it anything you want) is a function we'll use to update this state object below
     const [state, updateState] = useState({
+        login: true,
         username: "",
         password_hash: "",
     })
@@ -49,15 +50,26 @@ function LoginForm(props) {
       })
       .then(response => response.json()) 
 	    .then(data => {
-        if(data["message"] === "User logged in successfully!"){
-          alert(`${data["message"]}`)
+        if(data["username"] === state["username"]){
+          alert(`${state["username"]}`)
           //Need to add Redirect after creating User
+          handleLoginChange(true); // Joseph: This makes the webpage in logged in state
+          handleUserChange(data);
         }
         else{
-          alert(`Error logging in user: ${data["message"]}`)
+          alert(`Error logging in user: ${state["username"]}`)
         }
       })
       .catch((error) => console.log("User login error: "+ error))
+    }
+
+    // Joseph: for updating login state
+    function handleLoginChange(value) {
+      props.onLoginChange(value)
+    }
+
+    function handleUserChange(value) {
+      props.onUserChange(value)
     }
 
     return (
