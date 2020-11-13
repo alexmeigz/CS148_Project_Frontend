@@ -7,6 +7,7 @@ import "./MyProfilePage.css"
 function ProfileView(props) {
     let id = 2; // user id number
 
+    // eslint-disable-next-line
     const [userInfo, setUserInfo] = useState({
         username: "Loading",
         account_type: "Loading",
@@ -67,9 +68,9 @@ function ProfileView(props) {
                     alt="Profile"
                 />
                 <div className="user-details">
-                    <p>Username: {userInfo.username}</p>
-                    <p>Account Type: {userInfo.account_type}</p>
-                    <p>Email: {userInfo.email}</p>
+                    <p>Username: {props.user.username}</p>
+                    <p>Account Type: {props.user.account_type}</p>
+                    <p>Email: {props.user.email}</p>
                 </div>
                 
 

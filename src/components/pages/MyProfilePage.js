@@ -25,15 +25,19 @@ function MyProfilePage (props) {
         props.onLoginChange(value)
     }
 
+    function handleUserChange(value) {
+        props.onUserChange(value)
+    }
+
     return (
         <div>
             <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
-            {props.isLoggedIn ? <AccountInfoBar /> : null}
+            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
 
             {isProfileView 
             ? <div>
                 <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button>
-                <ProfileView />
+                <ProfileView user={props.user}/>
             </div>
             : <div>
                 <button className="vendor-application-back-button" onClick={toggleView}>Back</button>

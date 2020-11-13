@@ -17,11 +17,14 @@ function DefaultHomePage (props) {
         props.onLoginChange(value)
     }
 
+    function handleUserChange(value) {
+        props.onUserChange(value)
+    }
     return (
         // TODO: add text on top of images
         <div className="background">
             <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
-            {props.isLoggedIn ? <AccountInfoBar /> : null}
+            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
             
             <img className="banner"
                 src="https://www.helpguide.org/wp-content/uploads/table-with-grains-vegetables-fruit-768.jpg"

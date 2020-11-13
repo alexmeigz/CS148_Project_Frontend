@@ -1,7 +1,8 @@
 // App.js
 // Modified by: Joseph Ng
 
-import React, { useState }from 'react';
+// eslint-disable-next-line
+import React, { useState, useEffect }from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // import NavigationBar from './components/common/NavigationBar';
@@ -29,11 +30,47 @@ import ProductForm from './components/pages/CreateProduct';
 
 function App() {
     // eslint-disable-next-line
-    var id=2;
+    var id=1;
     // eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false); // testing conditional rendering
     // eslint-disable-next-line
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({
+        user_id: 0,
+        username: "Loading",
+        password_hash: "",
+        email: "Loading",
+        account_type: "Loading",
+        vendor_location: "Loading",
+        credits: 0
+    })
+
+
+    // let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    // if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
+    //     server = "https://nutriflix-flask-backend.herokuapp.com/api"
+	// }
+    // if (process.env.NODE_ENV !== 'development') {
+    //     server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    // }
+    // let url = `${server}/user/?`
+
+
+    // useEffect( () => {
+    //     fetch(url+`login=${true}&username=${user.username}&password_hash=${user.password_hash}`, {
+    //         method: 'GET',
+    //         headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json'
+    //         },              
+    //     })
+    //     .then(response => response.json()) 
+    //     .then(data => {
+    //         setUser(data)
+    //     })
+    //     .catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
+    // }, [url, user]);
+
+
 
     function handleLoginChange(value) {
         setIsLoggedIn(value);
@@ -48,61 +85,131 @@ function App() {
         <main>
             <Switch>
 		        <Route path="/" exact>
-                    <DefaultHomePage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                    <DefaultHomePage 
+                        isLoggedIn={isLoggedIn} 
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
                 </Route>
                 <Route path="/maps">
-                    <MapsPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                    <MapsPage 
+                        isLoggedIn={isLoggedIn} 
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
                 </Route>
                 <Route path="/vendors">
-                    <VendorsPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                    <VendorsPage 
+                        isLoggedIn={isLoggedIn} 
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
                 </Route>
                 <Route path="/recipes">
-                    <RecipesPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                    <RecipesPage 
+                        isLoggedIn={isLoggedIn} 
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
                 </Route>
                 <Route path="/products">
-                    <ProductsPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                    <ProductsPage 
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
                 </Route>
                 <Route path="/login">
-                    <LoginPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                    <LoginPage 
+                        isLoggedIn={isLoggedIn} 
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
                 </Route>
                 <Route path="/logout">
-                    <LogoutPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                    <LogoutPage 
+                        isLoggedIn={isLoggedIn} 
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
                 </Route>
                 <Route path="/contact-us">
-                    <ContactUsPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                    <ContactUsPage 
+                        isLoggedIn={isLoggedIn} 
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
                 </Route>
                 
 
                 {/* Must be signed in to access pages */}
                 {isLoggedIn 
                     ? (<Route path="/my-profile">
-                        <MyProfilePage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                        <MyProfilePage 
+                            isLoggedIn={isLoggedIn} 
+                            onLoginChange={handleLoginChange}
+                            user={user}
+                            onUserChange={handleUserChange}
+                        />
                     </Route>)
                     : null
                 }
                 {isLoggedIn
                     ? (<Route path="/my-products">
-                        <MyProductsPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                        <MyProductsPage 
+                            isLoggedIn={isLoggedIn} 
+                            onLoginChange={handleLoginChange}
+                            user={user}
+                            onUserChange={handleUserChange}
+                        />
                     </Route>)
                     : null
                 }
                 {/*PRANAV: temporary create user tab on navbar*/}
                 {!isLoggedIn
                     ? (<Route path="/create-user">
-                        <CreateUserPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                        <CreateUserPage 
+                            isLoggedIn={isLoggedIn} 
+                            onLoginChange={handleLoginChange}
+                            user={user}
+                            onUserChange={handleUserChange}
+                        />
                     </Route>)
                     : null
                 }
                 
                 <Route path="/create-product">
-                    <ProductForm isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                    <ProductForm 
+                        isLoggedIn={isLoggedIn} 
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
                 </Route>
                 <Route path="/vendor-apply">
-                    <MyApplPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                    <MyApplPage 
+                        isLoggedIn={isLoggedIn} 
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
                 </Route>
 
 	            <Route>
-                    <ErrorPage isLoggedIn={isLoggedIn} onLoginChange={handleLoginChange}/>
+                    <ErrorPage 
+                        isLoggedIn={isLoggedIn} 
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
                 </Route>
             </Switch>
         </main>
