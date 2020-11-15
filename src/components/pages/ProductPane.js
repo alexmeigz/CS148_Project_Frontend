@@ -4,7 +4,6 @@
 import React from 'react';
 
 function ProductPane(props) {
-    console.log(props["image_url"])
     return (
         <div className="product_pane">
             <img className="product_image" alt=""

@@ -11,7 +11,7 @@ function ProductForm(props) {
         caption: "",
         location: "",
         image_url: "",
-        vendor_id: 243
+        vendor_id: props.user["user_id"]
     })
     //Remember that updating state means we make a complete new copy and overwrite the exisiting state
     //Remember that React.useState on state objects requires that we copy the existing state upon each update (using the "spread" operator ...state) -- see below
@@ -27,7 +27,7 @@ function ProductForm(props) {
     }
 
     const submitForm = (evt) => {  //send creds to backend, nested arrow function
-	    evt.preventDefault();
+      evt.preventDefault();
 	
       let server = "http://localhost:8118/api"
       if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
