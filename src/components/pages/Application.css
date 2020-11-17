@@ -1,0 +1,83 @@
+@import url("../common/Base.css");
+
+.application_header{
+    float: left;
+    width: 100%;
+    font-weight: bold;
+    padding: 10px 5px;
+}
+
+.application_pane{
+    float: left;
+    width: 100%;
+    padding: 5px;
+    text-align: left;
+}
+
+.application_pane:hover{
+    background: #bbbbbb;
+}
+
+.application_user{
+    float: left;
+    width: 25%;
+}
+
+.application_date{
+    float: left;
+    width: 25%;
+}
+
+.application_type{
+    float: left;
+    width: 25%;
+}
+
+.title{
+    font-size: 30px;
+    margin: 20px;
+}
+
+.product_panel_button {
+    background: none;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.product_panel_button:active {
+    border: none !important;
+}
+
+.product_back_button {
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 70px;
+    height: 50px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.product_back_button:active {
+    border: none;
+}
+
+.row{
+    float: left;
+    width: 100%;
+    padding: 5px;
+}
+
+.appview_header{
+    float: left;
+    width: 20%;
+    text-align: right;
+    margin-right: 25px;
+}
+
+.appview_text{
+    float: left;
+    width: 50%;
+    text-align: justify;
+}
+

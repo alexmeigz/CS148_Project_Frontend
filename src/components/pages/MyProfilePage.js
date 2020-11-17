@@ -41,7 +41,7 @@ function MyProfilePage (props) {
             </div>
             : <div>
                 <button className="vendor-application-back-button" onClick={toggleView}>Back</button>
-                <ApplForm />
+                <ApplForm user={props.user} onUserChange={handleUserChange}/>
             </div>
             }
             

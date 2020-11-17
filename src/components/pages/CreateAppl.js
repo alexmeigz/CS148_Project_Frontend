@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 //import Input from "../common/InputComponent.js"
 
 function ApplForm(props) {
+    console.log(props.user)
     //The hard brackets are "array deconstruction" operator
     //updateState (name it anything you want) is a function we'll use to update this state object below
     const [state, updateState] = useState({
@@ -10,7 +11,7 @@ function ApplForm(props) {
         vendorType: "",
         reason: "",
         busLocation: "",
-        user_id: 243
+        user_id: props.user["user_id"]
     })
     //Remember that updating state means we make a complete new copy and overwrite the exisiting state
     //Remember that React.useState on state objects requires that we copy the existing state upon each update (using the "spread" operator ...state) -- see below
@@ -28,13 +29,7 @@ function ApplForm(props) {
     const submitForm = (evt) => {  //send creds to backend, nested arrow function
         evt.preventDefault();
 
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-            server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        }
-        if (process.env.NODE_ENV !== 'development') {
-            server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        }
+        let server = "http://localhost:8118/api"
 
         let url = `${server}/application/?`
         for (const param in state) {

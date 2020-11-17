@@ -3,13 +3,14 @@
 
 import React, { useState, useEffect } from 'react';
 
-import "./Product.css"
-import ProductView from "./ProductView";
+import "./Application.css"
+import ApplicationView from "./ApplicationView";
+import ApplicationPane from "./ApplicationPane"
 
 function VendorApps (props) {   
     const [results, setResults] = useState({});
     const [isListView, setIsListView] = useState(true);
-    const [productView, setProductView] = useState(<ProductView />)
+    const [applicationData, setApplicationData] = useState({})
 
     useEffect(() => {
         const url = `http://localhost:8118/api/application/?display_all=True`
@@ -22,50 +23,116 @@ function VendorApps (props) {
         })
         .then(response => response.json()) 
         .then(data => {
+            console.log(data)
             setResults(data)
         })
         .catch((error) => console.log("Error: " + error))
     }, [])
     
-    function changeView(event, type, productData) {
+    function changeView(event, type, applicationData) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "product-pane") {
-            setProductView(<ProductView productData={productData} />);
+            setApplicationData(applicationData);
         }
     };
 
+    function approveApplication(){
+        console.log(applicationData)
+        const url = `http://localhost:8118/api/`
+        const userurl = `user/?user_id=${applicationData["user"]}&account_type=${applicationData["type"]}`
+        const applicationurl = `application/?id=${applicationData["id"]}`
+        fetch(url+userurl, {
+            method: 'PATCH',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },              
+        })
+        .then(response => response.json()) 
+        .then(data => {
+            alert(data["message"])
+            fetch(url+applicationurl, {
+                method: 'DELETE',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },              
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                alert(data["message"])
+                //window.location.replace("/vendor-apps")
+            })
+            .catch((error) => console.log("Error: " + error))
+        })
+        .catch((error) => console.log("Error: " + error))
+    }
+
+    function denyApplication(){
+        const url = `http://localhost:8118/api/application/?id=${applicationData["id"]}`
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },              
+        })
+        .then(response => response.json()) 
+        .then(data => {
+            alert(data["message"])
+            //window.location.replace("/vendor-apps")
+        })
+        .catch((error) => console.log("Error: " + error))
+    }
+
     return (
-        <div>
+        <div className="container">
             {/* clicking/back button toggles between product list view and individual product display */}
             {!isListView
 
-            ? <div><button className="product_back_button" onClick={(e) => changeView(e, "product-view")}>Back</button>
-                {productView}
+            ? <div>   
+                <h1> Review Application </h1>
+                {<ApplicationView applicationData={applicationData} />}
+                <button className="product_back_button" onClick={(e) => changeView(e, "product-view")}> Back </button>
+                <button className="product_back_button" onClick={() => approveApplication()}> Approve </button>
+                <button className="product_back_button" onClick={() => denyApplication()}> Deny </button>
             </div>
 
-            : <div className="container">
+            : <div>
                 <h1> Vendor Applications </h1>
 
                     <div className="title">
                         Active Applications (Total: {Object.keys(results).length})
                     </div>
-                    <table>
-                        <tr className="header_row">
-                            <th> User </th>
-                            <th> Apply Date </th>
-                            <th> App Type </th>
-                        </tr>
-                        
+
+                    <div className="application_header">
+                        <div className="application_user">
+                            User ID
+                        </div>
+                        <div className="application_date">
+                            Application Date
+                        </div>
+                        <div className="application_type">
+                            Application Type
+                        </div>
+                    </div>
+
                         {Object.values(results).map(application => (
-                            <tr> 
-                                <td> {application["user_id"]} </td>
-                                <td> {application["applsDate"]} </td>
-                                <td> {application["vendorType"]} </td>
-                                <td> <button> See Details </button></td>
-                            </tr>      
-                        ))}
-                    </table>
-                    
+                            <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
+                                user: application["user_id"],
+                                date: application["applsDate"],
+                                type: application["vendorType"],
+                                reason: application["reason"],
+                                name: application["restName"],
+                                id: application["application_id"]
+                            })}>
+                                <ApplicationPane 
+                                    user={application["user_id"]}
+                                    date={application["applsDate"]} 
+                                    type={application["vendorType"]}
+                                />   
+                            </button>  
+                        ))}                
                 </div>
             }
         </div>
