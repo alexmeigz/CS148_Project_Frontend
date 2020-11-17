@@ -16,7 +16,9 @@ function ProfileView(props) {
     function resetNewUserInfo() {
         setNewUserInfo({
             ...props.user,
-            email: ""
+            email: "",
+            coupon_code: "",
+            coupon_amount: 0
         })
     }
 
@@ -38,6 +40,19 @@ function ProfileView(props) {
     }
 
     function submitNewUserInfo(event) {
+        // handle coupon code adding logic
+        if (newUserInfo["coupon_code"] === "dev") {
+            if (isNaN(newUserInfo["coupon_amount"])) {
+                alert("User update error: Invalid coupon amount.");
+                return;
+            }
+            newUserInfo["credits"] = parseFloat(props.user["credits"]) + parseFloat(newUserInfo["coupon_amount"]);
+        } else if (newUserInfo["coupon_code"] !== "") {
+            alert("User update error: Invalid coupon code.");
+            return;
+        }
+
+
         event.preventDefault();
         let server = "https://nutriflix-flask-backend.herokuapp.com/api"
         if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
@@ -49,15 +64,20 @@ function ProfileView(props) {
 
         let url = `${server}/user/?`
 
+        let update_params = ["user_id", "username", "email", "account_type", "credits"]
         for(const param in newUserInfo){
-            url += `&${param}=${newUserInfo[param]}`
-            console.log(`&${param}=${newUserInfo[param]}`);
+            if (update_params.includes(param)) {
+                if (newUserInfo[param] === "") {
+                    newUserInfo[param] = props.user[param];
+                }
+                    url += `&${param}=${newUserInfo[param]}`
+            }   
         }
         
         
         fetch(url, 
             {
-              method: 'POST',
+              method: 'PATCH',
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -67,6 +87,7 @@ function ProfileView(props) {
               .then(data => {
               if(data["message"] === "User successfully updated"){
                 alert(`${data["message"]}`)
+                handleUserChange(newUserInfo);
               }
               else{
                 alert(`Error updating user info: ${data["message"]}`)
@@ -79,12 +100,6 @@ function ProfileView(props) {
         <div>
             <h1>
                 My Profile
-                {!settingsMode 
-                ? <div><button className="change-info" onClick={(event) => {toggleView(); resetNewUserInfo()}}>Change User Info/Settings</button></div>
-                : <div>
-                    <button className="cancel-info" onClick={(event)=> {toggleView()}}>Cancel</button>
-                    <button className="submit-info" onClick={(event)=> {toggleView(); submitNewUserInfo(event)}}>Submit Changes</button>
-                    </div>}
             </h1>
             <div className="user-info">
                 <img className="profile-picture"
@@ -92,6 +107,13 @@ function ProfileView(props) {
                     alt="Profile"
                 />
                 <div className="user-details">
+                    {!settingsMode 
+                        ? <div><button className="change-info" onClick={(event) => {toggleView(); resetNewUserInfo()}}>Change User Info/Settings</button></div>
+                        : <div>
+                            <button className="cancel-info" onClick={(event)=> {toggleView()}}>Cancel</button>
+                            <button className="submit-info" onClick={(event)=> {toggleView(); submitNewUserInfo(event)}}>Submit Changes</button>
+                        </div>
+                     }
                     <p>
                         Username: {props.user.username}
                     </p>
@@ -102,14 +124,24 @@ function ProfileView(props) {
                         Email: {props.user.email}
                         {settingsMode 
                         ? <div>
-                            <label className="form-label" for="email"> New Email: </label>         
+                            <label className="form-label" for="email">New Email: </label>         
                             <input className="form-field" type="text" value={newUserInfo.email} name="email" onChange={handleNewUserChange} />
                             <br />
                         </div>
                         : null}
                     </p>
                     <p>
-                        Credits: {props.user.credits}
+                        Credits: ${props.user.credits}
+                        {settingsMode 
+                        ? <div>
+                            <label className="form-label" for="coupon_code">Coupon Code: </label>         
+                            <input className="form-field" type="text" value={newUserInfo.coupon_code} name="coupon_code" onChange={handleNewUserChange} />
+                            <br />
+                            <label className="form-label" for="coupon_amount">Coupon Amount: </label>         
+                            <input className="form-field" type="text" value={newUserInfo.coupon_amount} name="coupon_amount" onChange={handleNewUserChange} />
+                            <br />
+                        </div>
+                        : null}
                     </p>
                 </div>
                 
