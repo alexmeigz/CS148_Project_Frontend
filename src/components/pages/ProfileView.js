@@ -18,7 +18,7 @@ function ProfileView(props) {
             ...props.user,
             email: "",
             coupon_code: "",
-            coupon_amount: 0
+            coupon_amount: ""
         })
     }
 
@@ -75,7 +75,7 @@ function ProfileView(props) {
             }   
         }
         
-        
+        console.log(url);
         fetch(url, 
             {
               method: 'PATCH',
