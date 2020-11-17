@@ -34,9 +34,9 @@ function MyProfilePage (props) {
             <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
             {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
 
-            {isProfileView 
+            {isProfileView
             ? <div>
-                <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button>
+                {props.user.account_type !== "Resturant" ? <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button> : null}
                 <ProfileView user={props.user} onUserChange={handleUserChange}/>
             </div>
             : <div>
