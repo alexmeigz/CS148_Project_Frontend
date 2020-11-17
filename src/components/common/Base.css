@@ -11,6 +11,32 @@ h1{
     text-align: center;
 }
 
+table{
+    width: 100%;
+}
+
+tr{
+    padding: 5px 0;
+    margin: -1px;
+}
+
+tr:hover{
+    background: gray;
+    
+}
+
+th{
+    height: 50px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 20px;
+    background: red !important;
+}
+
+td{
+    height: 35px;
+}
+
 .container{
     margin-left: 10%;
     width: 80%;

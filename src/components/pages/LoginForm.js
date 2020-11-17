@@ -51,13 +51,13 @@ function LoginForm(props) {
       .then(response => response.json()) 
 	    .then(data => {
         if(data["username"] === state["username"]){
-          alert(`${state["username"]}`)
+          alert(`Successfully logged in to account ${state["username"]}`)
           //Need to add Redirect after creating User
           handleLoginChange(true); // Joseph: This makes the webpage in logged in state
           handleUserChange(data);
         }
         else{
-          alert(`Error logging in user: ${state["username"]}`)
+          alert(`Error logging in user: ${data["message"]}`)
         }
       })
       .catch((error) => console.log("User login error: "+ error))
@@ -87,7 +87,7 @@ function LoginForm(props) {
         </div>
         
         
-        <input className="form_submit" type="submit" value="Login in" />
+        <input className="form_submit" type="submit" value="Log in" />
       </form>
       </div>
     )

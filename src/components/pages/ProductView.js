@@ -16,7 +16,7 @@ function ProductView(props) {
     return (
         <div className="product-pane">
             <img className="product-image" alt="Product"
-                src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"/>
+                src={props.productData["image_url"]}/>
             <div className="product-description">
                 <div className="row">
                     <div className="product-name">

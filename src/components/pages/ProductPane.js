@@ -6,8 +6,8 @@ import React from 'react';
 function ProductPane(props) {
     return (
         <div className="product_pane">
-            <img className="product_image" alt="Product"
-                src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"/>
+            <img className="product_image" alt=""
+                src={props["image_url"]}/>
             <div className="product_description">
                 <div className="row">
                     <div className="product_name">

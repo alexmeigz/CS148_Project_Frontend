@@ -19,13 +19,14 @@ import LogoutPage from "./components/pages/LogoutPage";
 import ContactUsPage from "./components/pages/ContactUsPage";
 import MyProfilePage from "./components/pages/MyProfilePage";
 import MyProductsPage from "./components/pages/MyProductsPage";
+import VendorApps from "./components/pages/VendorApps";
 import MyApplPage from "./components/pages/MyApplPage";
 import CreateUserPage from "./components/pages/CreateUserPage";
 
 import ErrorPage from './components/pages/ErrorPage';
 // import ContactUsFooter from './components/common/ContactUsFooter';
 
-import ProductForm from './components/pages/CreateProduct';
+//import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 
 function App() {
@@ -164,8 +165,8 @@ function App() {
                     : null
                 }
                 
-                <Route path="/create-product">
-                    <ProductForm 
+                <Route path="/vendor-apps">
+                    <VendorApps 
                         isLoggedIn={isLoggedIn} 
                         onLoginChange={handleLoginChange}
                         user={user}

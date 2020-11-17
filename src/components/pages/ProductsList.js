@@ -14,9 +14,9 @@ import ProductView from "./ProductView";
 // import AccountInfoBar from "../common/AccountInfoBar"
 
 function ProductsList (props) {   
-    let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+        server = "http://localhost:8118/api"
 	}
     if (process.env.NODE_ENV !== 'development') {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
@@ -50,7 +50,7 @@ function ProductsList (props) {
             .then(data => {
                 setResults(data)
             })
-            .catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
+            .catch((error) => console.log("Error: " + error))
         }
     }
 
@@ -119,6 +119,7 @@ function ProductsList (props) {
                             location: product["location"],
                             subscription: product["subscription"],
                             caption: product["caption"],
+                            image_url: product["image_url"]
                         })}>
                             <ProductPane 
                                 name={product["product_name"]} 
@@ -127,6 +128,7 @@ function ProductsList (props) {
                                 location={product["location"]}
                                 subscription={product["subscription"]}
                                 caption={product["caption"]}
+                                image_url={product["image_url"]}
                             />
                         </button>
                     ))}
