@@ -46,7 +46,7 @@ function ProfileView(props) {
                 alert("User update error: Invalid coupon amount.");
                 return;
             }
-            newUserInfo["credits"] = parseFloat(props.user["credits"]) + parseFloat(newUserInfo["coupon_amount"]);
+            newUserInfo["credits"] = `${parseFloat(props.user["credits"]) + parseFloat(newUserInfo["coupon_amount"])}`;
         } else if (newUserInfo["coupon_code"] !== "") {
             alert("User update error: Invalid coupon code.");
             return;
