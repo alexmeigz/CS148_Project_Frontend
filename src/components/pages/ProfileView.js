@@ -64,13 +64,14 @@ function ProfileView(props) {
 
         let url = `${server}/user/?`
 
-        let update_params = ["user_id", "username", "email", "account_type", "credits"]
+        let required_params = ["user_id", "username", "email", "account_type", "credits"];
+        let updatable_params = ["email", "credits"];
         for(const param in newUserInfo){
-            if (update_params.includes(param)) {
-                if (newUserInfo[param] === "") {
+            if (required_params.includes(param)) {
+                if (newUserInfo[param] === "" || !updatable_params.includes(param)) {
                     newUserInfo[param] = props.user[param];
                 }
-                    url += `&${param}=${newUserInfo[param]}`
+                url += `&${param}=${newUserInfo[param]}`
             }   
         }
         
