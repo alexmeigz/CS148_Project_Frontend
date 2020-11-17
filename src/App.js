@@ -19,7 +19,7 @@ import LogoutPage from "./components/pages/LogoutPage";
 import ContactUsPage from "./components/pages/ContactUsPage";
 import MyProfilePage from "./components/pages/MyProfilePage";
 import MyProductsPage from "./components/pages/MyProductsPage";
-import MyProductsList from "./components/pages/MyProductsList";
+import VendorApps from "./components/pages/VendorApps";
 import MyApplPage from "./components/pages/MyApplPage";
 import CreateUserPage from "./components/pages/CreateUserPage";
 
@@ -187,8 +187,8 @@ function App() {
                     : null
                 }
                 
-                <Route path="/my-product">
-                    <MyProductsList 
+                <Route path="/vendor-apps">
+                    <VendorApps 
                         isLoggedIn={isLoggedIn} 
                         onLoginChange={handleLoginChange}
                         user={user}

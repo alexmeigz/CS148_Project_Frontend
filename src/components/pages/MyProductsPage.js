@@ -1,7 +1,7 @@
 // MyProductsPage.js
 // Engineer: Joseph Ng, Alex Mei
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";

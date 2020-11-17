@@ -26,8 +26,8 @@ function MyProductsList (props) {
     const [isListView, setIsListView] = useState(true);
     const [productView, setProductView] = useState(<ProductView />)
 
-    useEffect(() => {
-        let newUrl = url + `&vendor_id=9`
+    useEffect((url) => {
+        let newUrl = `http://localhost:8118/api/product/?display_all=True&vendor_id=9`
         fetch(newUrl, {
             method: 'GET',
             headers: {
@@ -46,6 +46,7 @@ function MyProductsList (props) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "product-pane") {
             setProductView(<ProductView productData={productData} />);
+            console.log(url)
         }
     };
 
