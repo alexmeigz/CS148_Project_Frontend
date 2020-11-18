@@ -1,20 +1,10 @@
 import React, { useState } from 'react';
-//import Input from "../common/InputComponent.js"
 
 function RecipeCall(props) {
-    //The hard brackets are "array deconstruction" operator
-    //updateState (name it anything you want) is a function we'll use to update this state object below
+
     const [state, updateState] = useState({
-        product_name: "",
-        subscription: "",
-        price: "",
-        caption: "",
-        location: "",
-        image_url: "",
-        vendor_id: 243
+        q: ""
     })
-    //Remember that updating state means we make a complete new copy and overwrite the exisiting state
-    //Remember that React.useState on state objects requires that we copy the existing state upon each update (using the "spread" operator ...state) -- see below
 
     function handleChange(evt) { //updating form elements, nested function
         const name = evt.target.name //defined in render
@@ -29,20 +19,8 @@ function RecipeCall(props) {
     const submitForm = (evt) => {  //send creds to backend, nested arrow function
         evt.preventDefault();
 
-        let server = "http://localhost:8118/api"
-        if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-            server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        }
-        if (process.env.NODE_ENV !== 'development') {
-            server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        }
+        let url = `https://api.edamam.com/search?q=${state.q}&app_id=91203381&app_key=0449d632515eb9ee5ed2ed611e0c8032&from=0&to=3`
 
-        let url = `https://api.edamam.com/search?q=${query}&app_id=91203381&app_key=0449d632515eb9ee5ed2ed611e0c8032&from=0&to=3`
-        for (const param in state) {
-            if (state[param] !== "") {
-                url += `&${param}=${state[param]}`
-            }
-        }
 
         fetch(url,
             {
@@ -50,15 +28,13 @@ function RecipeCall(props) {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                },
-                params: {
-                    'q': 'coffee'
                 }
             })
             .then(response => response.json())
             .then(data => {
                 if (data["more"]) {
-                    alert(`${data["message"]}`)
+                    alert(`${data["hits"][0]["recipe"]["source"]}`)
+                    // console.log(data)
                     //Need to add Redirect after creating Product
                 }
                 else {
@@ -69,7 +45,14 @@ function RecipeCall(props) {
     }
 
     return (
-        <div className="container">
+        <div>
+            <form onSubmit={submitForm}>
+                <div className="form_input">
+                    <label className="form_label" for="q"> Search: </label>
+                    <input className="form_field" type="text" value={state.q} name="q" onChange={handleChange} />
+                </div>
+                <input className="form_submit" type="submit" value="Submit" />
+            </form>
         </div>
     )
 }
