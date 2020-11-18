@@ -8,7 +8,6 @@ function UserForm(props) {
         username: "",
         password_hash: "",
         email: "",
-        account_type: "",
         vendor_location: "",
     })
     //Remember that updating state means we make a complete new copy and overwrite the exisiting state
@@ -26,13 +25,8 @@ function UserForm(props) {
 
     const submitForm = (evt) => {  //send creds to backend, nested arrow function
 	    evt.preventDefault();
-      let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-      if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-        server = "https://nutriflix-flask-backend.herokuapp.com/api"
-	  }
-      if (process.env.NODE_ENV !== 'development') {
-        server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    }
+      //let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+      let server = "http://localhost:8118/api"
     
     
     let url = `${server}/user/?`
@@ -80,12 +74,6 @@ function UserForm(props) {
         <div className="form_input">
           <label className="form_label" for="email"> Email: </label>         
           <input className="form_field" type="text" value={state.email} name="email" onChange={handleChange} />
-          <br /> 
-        </div>
-        {/*Change this account_type field so that user can only select options for account type instead of  typing it*/}
-        <div className="form_input">
-          <label className="form_label" for="account_type"> Account Type: </label>         
-          <input className="form_field" type="text" value={state.account_type} name="account_type" onChange={handleChange} />
           <br /> 
         </div>
         {/*Have this vendor location field come only if account_type == vendor*/}
