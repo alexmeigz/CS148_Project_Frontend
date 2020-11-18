@@ -36,14 +36,38 @@
     float: right;
 }
 p {
-    height: 20px;
+    margin-bottom: 20px;
     font-size: 20px;
 }
 
-.refresh-info {
+.form-field {
+    font-size: 20px;
+}
+
+.form-label {
+    font-size: 20px;
+}
+
+.change-info {
     margin-left: 20px;
-    width: 100px;
-    height: 40px;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.submit-info {
+    margin-left: 20px;
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.cancel-info {
+    margin-left: 20px;
+    width: 120px;
+    height: 50px;
     border-radius: 10px;
     border-width: 1px;
 }

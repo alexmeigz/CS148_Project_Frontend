@@ -13,7 +13,7 @@ import ProductView from "./ProductView";
 // import AccountInfoBar from "../common/AccountInfoBar"
 
 function MyProductsList (props) {   
-    let server = "http://localhost:8118/api"
+    let server = "https://nutriflix-flask-backend.herokuapp.com/api"
     if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
         server = "http://localhost:8118/api"
 	}
@@ -27,7 +27,7 @@ function MyProductsList (props) {
     const [productView, setProductView] = useState(<ProductView />)
 
     useEffect((url) => {
-        let newUrl = `http://localhost:8118/api/product/?display_all=True&vendor_id=9`
+        let newUrl = `${server}/product/?display_all=True&vendor_id=${props.user.user_id}`
         fetch(newUrl, {
             method: 'GET',
             headers: {
@@ -40,7 +40,7 @@ function MyProductsList (props) {
             setResults(data)
         })
         .catch((error) => console.log("Error: " + error))
-    }, [])
+    }, [server, props.user.user_id])
     
     function changeView(event, type, productData) {
         setIsListView(prevIsListView => !prevIsListView);
@@ -60,8 +60,8 @@ function MyProductsList (props) {
             </div>
 
             : <div className="container">
-                <h1> Products </h1>
-
+                <h1> My Products </h1>
+                <div className="my_product_panel">
                     <div className="title">
                         Product Results (Total: {Object.keys(results).length})
                     </div>
@@ -87,6 +87,7 @@ function MyProductsList (props) {
                         </button>
                     ))}
                 </div>
+            </div>
             }
         </div>
     );

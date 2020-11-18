@@ -46,31 +46,6 @@ function App() {
     })
 
 
-    // let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    // if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-    //     server = "https://nutriflix-flask-backend.herokuapp.com/api"
-	// }
-    // if (process.env.NODE_ENV !== 'development') {
-    //     server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    // }
-    // let url = `${server}/user/?`
-
-
-    // useEffect( () => {
-    //     fetch(url+`login=${true}&username=${user.username}&password_hash=${user.password_hash}`, {
-    //         method: 'GET',
-    //         headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json'
-    //         },              
-    //     })
-    //     .then(response => response.json()) 
-    //     .then(data => {
-    //         setUser(data)
-    //     })
-    //     .catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
-    // }, [url, user]);
-
 
 
     function handleLoginChange(value) {
@@ -78,7 +53,10 @@ function App() {
     }
     // eslint-disable-next-line
     function handleUserChange(value) {
-        setUser(value);
+        setUser({
+            ...user,
+            ...value
+        });
     }
 
     return (

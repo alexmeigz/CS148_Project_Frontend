@@ -14,7 +14,7 @@ import ProductView from "./ProductView";
 // import AccountInfoBar from "../common/AccountInfoBar"
 
 function ProductsList (props) {   
-    let server = "http://localhost:8118/api"
+    let server = "https://nutriflix-flask-backend.herokuapp.com/api"
     if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
         server = "http://localhost:8118/api"
 	}
