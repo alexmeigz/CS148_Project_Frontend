@@ -7,7 +7,10 @@ import { Link } from 'react-router-dom';
 import './NavigationBar.css'
 
 function NavigationBar(props) {
-    var accountType = "Home";
+    var accountType = null;
+    if(props.user){
+        accountType = props.user["account_type"];
+    }
 
     function handleLoginChange(value) {
         props.onLoginChange(value)
@@ -35,8 +38,13 @@ function NavigationBar(props) {
                             : null
                         }
                         </li>
-                        <li>{(props.isLoggedIn) && (accountType === "Home" || accountType === "Resturant")
+                        <li>{(props.isLoggedIn) && (accountType === "Home" || accountType === "Business" || accountType === "Admin")
                                 ? <Link to="/my-products">My Products</Link>
+                                : null
+                            }
+                        </li>
+                        <li>{(props.isLoggedIn) && (accountType === "Admin")
+                                ? <Link to="/admin-panel"> Admin Panel </Link>
                                 : null
                             }
                         </li>

@@ -47,24 +47,19 @@ function ProfileView(props) {
                 return;
             }
             newUserInfo["credits"] = parseFloat(props.user["credits"]) + parseFloat(newUserInfo["coupon_amount"]);
-        } else if (newUserInfo["coupon_code"] !== "") {
+        } else {
             alert("User update error: Invalid coupon code.");
             return;
         }
 
 
         event.preventDefault();
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-            server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        }
-        if (process.env.NODE_ENV !== 'development') {
-            server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        }
+        //let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+        let server = "http://localhost:8118/api"
 
         let url = `${server}/user/?`
 
-        let required_params = ["user_id", "username", "email", "account_type", "credits"];
+        let required_params = ["user_id", "email", "account_type", "credits"];
         let updatable_params = ["email", "credits"];
         for(const param in newUserInfo){
             if (required_params.includes(param)) {
