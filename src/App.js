@@ -20,7 +20,7 @@ import ContactUsPage from "./components/pages/ContactUsPage";
 import MyProfilePage from "./components/pages/MyProfilePage";
 import MyProductsPage from "./components/pages/MyProductsPage";
 import VendorApps from "./components/pages/VendorApps";
-import MyApplPage from "./components/pages/MyApplPage";
+import AdminPage from "./components/pages/AdminPage";
 import CreateUserPage from "./components/pages/CreateUserPage";
 
 import ErrorPage from './components/pages/ErrorPage';
@@ -44,9 +44,6 @@ function App() {
         vendor_location: "Loading",
         credits: 0
     })
-
-
-
 
     function handleLoginChange(value) {
         setIsLoggedIn(value);
@@ -152,7 +149,17 @@ function App() {
                     </Route>)
                     : null
                 }
-                {/*PRANAV: temporary create user tab on navbar*/}
+                {isLoggedIn
+                    ? (<Route path="/admin-panel">
+                        <AdminPage 
+                            isLoggedIn={isLoggedIn} 
+                            onLoginChange={handleLoginChange}
+                            user={user}
+                            onUserChange={handleUserChange}
+                        />
+                    </Route>)
+                    : null
+                }
                 {!isLoggedIn
                     ? (<Route path="/create-user">
                         <CreateUserPage 
@@ -165,16 +172,9 @@ function App() {
                     : null
                 }
                 
+                
                 <Route path="/vendor-apps">
                     <VendorApps 
-                        isLoggedIn={isLoggedIn} 
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
-                    />
-                </Route>
-                <Route path="/vendor-apply">
-                    <MyApplPage 
                         isLoggedIn={isLoggedIn} 
                         onLoginChange={handleLoginChange}
                         user={user}

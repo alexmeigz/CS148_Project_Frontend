@@ -31,12 +31,12 @@ function MyProfilePage (props) {
 
     return (
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} />
             {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
 
             {isProfileView
             ? <div>
-                {props.user.account_type !== "Resturant" ? <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button> : null}
+                {props.user.account_type !== "Business" ? <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button> : null}
                 <ProfileView user={props.user} onUserChange={handleUserChange}/>
             </div>
             : <div>
