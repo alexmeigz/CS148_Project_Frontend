@@ -31,17 +31,17 @@ function MyProfilePage (props) {
 
     return (
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} />
             {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
 
-            {isProfileView 
+            {isProfileView
             ? <div>
-                <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button>
+                {props.user.account_type !== "Business" ? <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button> : null}
                 <ProfileView user={props.user} onUserChange={handleUserChange}/>
             </div>
             : <div>
                 <button className="vendor-application-back-button" onClick={toggleView}>Back</button>
-                <ApplForm />
+                <ApplForm user={props.user} onUserChange={handleUserChange}/>
             </div>
             }
             

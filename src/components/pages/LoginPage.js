@@ -22,7 +22,7 @@ function LoginPage (props) {
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange}/>
+            <NavigationBar isLoggedIn={props.isLoggedIn} user={props.user} onLoginChange={handleLoginChange}/>
             {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
 
             <LoginForm isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} onUserChange={handleUserChange}/>

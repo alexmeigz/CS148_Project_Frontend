@@ -4,11 +4,14 @@
 import React from 'react';
 
 function ProductPane(props) {
-    console.log(props["image_url"])
     return (
         <div className="product_pane">
             <img className="product_image" alt=""
-                src={props["image_url"]}/>
+                src={props["image_url"] !== null 
+                    ? props["image_url"]
+                    : "https://longsshotokan.com/wp-content/uploads/2017/04/default-image-620x600.jpg"
+                }
+            />
             <div className="product_description">
                 <div className="row">
                     <div className="product_name">

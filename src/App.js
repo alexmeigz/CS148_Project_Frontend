@@ -19,13 +19,14 @@ import LogoutPage from "./components/pages/LogoutPage";
 import ContactUsPage from "./components/pages/ContactUsPage";
 import MyProfilePage from "./components/pages/MyProfilePage";
 import MyProductsPage from "./components/pages/MyProductsPage";
-import MyApplPage from "./components/pages/MyApplPage";
+import VendorApps from "./components/pages/VendorApps";
+import AdminPage from "./components/pages/AdminPage";
 import CreateUserPage from "./components/pages/CreateUserPage";
 
 import ErrorPage from './components/pages/ErrorPage';
 // import ContactUsFooter from './components/common/ContactUsFooter';
 
-import ProductForm from './components/pages/CreateProduct';
+//import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 
 import RecipeCall from './components/pages/RecipeCall';
@@ -46,40 +47,15 @@ function App() {
         credits: 0
     })
 
-
-    // let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    // if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-    //     server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    // }
-    // if (process.env.NODE_ENV !== 'development') {
-    //     server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    // }
-    // let url = `${server}/user/?`
-
-
-    // useEffect( () => {
-    //     fetch(url+`login=${true}&username=${user.username}&password_hash=${user.password_hash}`, {
-    //         method: 'GET',
-    //         headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json'
-    //         },              
-    //     })
-    //     .then(response => response.json()) 
-    //     .then(data => {
-    //         setUser(data)
-    //     })
-    //     .catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
-    // }, [url, user]);
-
-
-
     function handleLoginChange(value) {
         setIsLoggedIn(value);
     }
     // eslint-disable-next-line
     function handleUserChange(value) {
-        setUser(value);
+        setUser({
+            ...user,
+            ...value
+        });
     }
 
     return (
@@ -175,7 +151,17 @@ function App() {
                     </Route>)
                     : null
                 }
-                {/*PRANAV: temporary create user tab on navbar*/}
+                {isLoggedIn
+                    ? (<Route path="/admin-panel">
+                        <AdminPage
+                            isLoggedIn={isLoggedIn}
+                            onLoginChange={handleLoginChange}
+                            user={user}
+                            onUserChange={handleUserChange}
+                        />
+                    </Route>)
+                    : null
+                }
                 {!isLoggedIn
                     ? (<Route path="/create-user">
                         <CreateUserPage
@@ -188,16 +174,9 @@ function App() {
                     : null
                 }
 
-                <Route path="/create-product">
-                    <ProductForm
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
-                    />
-                </Route>
-                <Route path="/vendor-apply">
-                    <MyApplPage
+
+                <Route path="/vendor-apps">
+                    <VendorApps
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}

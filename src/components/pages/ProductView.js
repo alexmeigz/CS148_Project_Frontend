@@ -16,7 +16,11 @@ function ProductView(props) {
     return (
         <div className="product-pane">
             <img className="product-image" alt="Product"
-                src="http://alexmeicooking.com/resources/photos/brunch/french_toast.JPG"/>
+                src={props.productData["image_url"] !== null 
+                    ? props.productData["image_url"]
+                    : "https://longsshotokan.com/wp-content/uploads/2017/04/default-image-620x600.jpg"
+                }
+            />
             <div className="product-description">
                 <div className="row">
                     <div className="product-name">
