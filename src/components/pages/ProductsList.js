@@ -78,7 +78,12 @@ function ProductsList (props) {
     function changeView(event, type, productData) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "product-pane") {
-            setProductView(<ProductView productData={productData} />);
+            setProductView(<ProductView 
+                productData={productData} 
+                isLoggedIn={props.isLoggedIn} 
+                user={props.user} 
+                onUserChange={props.handleUserChange}
+            />);
         }
     };
 

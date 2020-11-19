@@ -13,6 +13,56 @@ import "./ProductView.css"
 
 function ProductView(props) {
 
+    function purchaseProduct(event) {
+        if (!props.isLoggedIn) {
+            alert("Purchase Failed: Not Logged In!");
+            return;
+        } else if (props.productData["price"] > props.user.credits) {
+            alert("Purchase Failed: Not enough credits");
+            return;
+        }
+
+        let newUserInfo = {
+            ...props.user,
+            credits: props.user.credits - props.productData["price"]
+        }
+
+        event.preventDefault();
+        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+        // let server = "http://localhost:8118/api"
+
+        let url = `${server}/user/?`
+
+        let required_params = ["user_id", "email", "account_type", "credits"];
+        for(const param in newUserInfo){
+            if (required_params.includes(param)) {
+                url += `&${param}=${newUserInfo[param]}`
+            }   
+        }
+        
+        fetch(url, 
+            {
+              method: 'PATCH',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },           
+            })
+            .then(response => response.json()) 
+              .then(data => {
+              if(data["message"] === "User successfully updated"){
+                alert("Product successfully purchased")
+                props.handleUserChange(newUserInfo);
+              }
+              else{
+                alert(`Error updating user info: ${data["message"]}`)
+              }
+            })
+            .catch((error) => console.log("User update error: "+ error))
+
+        // TODO: send message to vendor
+    }
+
     return (
         <div className="product-pane">
             <img className="product-image" alt="Product"
@@ -47,6 +97,13 @@ function ProductView(props) {
                     </div>
                 </div>
             </div>
+            {props.isLoggedIn
+            ? <div>
+                <button className="purchase-product" onClick={purchaseProduct}>Purchase Product</button>
+            </div>
+            : null
+            }
+            
         </div>
     );
 };

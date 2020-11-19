@@ -54,8 +54,8 @@ function ProfileView(props) {
 
 
         event.preventDefault();
-        //let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        let server = "http://localhost:8118/api"
+        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+        // let server = "http://localhost:8118/api"
 
         let url = `${server}/user/?`
 
