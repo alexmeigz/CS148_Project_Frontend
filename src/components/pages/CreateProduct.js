@@ -29,20 +29,15 @@ function ProductForm(props) {
     const submitForm = (evt) => {  //send creds to backend, nested arrow function
       evt.preventDefault();
 	
-      let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-      if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-        server = "https://nutriflix-flask-backend.herokuapp.com/api"
-	  }
-      if (process.env.NODE_ENV !== 'development') {
-        server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    }
+      //let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+      let server = "http://localhost:8118/api"
     
-    let url = `${server}/product/?`
-    for(const param in state){
-      if(state[param] !== ""){
-        url += `&${param}=${state[param]}`
+      let url = `${server}/product/?`
+      for(const param in state){
+        if(state[param] !== ""){
+          url += `&${param}=${state[param]}`
+        }
       }
-    }
 
     fetch(url, 
       {
