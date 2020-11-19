@@ -2,7 +2,7 @@
 // Modified by: Joseph Ng
 
 // eslint-disable-next-line
-import React, { useState, useEffect }from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // import NavigationBar from './components/common/NavigationBar';
@@ -29,9 +29,11 @@ import ErrorPage from './components/pages/ErrorPage';
 //import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 
+import RecipeCall from './components/pages/RecipeCall';
+
 function App() {
     // eslint-disable-next-line
-    var id=1;
+    var id = 1;
     // eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false); // testing conditional rendering
     // eslint-disable-next-line
@@ -60,40 +62,40 @@ function App() {
         // TODO: Change to new Nutriflix components
         <main>
             <Switch>
-		        <Route path="/" exact>
-                    <DefaultHomePage 
-                        isLoggedIn={isLoggedIn} 
+                <Route path="/" exact>
+                    <DefaultHomePage
+                        isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
                         onUserChange={handleUserChange}
                     />
                 </Route>
                 <Route path="/maps">
-                    <MapsPage 
-                        isLoggedIn={isLoggedIn} 
+                    <MapsPage
+                        isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
                         onUserChange={handleUserChange}
                     />
                 </Route>
                 <Route path="/vendors">
-                    <VendorsPage 
-                        isLoggedIn={isLoggedIn} 
+                    <VendorsPage
+                        isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
                         onUserChange={handleUserChange}
                     />
                 </Route>
                 <Route path="/recipes">
-                    <RecipesPage 
-                        isLoggedIn={isLoggedIn} 
+                    <RecipesPage
+                        isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
                         onUserChange={handleUserChange}
                     />
                 </Route>
                 <Route path="/products">
-                    <ProductsPage 
+                    <ProductsPage
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
@@ -101,36 +103,36 @@ function App() {
                     />
                 </Route>
                 <Route path="/login">
-                    <LoginPage 
-                        isLoggedIn={isLoggedIn} 
+                    <LoginPage
+                        isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
                         onUserChange={handleUserChange}
                     />
                 </Route>
                 <Route path="/logout">
-                    <LogoutPage 
-                        isLoggedIn={isLoggedIn} 
+                    <LogoutPage
+                        isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
                         onUserChange={handleUserChange}
                     />
                 </Route>
                 <Route path="/contact-us">
-                    <ContactUsPage 
-                        isLoggedIn={isLoggedIn} 
+                    <ContactUsPage
+                        isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
                         onUserChange={handleUserChange}
                     />
                 </Route>
-                
+
 
                 {/* Must be signed in to access pages */}
-                {isLoggedIn 
+                {isLoggedIn
                     ? (<Route path="/my-profile">
-                        <MyProfilePage 
-                            isLoggedIn={isLoggedIn} 
+                        <MyProfilePage
+                            isLoggedIn={isLoggedIn}
                             onLoginChange={handleLoginChange}
                             user={user}
                             onUserChange={handleUserChange}
@@ -140,8 +142,8 @@ function App() {
                 }
                 {isLoggedIn
                     ? (<Route path="/my-products">
-                        <MyProductsPage 
-                            isLoggedIn={isLoggedIn} 
+                        <MyProductsPage
+                            isLoggedIn={isLoggedIn}
                             onLoginChange={handleLoginChange}
                             user={user}
                             onUserChange={handleUserChange}
@@ -151,8 +153,8 @@ function App() {
                 }
                 {isLoggedIn
                     ? (<Route path="/admin-panel">
-                        <AdminPage 
-                            isLoggedIn={isLoggedIn} 
+                        <AdminPage
+                            isLoggedIn={isLoggedIn}
                             onLoginChange={handleLoginChange}
                             user={user}
                             onUserChange={handleUserChange}
@@ -162,8 +164,8 @@ function App() {
                 }
                 {!isLoggedIn
                     ? (<Route path="/create-user">
-                        <CreateUserPage 
-                            isLoggedIn={isLoggedIn} 
+                        <CreateUserPage
+                            isLoggedIn={isLoggedIn}
                             onLoginChange={handleLoginChange}
                             user={user}
                             onUserChange={handleUserChange}
@@ -171,20 +173,29 @@ function App() {
                     </Route>)
                     : null
                 }
-                
-                
+
+
                 <Route path="/vendor-apps">
-                    <VendorApps 
-                        isLoggedIn={isLoggedIn} 
+                    <VendorApps
+                        isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
                         onUserChange={handleUserChange}
                     />
                 </Route>
 
-	            <Route>
-                    <ErrorPage 
-                        isLoggedIn={isLoggedIn} 
+                <Route path="/recipe-call">
+                    <RecipeCall
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
+                </Route>
+
+                <Route>
+                    <ErrorPage
+                        isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
                         onUserChange={handleUserChange}
