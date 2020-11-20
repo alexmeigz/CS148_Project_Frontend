@@ -13,6 +13,41 @@ import "./ProductView.css"
 
 function ProductView(props) {
     const [purchased, setPurchased] = useState(false);
+    const [removed, setRemoved] = useState(false);
+
+    function login(event) {
+        // TODO
+    }
+
+    function removeProduct(event) {
+        event.preventDefault();
+        
+        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+        // let server = "http://localhost:8118/api"
+
+        let url = `${server}/product/?id=${props.productData["id"]}`
+        console.log(url)
+
+        fetch(url, 
+            {
+                method: 'DELETE',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },           
+            })
+            .then(response => response.json()) 
+                .then(data => {
+                if(data["message"] === "Product successfully removed"){
+                    alert("Product successfully removed")
+                    setRemoved(true);
+                }
+                else{
+                    alert(`Error deleting product: ${data["message"]}`)
+                }
+            })
+            .catch((error) => console.log("Product delete error: "+ error))
+    }
 
     function purchaseProduct(event) {
         event.preventDefault();
@@ -100,9 +135,25 @@ function ProductView(props) {
                     </div>
                 </div>
             </div>
-            {props.isLoggedIn
+
+            {props.isLoggedIn && props.user.user_id !== props.productData.vendor_id
             ? <div>
                 <button className="purchase-product" onClick={purchaseProduct} disabled={purchased}>{!purchased ? "Purchase Product": "Purchased!"}</button>
+            </div>
+            : null
+            }
+
+            {!props.isLoggedIn
+            ? <div>
+                <button className="login-button" onClick={login} disabled={true}>Login to Purchase Product, use top right login button.</button> 
+            </div>
+            : null
+            }
+
+            {/* TODO: Waiting for product model to get updated */}
+            {props.user.user_id === props.productData.vendor_id
+            ? <div>
+                <button className="remove-product" onClick={removeProduct} disabled={true}>{!removed ? "Remove Product": "Removed!"}</button>
             </div>
             : null
             }

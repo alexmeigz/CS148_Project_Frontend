@@ -25,7 +25,7 @@ function MyProductsPage (props) {
 
             <ProductForm user={props.user}/>
 
-            <MyProductsList user={props.user} onUserChange={handleUserChange} />
+            <MyProductsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange} />
 
             <ContactUsFooter />
         </div>

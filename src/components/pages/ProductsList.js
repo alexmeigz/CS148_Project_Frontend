@@ -124,7 +124,9 @@ function ProductsList (props) {
                             location: product["location"],
                             subscription: product["subscription"],
                             caption: product["caption"],
-                            image_url: product["image_url"]
+                            image_url: product["image_url"],
+                            vendor_id: product["vendor_id"],
+                            id: product["id"]
                         })}>
                             <ProductPane 
                                 name={product["product_name"]} 
@@ -134,62 +136,11 @@ function ProductsList (props) {
                                 subscription={product["subscription"]}
                                 caption={product["caption"]}
                                 image_url={product["image_url"]}
+                                vendor_id={product["vendor_id"]}
+                                id={product["id"]}
                             />
                         </button>
                     ))}
-                    {/* Remove below (testing only) */}
-                    {/* <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
-                        name: "Test Name1",
-                        price: 10.99,
-                        list_date: "nov",
-                        location: "Santa Barbara",
-                        subscription: true,
-                        caption: "This is a long testing caption and stuff",
-                    })}>
-                        <ProductPane 
-                            name="Test Name1" 
-                            price={10.99}
-                            list_date="nov"
-                            location="Santa Barbara"
-                            subscription={true}
-                            caption="This is a long testing caption and stuff"
-                        />
-                    </button>
-                    <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
-                        name: "Test Name2",
-                        price: 10.99,
-                        list_date: "nov",
-                        location: "Santa Barbara",
-                        subscription: true,
-                        caption: "caption",
-                    })}>
-                        <ProductPane 
-                            name="Test Name2" 
-                            price={10.99}
-                            list_date="nov"
-                            location="Santa Barbara"
-                            subscription={true}
-                            caption="caption"
-                        />
-                    </button>
-                    <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
-                        name: "Test Name3",
-                        price: 10.99,
-                        list_date: "nov",
-                        location: "Santa Barbara",
-                        subscription: true,
-                        caption: "caption",
-                    })}>
-                        <ProductPane 
-                            name="Test Name3" 
-                            price={10.99}
-                            list_date="nov"
-                            location="Santa Barbara"
-                            subscription={true}
-                            caption="caption"
-                        />
-                    </button> */}
-                    {/* remove above (testing only) */}
                 </div>
             </div>}
         </div>
