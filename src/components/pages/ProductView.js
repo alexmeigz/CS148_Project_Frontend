@@ -1,7 +1,7 @@
 // ProductView.js
 // Engineer: Joseph Ng
 
-import React from "react";
+import React, {useState} from "react";
 
 // import NavigationBar from '../common/NavigationBar';
 // import ContactUsFooter from "../common/ContactUsFooter";
@@ -12,8 +12,11 @@ import React from "react";
 import "./ProductView.css"
 
 function ProductView(props) {
+    const [purchased, setPurchased] = useState(false);
 
     function purchaseProduct(event) {
+        event.preventDefault();
+
         if (!props.isLoggedIn) {
             alert("Purchase Failed: Not Logged In!");
             return;
@@ -22,41 +25,41 @@ function ProductView(props) {
             return;
         }
 
-        let newUserInfo = {
-            ...props.user,
-            credits: props.user.credits - props.productData["price"]
-        }
+        let newCredits = props.user.credits - parseFloat(props.productData.price);
 
-        event.preventDefault();
         let server = "https://nutriflix-flask-backend.herokuapp.com/api"
         // let server = "http://localhost:8118/api"
 
         let url = `${server}/user/?`
 
-        let required_params = ["user_id", "email", "account_type", "credits"];
-        for(const param in newUserInfo){
+        let required_params = ["user_id"];
+        for(const param in props.user){
             if (required_params.includes(param)) {
-                url += `&${param}=${newUserInfo[param]}`
+                url += `&${param}=${props.user[param]}`
             }   
         }
+
+        url += `&credits=${newCredits}`
+
         
         fetch(url, 
             {
-              method: 'PATCH',
-              headers: {
+                method: 'PATCH',
+                headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-              },           
+                },           
             })
             .then(response => response.json()) 
-              .then(data => {
-              if(data["message"] === "User successfully updated"){
-                alert("Product successfully purchased")
-                props.handleUserChange(newUserInfo);
-              }
-              else{
-                alert(`Error updating user info: ${data["message"]}`)
-              }
+                .then(data => {
+                if(data["message"] === "User successfully updated"){
+                    alert("Product successfully purchased")
+                    props.onUserChange({credits: newCredits});
+                    setPurchased(true);
+                }
+                else{
+                    alert(`Error updating user info: ${data["message"]}`)
+                }
             })
             .catch((error) => console.log("User update error: "+ error))
 
@@ -99,7 +102,7 @@ function ProductView(props) {
             </div>
             {props.isLoggedIn
             ? <div>
-                <button className="purchase-product" onClick={purchaseProduct}>Purchase Product</button>
+                <button className="purchase-product" onClick={purchaseProduct} disabled={purchased}>{!purchased ? "Purchase Product": "Purchased!"}</button>
             </div>
             : null
             }

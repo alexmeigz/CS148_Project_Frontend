@@ -82,7 +82,7 @@ function ProductsList (props) {
                 productData={productData} 
                 isLoggedIn={props.isLoggedIn} 
                 user={props.user} 
-                onUserChange={props.handleUserChange}
+                onUserChange={props.onUserChange}
             />);
         }
     };
