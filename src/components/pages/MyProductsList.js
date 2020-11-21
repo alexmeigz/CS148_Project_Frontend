@@ -40,7 +40,7 @@ function MyProductsList (props) {
             setResults(data)
         })
         .catch((error) => console.log("Error: " + error))
-    }, [server, props.user.user_id])
+    }, [server, props.user.user_id, isListView])
     
     function changeView(event, type, productData) {
         setIsListView(prevIsListView => !prevIsListView);
@@ -53,6 +53,7 @@ function MyProductsList (props) {
             />);
         }
     };
+
 
     return (
         <div>
@@ -79,7 +80,7 @@ function MyProductsList (props) {
                             caption: product["caption"],
                             image_url: product["image_url"],
                             vendor_id: product["vendor_id"],
-                            id: product["id"]
+                            product_id: product["product_id"]
                         })}>
                             <ProductPane 
                                 name={product["product_name"]} 
@@ -90,7 +91,7 @@ function MyProductsList (props) {
                                 caption={product["caption"]}
                                 image_url={product["image_url"]}
                                 vendor_id={product["vendor_id"]}
-                                id={product["id"]}
+                                product_id={product["product_id"]}
                             />
                         </button>
                     ))}

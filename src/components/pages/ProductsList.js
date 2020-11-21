@@ -1,7 +1,8 @@
 // ProductsList.js
 // Engineer: Joseph Ng, Alex Mei
 
-import React, { useState } from 'react';
+// eslint-disable-next-line
+import React, { useState, useEffect } from 'react';
 
 import "./Product.css"
 import ProductPane from "./ProductPane.js"
@@ -31,6 +32,25 @@ function ProductsList (props) {
 
     const [isListView, setIsListView] = useState(true);
     const [productView, setProductView] = useState(<ProductView />)
+
+    useEffect(() => {
+        let newUrl = url + `&product_name=${query}`
+        if(filters["subscription"] != null){
+            newUrl += `&subscription=${filters["subscription"]}`
+        }
+        fetch(newUrl, {
+            method: 'GET',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },              
+        })
+        .then(response => response.json()) 
+        .then(data => {
+            setResults(data)
+        })
+        .catch((error) => console.log("Error: " + error))
+    }, [isListView, filters, query, url])
 
     function search(e){
         if(e.key === "Enter"){
@@ -126,7 +146,7 @@ function ProductsList (props) {
                             caption: product["caption"],
                             image_url: product["image_url"],
                             vendor_id: product["vendor_id"],
-                            id: product["id"]
+                            product_id: product["product_id"]
                         })}>
                             <ProductPane 
                                 name={product["product_name"]} 
@@ -137,7 +157,7 @@ function ProductsList (props) {
                                 caption={product["caption"]}
                                 image_url={product["image_url"]}
                                 vendor_id={product["vendor_id"]}
-                                id={product["id"]}
+                                product_id={product["product_id"]}
                             />
                         </button>
                     ))}

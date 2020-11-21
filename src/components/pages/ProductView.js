@@ -14,8 +14,16 @@ import "./ProductView.css"
 function ProductView(props) {
     const [purchased, setPurchased] = useState(false);
     const [removed, setRemoved] = useState(false);
+    // eslint-disable-next-line
+    const [updating, setUpdating] = useState(false);
 
     function login(event) {
+        event.preventDefault();
+        // TODO
+    }
+
+    function updateProduct(event) {
+        event.preventDefault();
         // TODO
     }
 
@@ -25,8 +33,8 @@ function ProductView(props) {
         let server = "https://nutriflix-flask-backend.herokuapp.com/api"
         // let server = "http://localhost:8118/api"
 
-        let url = `${server}/product/?id=${props.productData["id"]}`
-        console.log(url)
+        let url = `${server}/product/?id=${props.productData["product_id"]}`
+        console.log(props.productData["product_id"])
 
         fetch(url, 
             {
@@ -150,10 +158,12 @@ function ProductView(props) {
             : null
             }
 
+
             {/* TODO: Waiting for product model to get updated */}
             {props.user.user_id === props.productData.vendor_id
             ? <div>
-                <button className="remove-product" onClick={removeProduct} disabled={true}>{!removed ? "Remove Product": "Removed!"}</button>
+                <button className="remove-product" onClick={removeProduct} disabled={removed}>{!removed ? "Remove Product": "Removed!"}</button>
+                <button className="update-product" onClick={updateProduct} disabled={true}>{!updating ? "Update Product": "Submit Update!"}</button>
             </div>
             : null
             }
