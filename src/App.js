@@ -22,6 +22,7 @@ import MyProductsPage from "./components/pages/MyProductsPage";
 import VendorApps from "./components/pages/VendorApps";
 import AdminPage from "./components/pages/AdminPage";
 import CreateUserPage from "./components/pages/CreateUserPage";
+import SubmitReportPage from "./components/pages/SubmitReportPage";
 
 import ErrorPage from './components/pages/ErrorPage';
 // import ContactUsFooter from './components/common/ContactUsFooter';
@@ -120,6 +121,15 @@ function App() {
                 </Route>
                 <Route path="/contact-us">
                     <ContactUsPage
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
+                </Route>
+
+                <Route path="/submit-report">
+                    <SubmitReportPage
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
