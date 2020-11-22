@@ -127,7 +127,7 @@ function App() {
                         onUserChange={handleUserChange}
                     />
                 </Route>
-
+                
                 <Route path="/submit-report">
                     <SubmitReportPage
                         isLoggedIn={isLoggedIn}
