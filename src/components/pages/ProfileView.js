@@ -40,6 +40,8 @@ function ProfileView(props) {
     }
 
     function submitNewUserInfo(event) {
+        let required_params = ["user_id"];
+        let updatable_params = ["email"];
         // handle coupon code adding logic
         if (newUserInfo["coupon_code"] === "dev") {
             if (isNaN(newUserInfo["coupon_amount"])) {
@@ -47,28 +49,35 @@ function ProfileView(props) {
                 return;
             }
             newUserInfo["credits"] = parseFloat(props.user["credits"]) + parseFloat(newUserInfo["coupon_amount"]);
-        } else {
+            updatable_params.push("credits")
+        } else if (newUserInfo["coupon_code"] !== "") {
             alert("User update error: Invalid coupon code.");
             return;
         }
 
 
         event.preventDefault();
-        //let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        let server = "http://localhost:8118/api"
+        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+        // let server = "http://localhost:8118/api"
 
         let url = `${server}/user/?`
 
-        let required_params = ["user_id", "email", "account_type", "credits"];
-        let updatable_params = ["email", "credits"];
-        for(const param in newUserInfo){
-            if (required_params.includes(param)) {
-                if (newUserInfo[param] === "" || !updatable_params.includes(param)) {
-                    newUserInfo[param] = props.user[param];
-                }
-                url += `&${param}=${newUserInfo[param]}`
-            }   
-        }
+        // TODO: fix bug with email
+
+        required_params.forEach((param, index) => {
+            if (newUserInfo[param] === "") {
+                newUserInfo[param] = props.user[param]; 
+            }
+            url += `&${param}=${newUserInfo[param]}`
+        });
+            
+        updatable_params.forEach((param, index) => {
+            if (newUserInfo[param] !== "") {
+                 url += `&${param}=${newUserInfo[param]}`
+            } else {
+                newUserInfo[param] = props.user[param]; 
+            }
+        });
         
         fetch(url, 
             {

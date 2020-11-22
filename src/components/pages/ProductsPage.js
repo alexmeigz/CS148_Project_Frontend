@@ -22,7 +22,7 @@ function ProductsPage (props) {
             <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} />
             {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
 
-            <ProductsList />
+            <ProductsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>
 
             <ContactUsFooter />
         </div>

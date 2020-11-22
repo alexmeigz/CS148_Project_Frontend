@@ -20,13 +20,13 @@ function MyProductsList (props) {
     if (process.env.NODE_ENV !== 'development') {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
-    const url = `${server}/product/?display_all=True`
+    // const url = `${server}/product/?display_all=True`
     
     const [results, setResults] = useState({});
     const [isListView, setIsListView] = useState(true);
     const [productView, setProductView] = useState(<ProductView />)
 
-    useEffect((url) => {
+    useEffect(() => {
         let newUrl = `${server}/product/?display_all=True&vendor_id=${props.user.user_id}`
         fetch(newUrl, {
             method: 'GET',
@@ -40,15 +40,20 @@ function MyProductsList (props) {
             setResults(data)
         })
         .catch((error) => console.log("Error: " + error))
-    }, [server, props.user.user_id])
+    }, [server, props.user.user_id, isListView])
     
     function changeView(event, type, productData) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "product-pane") {
-            setProductView(<ProductView productData={productData} />);
-            console.log(url)
+            setProductView(<ProductView 
+                productData={productData} 
+                isLoggedIn={props.isLoggedIn} 
+                user={props.user} 
+                onUserChange={props.onUserChange}
+            />);
         }
     };
+
 
     return (
         <div>
@@ -73,7 +78,9 @@ function MyProductsList (props) {
                             location: product["location"],
                             subscription: product["subscription"],
                             caption: product["caption"],
-                            image_url: product["image_url"]
+                            image_url: product["image_url"],
+                            vendor_id: product["vendor_id"],
+                            product_id: product["product_id"]
                         })}>
                             <ProductPane 
                                 name={product["product_name"]} 
@@ -83,6 +90,8 @@ function MyProductsList (props) {
                                 subscription={product["subscription"]}
                                 caption={product["caption"]}
                                 image_url={product["image_url"]}
+                                vendor_id={product["vendor_id"]}
+                                product_id={product["product_id"]}
                             />
                         </button>
                     ))}
