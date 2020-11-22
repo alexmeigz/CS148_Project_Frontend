@@ -1,20 +1,10 @@
 import React, { useState } from 'react';
-//import Input from "../common/InputComponent.js"
 
-function ProductForm(props) {
-    //The hard brackets are "array deconstruction" operator
-    //updateState (name it anything you want) is a function we'll use to update this state object below
+function RecipeIngredientCall(props) {
+
     const [state, updateState] = useState({
-        product_name: "",
-        subscription: "",
-        price: "",
-        caption: "",
-        location: "",
-        image_url: "",
-        vendor_id: 243
+        q: ""
     })
-    //Remember that updating state means we make a complete new copy and overwrite the exisiting state
-    //Remember that React.useState on state objects requires that we copy the existing state upon each update (using the "spread" operator ...state) -- see below
 
     function handleChange(evt) { //updating form elements, nested function
         const name = evt.target.name //defined in render
@@ -29,77 +19,41 @@ function ProductForm(props) {
     const submitForm = (evt) => {  //send creds to backend, nested arrow function
         evt.preventDefault();
 
+        let url = `https://api.edamam.com/search?q=${state.q}&app_id=91203381&app_key=0449d632515eb9ee5ed2ed611e0c8032&from=0&to=3`
 
-        let url = `https://api.edamam.com/api/nutrition-details?app_id=e8520cc9&app_key=3f16e194023d773558701b51eae413b8`
-        for (const param in state) {
-            if (state[param] !== "") {
-                url += `&${param}=${state[param]}`
-            }
-        }
 
         fetch(url,
             {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(input)
+                }
             })
             .then(response => response.json())
             .then(data => {
-                if (data["message"] === "Product created successfully!") {
-                    alert(`${data["message"]}`)
+                if (data["more"]) {
+                    alert(`${data["hits"][0]["recipe"]["source"]}`)
+                    // console.log(data)
                     //Need to add Redirect after creating Product
                 }
                 else {
-                    alert(`Error creating product: ${data["message"]}`)
+                    alert(`Error with parameters`)
                 }
             })
-            .catch((error) => console.log("Product creation error: " + error))
+            .catch((error) => console.log("Recipe call error: " + error))
     }
 
     return (
-        <div className="container">
-            <h1> Create Product </h1>
+        <div>
             <form onSubmit={submitForm}>
                 <div className="form_input">
-                    <label className="form_label" for="product_name"> Product Name: </label>
-                    <input className="form_field" type="text" value={state.product_name} name="product_name" onChange={handleChange} />
+                    <label className="form_label" for="q"> Search: </label>
+                    <input className="form_field" type="text" value={state.q} name="q" onChange={handleChange} />
                 </div>
-
-                <div className="form_input">
-                    <label className="form_label" for="subscription"> Subscription Product? </label>
-                    <input className="form_field" type="text" value={state.subscription} name="subscription" onChange={handleChange} />
-                </div>
-
-                <div className="form_input">
-                    <label className="form_label" for="price"> Price: </label>
-                    <input className="form_field" type="text" value={state.price} name="price" onChange={handleChange} />
-                    <br />
-                </div>
-
-                <div className="form_input">
-                    <label className="form_label" for="location"> Location: </label>
-                    <input className="form_field" type="text" value={state.location} name="location" onChange={handleChange} />
-                    <br />
-                </div>
-
-                <div className="form_input">
-                    <label className="form_label" for="caption"> Caption: </label>
-                    <input className="form_field" type="text" value={state.caption} name="caption" onChange={handleChange} />
-                    <br />
-                </div>
-
-                <div className="form_input">
-                    <label className="form_label" for="caption"> Product Image: </label>
-                    <input className="form_field" type="text" value={state.image_url} name="image_url" onChange={handleChange} />
-                    <br />
-                </div>
-
                 <input className="form_submit" type="submit" value="Submit" />
             </form>
         </div>
     )
 }
-export default ProductForm;
+export default RecipeIngredientCall;
