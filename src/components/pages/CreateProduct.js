@@ -52,6 +52,15 @@ function ProductForm(props) {
         if(data["message"] === "Product created successfully!"){
           alert(`${data["message"]}`)
           //Need to add Redirect after creating Product
+          updateState({
+            product_name: "",
+            subscription: "",
+            price: "",
+            caption: "",
+            location: "",
+            image_url: "",
+            vendor_id: props.user["user_id"]
+        })
         }
         else{
           alert(`Error creating product: ${data["message"]}`)

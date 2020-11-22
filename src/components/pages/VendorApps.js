@@ -13,6 +13,7 @@ function VendorApps (props) {
     const [applicationData, setApplicationData] = useState({})
 
     useEffect(() => {
+        // const url = `https://nutriflix-flask-backend.herokuapp.com/api/application/?display_all=True`
         const url = `http://localhost:8118/api/application/?display_all=True`
         fetch(url, {
             method: 'GET',
