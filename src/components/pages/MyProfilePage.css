@@ -1,32 +1,30 @@
 @import url("../common/Base.css");
 
-.vendor-application-button {
-    margin-top: 20px;
-    margin-left: 20px;
+.button-bar button {
+    margin: 20px;
     width: 150px;
     height: 50px;
     border-radius: 10px;
     border-width: 1px;
 }
 
-.vendor-application-back-button {
-    margin-top: 20px;
-    margin-left: 20px;
-    width: 70px;
-    height: 50px;
-    border-radius: 10px;
-    border-width: 1px;
-}
 
 .user-info {
     margin: 30px;
 }
 
-.profile-picture {
+.profile-picture-pane {
     width: 30%;
     height: auto;
     margin: 20px;
     float: left;
+}
+
+.profile-picture {
+    width: 80%;
+    height: auto;
+    /* margin: 20px; */
+    /* float: left; */
 }
 
 .user-details {
@@ -70,4 +68,39 @@ p {
     height: 50px;
     border-radius: 10px;
     border-width: 1px;
+}
+
+
+.vendor-picture-pane {
+    height: auto;
+}
+
+.vendor-picture {
+    width: 100%;
+    height: 300px;
+    object-fit: cover; 
+    /* margin: 20px; */
+    /* float: left; */
+}
+
+.vendor-profile div {
+    display: inline-block;
+}
+
+.vendor-info {
+    width: 70%;
+    height: 70%;
+    float: right;
+    margin: 10px;
+    border-style: solid;
+    border-color: lightcoral;
+}
+
+.settings-pane {
+    width: 25%;
+    min-height: 500px;
+    float: left;
+    margin: 10px;
+    /* border-style: solid;
+    border-color: green; */
 }
