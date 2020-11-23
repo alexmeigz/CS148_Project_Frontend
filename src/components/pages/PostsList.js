@@ -8,11 +8,8 @@ import "./Posts.css"
 import PostsPane from "./PostsPane.js"
 import FilterOption from "./FilterOption.js"
 
-import PostView from "./PostView";
-
-// import NavigationBar from '../common/NavigationBar';
-// import ContactUsFooter from "../common/ContactUsFooter";
-// import AccountInfoBar from "../common/AccountInfoBar"
+import BlogView from "./BlogView";
+import ReviewView from "./ReviewView";
 
 function PostsList (props) {   
     //let server = "https://nutriflix-flask-backend.herokuapp.com/api"
@@ -26,7 +23,7 @@ function PostsList (props) {
     });
 
     const [isListView, setIsListView] = useState(true);
-    const [postView, setPostView] = useState(<PostView />)
+    const [postView, setPostView] = useState(<BlogView />)
 
     useEffect(() => {
         let newUrl = url + `&product_name=${query}`
@@ -95,7 +92,15 @@ function PostsList (props) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "product-pane") {
             if(postData["post_type"] === "blog"){
-                setPostView(<PostView 
+                setPostView(<BlogView 
+                    postData={postData} 
+                    isLoggedIn={props.isLoggedIn} 
+                    user={props.user} 
+                    onUserChange={props.onUserChange}
+                />);
+            }
+            else if(postData["post_type"] === "review"){
+                setPostView(<ReviewView 
                     postData={postData} 
                     isLoggedIn={props.isLoggedIn} 
                     user={props.user} 
@@ -141,12 +146,14 @@ function PostsList (props) {
                             {post["post_type"] === "blog" &&
                                 <PostsPane 
                                     title={post["title"]} 
+                                    image={post["image_url"]}
                                     caption={post["content"]}
                                 />
                             }
                             {post["post_type"] === "review" &&
                                 <PostsPane 
                                     title={post["title"]} 
+                                    image={post["image_url"]}
                                     caption={post["content"]}
                                     rating={post["rating"]}
                                 />
@@ -154,6 +161,7 @@ function PostsList (props) {
                             {post["post_type"] === "recipe" &&
                                 <PostsPane 
                                     title={post["title"]} 
+                                    image={post["image_url"]}
                                     caption={post["caption"]}
                                     ingredients={post["ingredients"]}
                                     instructions={post["instructions"]}
