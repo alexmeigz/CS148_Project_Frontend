@@ -30,6 +30,20 @@
     width: calc(100% - 190px) !important;
 }
 
+.post-description {
+    margin: 10px 20px;
+    float: left;
+    width: calc(100% - 40px);
+    font-size: 20px;
+}
+
+.post-header {
+    margin: 10px 20px;
+    float: left;
+    width: calc(100% - 40px);
+    font-size: 30px;
+}
+
 .post-user {
     margin: 5px 20px;
     float: left;
@@ -50,6 +64,19 @@
     text-align: justify;
 }
 
+.post-ingredients{
+    margin: 10px 10px 30px 10px;
+    float: left;
+    width: 35%;
+    font-size: 25px;
+}
+
+.post-instructions{
+    margin: 10px 10px 30px 10px;
+    float: left;
+    width: 60%;
+    font-size: 25px;
+}
 .post-reacts{
     margin: 10px 10px 100px 10px;
     float: left;
@@ -58,4 +85,12 @@
 .post-comments{
     margin: 10px 10px 100px 10px;
     float: right;
+}
+
+ul{
+    margin: 10px 0;
+}
+
+ol{
+    margin: 10px 0;
 }

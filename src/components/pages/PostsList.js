@@ -10,6 +10,7 @@ import FilterOption from "./FilterOption.js"
 
 import BlogView from "./BlogView";
 import ReviewView from "./ReviewView";
+import RecipeView from "./RecipeView";
 
 function PostsList (props) {   
     //let server = "https://nutriflix-flask-backend.herokuapp.com/api"
@@ -91,8 +92,8 @@ function PostsList (props) {
     function changeView(event, type, postData) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "product-pane") {
-            if(postData["post_type"] === "blog"){
-                setPostView(<BlogView 
+            if(postData["post_type"] === "recipe"){
+                setPostView(<RecipeView 
                     postData={postData} 
                     isLoggedIn={props.isLoggedIn} 
                     user={props.user} 
@@ -101,6 +102,14 @@ function PostsList (props) {
             }
             else if(postData["post_type"] === "review"){
                 setPostView(<ReviewView 
+                    postData={postData} 
+                    isLoggedIn={props.isLoggedIn} 
+                    user={props.user} 
+                    onUserChange={props.onUserChange}
+                />);
+            }
+            else{
+                setPostView(<BlogView 
                     postData={postData} 
                     isLoggedIn={props.isLoggedIn} 
                     user={props.user} 
