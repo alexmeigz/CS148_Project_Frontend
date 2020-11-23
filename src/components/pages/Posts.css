@@ -1,0 +1,32 @@
+@import url("../common/Base.css");
+
+.post_panel{
+    float: left;
+    width: 70%;
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.post_title{
+    float: left;
+    text-align: center;
+    font-size: 24px;
+    margin: 10px 30px 10px 0px;
+}
+
+.post_caption{
+    float: left;
+    text-align: justify;
+    max-width: calc(100% - 60px);
+    margin: 10px 50px 10px 10px;
+}
+
+.post_reacts{
+    float: left;
+    margin: 10px 30px 10px 0px;
+}
+
+.post_comments{
+    float: right;
+    margin: 10px 30px 10px 0px;
+}

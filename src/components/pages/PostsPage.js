@@ -1,5 +1,5 @@
 // ProductsPage.js
-// Engineer: Joseph Ng, Alex Mei
+// Engineer: Alex Mei
 
 import React from 'react';
 
@@ -7,9 +7,9 @@ import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar";
 
-import ProductsList from "./ProductsList";
+import PostsList from "./PostsList";
 
-function ProductsPage (props) {
+function PostsPage (props) {
     function handleLoginChange(value) {
         props.onLoginChange(value)
     }
@@ -22,11 +22,11 @@ function ProductsPage (props) {
             <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} />
             {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
 
-            <ProductsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>
+            <PostsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>
 
             <ContactUsFooter />
         </div>
     );
 };
 
-export default ProductsPage;
+export default PostsPage;

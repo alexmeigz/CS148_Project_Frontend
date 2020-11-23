@@ -65,3 +65,7 @@ td{
 .form_submit{
     margin: 20px 0;
 }
+
+.row{
+    width: 100%;
+}
