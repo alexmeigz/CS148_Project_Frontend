@@ -18,7 +18,8 @@ function ProfileView(props) {
             ...props.user,
             email: "",
             coupon_code: "",
-            coupon_amount: ""
+            coupon_amount: "",
+            profile_image_url: ""
         })
     }
 
@@ -41,7 +42,7 @@ function ProfileView(props) {
 
     function submitNewUserInfo(event) {
         let required_params = ["user_id"];
-        let updatable_params = ["email"];
+        let updatable_params = ["email", "profile_image_url"];
         // handle coupon code adding logic
         if (newUserInfo["coupon_code"] === "dev") {
             if (isNaN(newUserInfo["coupon_amount"])) {
@@ -62,7 +63,6 @@ function ProfileView(props) {
 
         let url = `${server}/user/?`
 
-        // TODO: fix bug with email
 
         required_params.forEach((param, index) => {
             if (newUserInfo[param] === "") {
@@ -79,6 +79,7 @@ function ProfileView(props) {
             }
         });
         
+        console.log(url);
         fetch(url, 
             {
               method: 'PATCH',
@@ -106,10 +107,20 @@ function ProfileView(props) {
                 My Profile
             </h1>
             <div className="user-info">
-                <img className="profile-picture"
-                    src="https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
-                    alt="Profile"
-                />
+                <div className="profile-picture-pane">
+                    <img className="profile-picture"
+                        src={props.user.profile_image_url}
+                        alt="Profile"
+                    />
+                    {!settingsMode 
+                        ? null
+                        : <div>
+                            <label className="form-label" for="profile_image_url">New Profile Image URL: </label>         
+                            <input className="form-field" type="text" value={newUserInfo.profile_image_url} name="profile_image_url" onChange={handleNewUserChange} />
+                            <br />
+                        </div>
+                    }
+                </div>
                 <div className="user-details">
                     {!settingsMode 
                         ? <div><button className="change-info" onClick={(event) => {toggleView(); resetNewUserInfo()}}>Change User Info/Settings</button></div>
