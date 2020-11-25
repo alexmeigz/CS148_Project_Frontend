@@ -33,7 +33,7 @@ function MyProductsList (props) {
     const [productView, setProductView] = useState(<ProductView />)
 
     useEffect(() => {
-        // const interval = setInterval(() => {
+        const interval = setInterval(() => {
         if (isListView) {
             let newUrl = `${server}/product/?display_all=True&vendor_id=${vendor_id}`
             fetch(newUrl, {
@@ -49,8 +49,8 @@ function MyProductsList (props) {
             })
             .catch((error) => console.log("Error: " + error))
         }
-        // }, 1000);
-        // return () => clearInterval(interval);
+        }, 500);
+        return () => clearInterval(interval);
     }, [server, vendor_id, isListView])
     
     function changeView(event, type, productData) {
