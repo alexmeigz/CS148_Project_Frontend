@@ -33,19 +33,24 @@ function MyProductsList (props) {
     const [productView, setProductView] = useState(<ProductView />)
 
     useEffect(() => {
-        let newUrl = `${server}/product/?display_all=True&vendor_id=${vendor_id}`
-        fetch(newUrl, {
-            method: 'GET',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },              
-        })
-        .then(response => response.json()) 
-        .then(data => {
-            setResults(data)
-        })
-        .catch((error) => console.log("Error: " + error))
+        // const interval = setInterval(() => {
+        if (isListView) {
+            let newUrl = `${server}/product/?display_all=True&vendor_id=${vendor_id}`
+            fetch(newUrl, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },              
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                setResults(data)
+            })
+            .catch((error) => console.log("Error: " + error))
+        }
+        // }, 1000);
+        // return () => clearInterval(interval);
     }, [server, vendor_id, isListView])
     
     function changeView(event, type, productData) {
@@ -71,7 +76,7 @@ function MyProductsList (props) {
             </div>
 
             : <div className="container">
-                <h1> My Products </h1>
+                
                 <div className="my_product_panel">
                     <div className="title">
                         Product Results (Total: {Object.keys(results).length})

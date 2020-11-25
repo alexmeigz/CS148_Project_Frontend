@@ -9,7 +9,7 @@
 
 .vendor_panel{
     float: left;
-    width: 70%;
+    /* width: 70%; */
     height: 100vh;
     overflow-y: scroll;
 }
@@ -36,6 +36,11 @@
     float: left;
     width: 200px;
     height: auto;
+}
+
+.vendor_type {
+    margin: 10px;
+    float: left;
 }
 
 .vendor_description {
@@ -83,9 +88,9 @@
     text-align: center;
 }
 
-.location{
+.vendor_location{
     margin: 10px;
-    float: left;
+    float: right;
     width: calc(33% - 20px);
     font-size: 18px;
     text-align: right;

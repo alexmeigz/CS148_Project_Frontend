@@ -38,6 +38,7 @@ function VendorProfileView(props) {
                     src={displayInfo.vendor_image_url}
                     alt="Vendor Profile"
                 />
+                <h1> Welcome to {displayInfo.username}'s Store </h1>
             </div>
             <div className="vendor-details">
                 <MyProductsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={props.onUserChange} vendor_id={props.vendor_id}/>
