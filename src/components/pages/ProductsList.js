@@ -70,12 +70,10 @@ function ProductsList (props) {
     }
 
     function filter(param, value){
-        console.log(query)
         let newUrl = url + `&product_name=${query}`
         if(param != null){
             newUrl += `&${param}=${value}`
         }
-        console.log(newUrl)
         fetch(newUrl, {
             method: 'GET',
             headers: {

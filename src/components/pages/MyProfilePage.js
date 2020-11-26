@@ -57,12 +57,12 @@ function MyProfilePage (props) {
                 <div className="button-bar">
                     {isProfileView
                         ? <div>
-                            {/* {props.user.account_type !== "Business" && props.user.account_type !== "Admin" */}
                             {props.user.account_type !== "Business"
+                            // {props.user.account_type !== "Business"
                                 ? <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button>
                                 : null
                             }
-                            {props.user.account_type === "Business" || props.user.account_type === "Admin"
+                            {props.user.account_type === "Business" || props.user.account_type === "Home" || props.user.account_type === "Admin"
                                 ? <button className="vendor-profile-button" onClick={toggleView}>Vendor Profile</button>
                                 : null
                             }
