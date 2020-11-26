@@ -28,8 +28,9 @@ import ErrorPage from './components/pages/ErrorPage';
 
 //import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
-
-import RecipeCall from './components/pages/RecipeCall';
+import RecipeCall from './components/pages/RecipeCall'
+import RecipeCall2 from './components/pages/RecipeCall2';
+import RecipeCall3 from './components/pages/RecipeCall3';
 
 function App() {
     // eslint-disable-next-line
@@ -185,9 +186,26 @@ function App() {
                         onUserChange={handleUserChange}
                     />
                 </Route>
-
                 <Route path="/recipe-call">
                     <RecipeCall
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
+                </Route>
+
+                <Route path="/recipe-call2">
+                    <RecipeCall2
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
+                </Route>
+
+                <Route path="/recipe-call3">
+                    <RecipeCall3
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
