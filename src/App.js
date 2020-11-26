@@ -163,7 +163,7 @@ function App() {
                     </Route>)
                     : null
                 }
-                {isLoggedIn
+                {!isLoggedIn //SHOULD CHANGE BACK TO  isLoggedIn
                     ? (<Route path="/admin-panel">
                         <AdminPage
                             isLoggedIn={isLoggedIn}

@@ -7,6 +7,7 @@ import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar";
 import VendorApps from "./VendorApps"
+//import ReportList from "./ReportList"
 
 function AdminPage (props) {
     function handleLoginChange(value) {
