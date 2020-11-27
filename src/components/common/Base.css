@@ -37,11 +37,6 @@ td{
     height: 35px;
 }
 
-li{
-    line-height: 1.75;
-    font-size: 20px;
-}
-
 .container{
     margin-left: 10%;
     width: 80%;
@@ -70,13 +65,3 @@ li{
 .form_submit{
     margin: 20px 0;
 }
-
-textarea{
-    height: 200px;
-    width: 100%;
-}
-
-.row{
-    width: 100%;
-}
-
