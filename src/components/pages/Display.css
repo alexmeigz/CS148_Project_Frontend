@@ -1,0 +1,48 @@
+* {
+    margin: 0%;
+  }
+  
+  .all {
+    display: flex;
+    flex-wrap: wrap;
+    direction: row;
+    justify-content: space-around;
+    /* padding-top: 5%; */
+  }
+  
+  .card {
+    width: 31%;
+    height: auto;
+  }
+  
+  .overlay {
+    opacity: 0;
+    position: relative;
+    text-align: center;
+    bottom: 200px;
+    margin-bottom: -100px;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  .card:hover img {
+    opacity: 0.1;
+    backface-visibility: hidden;
+    transition: 0.5s ease;
+  }
+  
+  .card:hover .overlay {
+    opacity: 1;
+  }
+  
+  .first {
+    width: 100%;
+  }
+  
+  img.first {
+    height: 300px;
+    object-fit: contain;
+  }
+  
