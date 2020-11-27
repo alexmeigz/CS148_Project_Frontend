@@ -18,7 +18,7 @@ function PostsList (props) {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
     if (process.env.NODE_ENV !== "development") {
-        server = "https://nutriflix-flask-backend.herokuapp.com//api"
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
 
     const url = `${server}/post/?display_all=True`
@@ -33,11 +33,13 @@ function PostsList (props) {
     const [postView, setPostView] = useState(<BlogView />)
 
     useEffect(() => {
+        /*
         let newUrl = url + `&product_name=${query}`
         if(filters["subscription"] != null){
             newUrl += `&subscription=${filters["subscription"]}`
         }
-        fetch(newUrl, {
+        */
+        fetch(url, {
             method: 'GET',
             headers: {
             'Accept': 'application/json',
@@ -163,6 +165,8 @@ function PostsList (props) {
                                     title={post["title"]} 
                                     image={post["image_url"]}
                                     caption={post["content"]}
+                                    reacts={post["reacted_users"].length}
+                                    reacted={post["reacted_users"].includes(props.user.user_id)}
                                 />
                             }
                             {post["post_type"] === "review" &&
@@ -171,6 +175,8 @@ function PostsList (props) {
                                     image={post["image_url"]}
                                     caption={post["content"]}
                                     rating={post["rating"]}
+                                    reacts={post["reacted_users"].length}
+                                    reacted={post["reacted_users"].includes(props.user.user_id)}
                                 />
                             }
                             {post["post_type"] === "recipe" &&
@@ -180,6 +186,8 @@ function PostsList (props) {
                                     caption={post["caption"]}
                                     ingredients={post["ingredients"]}
                                     instructions={post["instructions"]}
+                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                    reacts={post["reacted_users"].length}
                                 />
                             }
                             

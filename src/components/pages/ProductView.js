@@ -17,6 +17,14 @@ function ProductView(props) {
     // eslint-disable-next-line
     const [updating, setUpdating] = useState(false);
 
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com//api"
+    }
+        
     function login(event) {
         event.preventDefault();
         // TODO
@@ -24,9 +32,6 @@ function ProductView(props) {
 
     function updateProduct(event) {
         event.preventDefault();
-
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        // let server = "http://localhost:8118/api"
 
         let url = `${server}/product/?product_id=${props.productData["product_id"]}`
 
@@ -54,9 +59,6 @@ function ProductView(props) {
     function removeProduct(event) {
         event.preventDefault();
         
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        // let server = "http://localhost:8118/api"
-
         let url = `${server}/product/?product_id=${props.productData["product_id"]}`
 
         fetch(url, 
