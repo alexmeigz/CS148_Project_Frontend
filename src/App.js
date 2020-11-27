@@ -10,9 +10,10 @@ import { Route, Switch } from 'react-router-dom';
 // import AccountInfoBar from "./components/common/AccountInfoBar";
 
 import DefaultHomePage from './components/pages/DefaultHomePage';
-import MapsPage from './components/pages/MapsPage'
+import MapsPage from './components/pages/MapsPage';
 import VendorsPage from './components/pages/VendorsPage';
-import RecipesPage from './components/pages/RecipesPage'
+import RecipesPage from './components/pages/RecipesPage';
+import PostsPage from './components/pages/PostsPage';
 import ProductsPage from './components/pages/ProductsPage';
 import LoginPage from "./components/pages/LoginPage";
 import LogoutPage from "./components/pages/LogoutPage";
@@ -66,6 +67,14 @@ function App() {
             <Switch>
                 <Route path="/" exact>
                     <DefaultHomePage
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
+                </Route>
+                <Route path="/posts">
+                    <PostsPage
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}

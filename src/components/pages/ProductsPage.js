@@ -1,5 +1,5 @@
 // ProductsPage.js
-// Engineer: Joseph Ng
+// Engineer: Joseph Ng, Alex Mei
 
 import React from 'react';
 

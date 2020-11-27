@@ -4,20 +4,24 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react';
 
-import "./Product.css"
-import ProductPane from "./ProductPane.js"
+import "./Posts.css"
+import PostsPane from "./PostsPane.js"
 import FilterOption from "./FilterOption.js"
 
-import ProductView from "./ProductView";
+import BlogView from "./BlogView";
+import ReviewView from "./ReviewView";
+import RecipeView from "./RecipeView";
 
-// import NavigationBar from '../common/NavigationBar';
-// import ContactUsFooter from "../common/ContactUsFooter";
-// import AccountInfoBar from "../common/AccountInfoBar"
-
-function ProductsList (props) {   
-    //let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+function PostsList (props) {   
     let server = "http://localhost:8118/api"
-    const url = `${server}/product/?display_all=True`
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com//api"
+    }
+
+    const url = `${server}/post/?display_all=True`
     
     const [results, setResults] = useState({});
     const [query, setQuery] = useState("");
@@ -26,7 +30,7 @@ function ProductsList (props) {
     });
 
     const [isListView, setIsListView] = useState(true);
-    const [productView, setProductView] = useState(<ProductView />)
+    const [postView, setPostView] = useState(<BlogView />)
 
     useEffect(() => {
         let newUrl = url + `&product_name=${query}`
@@ -70,10 +74,12 @@ function ProductsList (props) {
     }
 
     function filter(param, value){
+        console.log(query)
         let newUrl = url + `&product_name=${query}`
         if(param != null){
             newUrl += `&${param}=${value}`
         }
+        console.log(newUrl)
         fetch(newUrl, {
             method: 'GET',
             headers: {
@@ -83,20 +89,40 @@ function ProductsList (props) {
             })
         .then(response => response.json()) 
         .then(data => {
+            console.log(data)
             setResults(data)
         })
         .catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
     }
     
-    function changeView(event, type, productData) {
+    function changeView(event, type, postData) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "product-pane") {
-            setProductView(<ProductView 
-                productData={productData} 
-                isLoggedIn={props.isLoggedIn} 
-                user={props.user} 
-                onUserChange={props.onUserChange}
-            />);
+            if(postData["post_type"] === "recipe"){
+                setPostView(<RecipeView 
+                    postData={postData} 
+                    isLoggedIn={props.isLoggedIn} 
+                    user={props.user} 
+                    onUserChange={props.onUserChange}
+                />);
+            }
+            else if(postData["post_type"] === "review"){
+                setPostView(<ReviewView 
+                    postData={postData} 
+                    isLoggedIn={props.isLoggedIn} 
+                    user={props.user} 
+                    onUserChange={props.onUserChange}
+                />);
+            }
+            else{
+                setPostView(<BlogView 
+                    postData={postData} 
+                    isLoggedIn={props.isLoggedIn} 
+                    user={props.user} 
+                    onUserChange={props.onUserChange}
+                />);
+            }
+            
         }
     };
 
@@ -106,11 +132,11 @@ function ProductsList (props) {
             {!isListView
 
             ? <div><button className="product_back_button" onClick={(e) => changeView(e, "product-view")}>Back</button>
-                {productView}
+                {postView}
             </div>
 
             : <div className="container">
-                <h1> Products </h1>
+                <h1> Posts </h1>
                 <div className="side_panel">
                     <input className="search_bar" placeholder="Search products..." onKeyDown={search} />
                     <div className="title">
@@ -125,33 +151,38 @@ function ProductsList (props) {
                         />
                     </div>
                 </div>
-                <div className="product_panel">
+                <div className="post_panel">
                     <div className="title">
-                        Product Results (Total: {Object.keys(results).length})
+                        Post Results (Total: {Object.keys(results).length})
                     </div>
-                    {Object.values(results).map(product => (
-                        <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
-                            name: product["product_name"],
-                            price: product["price"],
-                            list_date: product["list_date"],
-                            location: product["location"],
-                            subscription: product["subscription"],
-                            caption: product["caption"],
-                            image_url: product["image_url"],
-                            vendor_id: product["vendor_id"],
-                            product_id: product["product_id"]
-                        })}>
-                            <ProductPane 
-                                name={product["product_name"]} 
-                                price={product["price"]}
-                                list_date={product["list_date"]}
-                                location={product["location"]}
-                                subscription={product["subscription"]}
-                                caption={product["caption"]}
-                                image_url={product["image_url"]}
-                                vendor_id={product["vendor_id"]}
-                                product_id={product["product_id"]}
-                            />
+                    {Object.values(results).map(post => (
+                        <button className="product_panel_button" 
+                            onClick={(e) => changeView(e, "product-pane", post)}>
+                            {post["post_type"] === "blog" &&
+                                <PostsPane 
+                                    title={post["title"]} 
+                                    image={post["image_url"]}
+                                    caption={post["content"]}
+                                />
+                            }
+                            {post["post_type"] === "review" &&
+                                <PostsPane 
+                                    title={post["title"]} 
+                                    image={post["image_url"]}
+                                    caption={post["content"]}
+                                    rating={post["rating"]}
+                                />
+                            }
+                            {post["post_type"] === "recipe" &&
+                                <PostsPane 
+                                    title={post["title"]} 
+                                    image={post["image_url"]}
+                                    caption={post["caption"]}
+                                    ingredients={post["ingredients"]}
+                                    instructions={post["instructions"]}
+                                />
+                            }
+                            
                         </button>
                     ))}
                 </div>
@@ -160,4 +191,4 @@ function ProductsList (props) {
     );
 };
 
-export default ProductsList;
+export default PostsList;
