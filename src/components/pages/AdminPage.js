@@ -7,7 +7,7 @@ import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar";
 import VendorApps from "./VendorApps"
-//import ReportList from "./ReportList"
+import ReportList from "./ReportList"
 
 function AdminPage (props) {
     function handleLoginChange(value) {
@@ -24,6 +24,8 @@ function AdminPage (props) {
             <h1> Admin Panel </h1>
 
             <VendorApps user={props.user} onUserChange={handleUserChange} />
+
+            <ReportList user={props.user} onUserChange={handleUserChange} />
 
             <ContactUsFooter />
         </div>

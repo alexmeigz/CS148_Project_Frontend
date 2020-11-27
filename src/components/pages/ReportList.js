@@ -5,12 +5,12 @@ import React, { useState, useEffect } from 'react';
 
 import "./Application.css"
 import ApplicationView from "./ApplicationView";
-import ApplicationPane from "./ApplicationPane"
+import ReportPane from "./ReportPane"
 
 function ReportList (props) {   
     const [results, setResults] = useState({});
     const [isListView, setIsListView] = useState(true);
-    const [reportData, setReportData] = useState({})
+    const [applicationData, setApplicationData] = useState({})
 
     useEffect(() => {
         // const url = `https://nutriflix-flask-backend.herokuapp.com/api/application/?display_all=True`
@@ -29,14 +29,14 @@ function ReportList (props) {
         })
         .catch((error) => console.log("Error: " + error))
     }, [])
-    
+    //Dont need this to just display reports
     function changeView(event, type, applicationData) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "product-pane") {
             setApplicationData(applicationData);
         }
     };
-
+//Dont need this to just display reports
     function approveApplication(){
         console.log(applicationData)
         const url = `http://localhost:8118/api/`
@@ -68,7 +68,7 @@ function ReportList (props) {
         })
         .catch((error) => console.log("Error: " + error))
     }
-
+    //Dont need this to just display reports
     function denyApplication(){
         const url = `http://localhost:8118/api/application/?id=${applicationData["id"]}`
         fetch(url, {
@@ -106,33 +106,25 @@ function ReportList (props) {
                         Active Reports (Total: {Object.keys(results).length})
                     </div>
 
-                    <div className="report_header">
-                        <div className="application_user">
-                            Reporter
-                        </div>
+                    <div className="application_header">
                         <div className="application_date">
-                            Application Date
+                            Report Date
                         </div>
-                        <div className="application_type">
-                            Application Type
+                        <div className="application_user">
+                            Report Submitted By
+                        </div>
+                        <div className="application_user">
+                            Reported User
                         </div>
                     </div>
 
-                        {Object.values(results).map(application => (
-                            <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
-                                user: application["user_id"],
-                                date: application["applsDate"],
-                                type: application["vendorType"],
-                                reason: application["reason"],
-                                name: application["restName"],
-                                id: application["application_id"]
-                            })}>
-                                <ApplicationPane 
-                                    user={application["user_id"]}
-                                    date={application["applsDate"]} 
-                                    type={application["vendorType"]}
+                        {Object.values(results).map(report => (
+
+                                <ReportPane 
+                                    reportDate={report["reportDate"]}
+                                    userReporter={report["userReporter_id"]}
+                                    reportedUser={report["reportedUser_id"]} 
                                 />   
-                            </button>  
                         ))}                
                 </div>
             }

@@ -5,15 +5,15 @@ import React from 'react';
 
 function ReportPane(props) {
     return (
-        <div className="report_pane">
-            <div className="userReporter">
+        <div className="application_pane">
+           <div className="application_date">
+                {props["reportDate"]}
+            </div>
+            <div className="application_user">
                 {props["userReporter"]}
             </div>
-            <div className="reportedUser">
+            <div className="application_user">
                 {props["reportedUser"]}
-            </div>
-            <div className="reportDate">
-                {props["reportDate"]}
             </div>
         </div>
     ); 
