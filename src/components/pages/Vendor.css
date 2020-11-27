@@ -1,0 +1,136 @@
+@import url("../common/Base.css");
+
+.side_panel{
+    margin: 20px 10px 10px 10px;
+    float: left;
+    width: calc(30% - 20px);
+    min-height: 100vh;
+}
+
+.vendor_panel{
+    float: left;
+    /* width: 70%; */
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.my_vendor_panel{
+    /* float: left;
+    width: 70%; */
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.title{
+    font-size: 30px;
+    margin: 20px;
+}
+
+.vendor_pane{
+    margin: 10px;
+    min-height: 220px;
+}
+
+.vendor_image {
+    margin: 10px;
+    float: left;
+    width: 200px;
+    height: auto;
+}
+
+.vendor_type {
+    margin: 10px;
+    float: left;
+}
+
+.vendor_description {
+    margin: 10px;
+    float: left;
+    width: calc(100% - 250px);
+}
+
+.vendor_name {
+    margin: 10px 10px 10px 20px;
+    float: left;
+    width: calc(85% - 30px);
+    font-size: 24px;
+}
+
+.vendor_price {
+    margin: 10px;
+    float: left;
+    width: calc(15% - 20px);
+    font-size: 24px;
+    text-align: right;
+}
+
+.vendor_caption{
+    margin: 10px 10px 30px 10px;
+    float: left;
+    width: calc(100% - 20px);
+    font-size: 18px;
+    text-align: justify;
+}
+
+.subscription{
+    margin: 10px;
+    float: left;
+    width: calc(33% - 20px);
+    font-size: 18px;
+    text-align: left;
+}
+
+.list_date{
+    margin: 10px;
+    float: left;
+    width: calc(33% - 20px);
+    font-size: 18px;
+    text-align: center;
+}
+
+.vendor_location{
+    margin: 10px;
+    float: right;
+    width: calc(33% - 20px);
+    font-size: 18px;
+    text-align: right;
+}
+
+.search_bar{
+    margin: 10px;
+    float: center;
+    width: 90%;
+    height: 20px;
+}
+
+.filter_option{
+    margin: 10px 10px 10px 20px;
+}
+
+.filter_label{
+    font-size: 18px;
+}
+
+.vendor_panel_button {
+    background: none;
+    width: 100%;
+    border-width: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.vendor_panel_button:active {
+    border: none;
+}
+
+.vendor_back_button {
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 70px;
+    height: 50px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.vendor_back_button:active {
+    border: none;
+}
