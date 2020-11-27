@@ -13,12 +13,13 @@ import ReviewView from "./ReviewView";
 import RecipeView from "./RecipeView";
 
 function PostsList (props) {   
-    let server = "http://localhost:8118/api"
+    // let server = "http://localhost:8118/api"
+    let server = "https://nutriflix-flask-backend.herokuapp.com/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
     if (process.env.NODE_ENV !== "development") {
-        server = "https://nutriflix-flask-backend.herokuapp.com//api"
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
 
     const url = `${server}/post/?display_all=True`
@@ -32,24 +33,25 @@ function PostsList (props) {
     const [isListView, setIsListView] = useState(true);
     const [postView, setPostView] = useState(<BlogView />)
 
-    useEffect(() => {
-        let newUrl = url + `&product_name=${query}`
-        if(filters["subscription"] != null){
-            newUrl += `&subscription=${filters["subscription"]}`
-        }
-        fetch(newUrl, {
-            method: 'GET',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },              
-        })
-        .then(response => response.json()) 
-        .then(data => {
-            setResults(data)
-        })
-        .catch((error) => console.log("Error: " + error))
-    }, [isListView, filters, query, url])
+    // useEffect(() => {
+    //     // let newUrl = url + `&product_name=${query}`
+    //     let newUrl = url
+    //     if(filters["subscription"] != null){
+    //         newUrl += `&subscription=${filters["subscription"]}`
+    //     }
+    //     fetch(newUrl, {
+    //         method: 'GET',
+    //         headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json'
+    //         },              
+    //     })
+    //     .then(response => response.json()) 
+    //     .then(data => {
+    //         setResults(data)
+    //     })
+    //     .catch((error) => console.log("Error: " + error))
+    // }, [isListView, filters, query, url])
 
     function search(e){
         if(e.key === "Enter"){
