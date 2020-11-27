@@ -62,9 +62,33 @@ function PostsPane(props) {
     else{
         return(
             <div className="post_pane row">
-                <div className="post_title row">
-                    {props["title"]}
-                </div>
+                { props["rating"] ?
+                    <div className="row">
+                        <div className="post_title rating_adjust"> {props["title"]} </div>
+                        { (props["rating"] === 5) && 
+                            <img className="rating_image" alt=""
+                                src={stars_5} height="20px"/>
+                        }
+                        { (4 <= props["rating"] && props["rating"] < 5) && 
+                            <img className="rating_image" alt=""
+                                src={stars_4} height="20px"/>
+                        }
+                        { (3 <= props["rating"] && props["rating"] < 4) && 
+                            <img className="rating_image" alt=""
+                                src={stars_3} height="20px"/>
+                        }
+                        { (2 <= props["rating"] && props["rating"] < 3) && 
+                            <img className="rating_image" alt=""
+                                src={stars_2} height="20px"/>
+                        }
+                        { (1 <= props["rating"] && props["rating"] < 2) && 
+                            <img className="rating_image" alt=""
+                                src={stars_1} height="20px"/>
+                        }                        
+                    </div>
+                    :
+                        <div className="post_title row"> {props["title"]} </div>
+                    }
                 <div className="post_caption row">
                     {props["caption"]} 
                 </div>
