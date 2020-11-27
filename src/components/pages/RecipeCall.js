@@ -6,6 +6,8 @@ function RecipeCall(props) {
     const [state, updateState] = useState({
         q: "",
         health: "",
+        // calories: "",
+        excluded: "",
         showHideDemo: false
     })
 
@@ -25,12 +27,18 @@ function RecipeCall(props) {
         // alert("button clicked")
         evt.preventDefault();
 
-        let url = `https://api.edamam.com/search?q=${state.q}&app_id=91203381&app_key=0449d632515eb9ee5ed2ed611e0c8032&from=0&to=3`
+        let url = `https://api.edamam.com/search?q=${state.q}&app_id=394088d7&app_key=cc0cb85ce098f755f855195231d1fe9f&from=0&to=3`
         let newUrl = url;
         if (state.health !== "") {
             newUrl += `&health=${state.health}`
         }
-        fetch(url,
+        if (state.excluded !== "") {
+            newUrl += `&excluded=${state.excluded}`
+        }
+        // if (state.calories !== "") {
+        //     newUrl += `&calories=${state.calories}`
+        // }
+        fetch(newUrl,
             {
                 method: 'GET',
                 headers: {
@@ -57,14 +65,26 @@ function RecipeCall(props) {
 
     return (
         <div>
+            <br />
             <form onSubmit={submitForm}>
                 <div className="form_input">
                     <label className="form_label" for="q"> Search: </label>
                     <input className="form_field" type="text" value={state.q} name="q" onChange={handleChange} />
+                </div>
+                <div className="form_input">
                     <label className="form_label" for="health"> Health: </label>
                     <input className="form_field" type="text" value={state.health} name="health" onChange={handleChange} />
                 </div>
-                <input className="form_submit" type="submit" value="Submit" />
+                {/* <div className="form_input">
+                    <label className="form_label" for="calories"> Calories: </label>
+                    <input className="form_field" type="text" value={state.calories} name="calories" onChange={handleChange} />
+                </div> */}
+                <div className="form_input">
+                    <label className="form_label" for="excluded"> Excluded: </label>
+                    <input className="form_field" type="text" value={state.excluded} name="excluded" onChange={handleChange} />
+                </div>
+                <br /><br /><br />
+                <center><input className="form_submit" type="submit" value="Submit" /></center>
             </form>
             {/* {isTrue === 1 ?
                 <Display
