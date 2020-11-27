@@ -12,9 +12,18 @@ function VendorApps (props) {
     const [isListView, setIsListView] = useState(true);
     const [applicationData, setApplicationData] = useState({})
 
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    console.log(server)
+
     useEffect(() => {
-        const url = `https://nutriflix-flask-backend.herokuapp.com/api/application/?display_all=True`
-        // const url = `http://localhost:8118/api/application/?display_all=True`
+        //const url = `${server}/application/?display_all=True`
+        const url = `http://localhost:8118/api/application/?display_all=True`
         fetch(url, {
             method: 'GET',
             headers: {

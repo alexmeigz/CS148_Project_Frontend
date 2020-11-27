@@ -94,10 +94,6 @@ function ProductView(props) {
         }
 
         let newCredits = props.user.credits - parseFloat(props.productData.price);
-
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        // let server = "http://localhost:8118/api"
-
         let url = `${server}/user/?`
 
         let required_params = ["user_id"];
