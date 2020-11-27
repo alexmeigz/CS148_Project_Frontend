@@ -73,7 +73,7 @@ function VendorsPage (props) {
                 isLoggedIn={props.isLoggedIn} 
                 user={props.user} 
                 onUserChange={props.onUserChange} 
-                vendor_id={vendorData.vendor.user_id}
+                vendor={vendorData.vendor}
             />);
         }
     };
