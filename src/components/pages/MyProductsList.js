@@ -12,13 +12,7 @@ import ProductView from "./ProductView";
 // import ContactUsFooter from "../common/ContactUsFooter";
 // import AccountInfoBar from "../common/AccountInfoBar"
 
-function MyProductsList (props) { 
-    let vendor_id = props.user.user_id;
-    if (props.vendor_id) {
-        vendor_id = props.vendor_id;
-    }
-    
-
+function MyProductsList (props) {   
     let server = "https://nutriflix-flask-backend.herokuapp.com/api"
     if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
         server = "http://localhost:8118/api"
@@ -33,25 +27,20 @@ function MyProductsList (props) {
     const [productView, setProductView] = useState(<ProductView />)
 
     useEffect(() => {
-        const interval = setInterval(() => {
-        if (isListView) {
-            let newUrl = `${server}/product/?display_all=True&vendor_id=${vendor_id}`
-            fetch(newUrl, {
-                method: 'GET',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },              
-            })
-            .then(response => response.json()) 
-            .then(data => {
-                setResults(data)
-            })
-            .catch((error) => console.log("Error: " + error))
-        }
-        }, 500);
-        return () => clearInterval(interval);
-    }, [server, vendor_id, isListView])
+        let newUrl = `${server}/product/?display_all=True&vendor_id=${props.user.user_id}`
+        fetch(newUrl, {
+            method: 'GET',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },              
+        })
+        .then(response => response.json()) 
+        .then(data => {
+            setResults(data)
+        })
+        .catch((error) => console.log("Error: " + error))
+    }, [server, props.user.user_id, isListView])
     
     function changeView(event, type, productData) {
         setIsListView(prevIsListView => !prevIsListView);
@@ -76,7 +65,7 @@ function MyProductsList (props) {
             </div>
 
             : <div className="container">
-                
+                <h1> My Products </h1>
                 <div className="my_product_panel">
                     <div className="title">
                         Product Results (Total: {Object.keys(results).length})

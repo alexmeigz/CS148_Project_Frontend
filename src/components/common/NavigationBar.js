@@ -29,7 +29,6 @@ function NavigationBar(props) {
                 <li className="navigation-links">
                     <ul>
                         <li><Link to="/">Home</Link></li>
-                        <li><Link to="/posts">Posts</Link></li>
                         <li><Link to="/maps">Maps</Link></li>
                         <li><Link to="/vendors">Vendors</Link></li>
                         <li><Link to="/recipes">Recipes</Link></li>

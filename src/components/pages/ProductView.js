@@ -24,31 +24,7 @@ function ProductView(props) {
 
     function updateProduct(event) {
         event.preventDefault();
-
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        // let server = "http://localhost:8118/api"
-
-        let url = `${server}/product/?product_id=${props.productData["product_id"]}`
-
-        fetch(url, 
-            {
-                method: 'PATCH',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },           
-            })
-            .then(response => response.json()) 
-                .then(data => {
-                if(data["message"] === "Product successfully removed"){
-                    alert("Product successfully removed")
-                    setRemoved(true);
-                }
-                else{
-                    alert(`Error deleting product: ${data["message"]}`)
-                }
-            })
-            .catch((error) => console.log("Product delete error: "+ error))
+        // TODO
     }
 
     function removeProduct(event) {
