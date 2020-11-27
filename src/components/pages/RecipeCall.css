@@ -1,0 +1,10 @@
+* {
+    margin: 0%;
+  }
+.all {
+    display: flex;
+}
+.form_input {
+  display: flex;
+  justify-content: center;
+}

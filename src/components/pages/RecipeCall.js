@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import Display from './Display';
+import "./RecipeCall.css";
 
 function RecipeCall(props) {
-
     const [state, updateState] = useState({
-        q: ""
+        q: "",
+        health: "",
+        // calories: "",
+        excluded: "",
+        showHideDemo: false
     })
+
+    const [results, setResults] = useState({});
 
     function handleChange(evt) { //updating form elements, nested function
         const name = evt.target.name //defined in render
@@ -17,12 +24,21 @@ function RecipeCall(props) {
     }
 
     const submitForm = (evt) => {  //send creds to backend, nested arrow function
+        // alert("button clicked")
         evt.preventDefault();
 
-        let url = `https://api.edamam.com/search?q=${state.q}&app_id=91203381&app_key=0449d632515eb9ee5ed2ed611e0c8032&from=0&to=3`
-
-
-        fetch(url,
+        let url = `https://api.edamam.com/search?q=${state.q}&app_id=394088d7&app_key=cc0cb85ce098f755f855195231d1fe9f&from=0&to=3`
+        let newUrl = url;
+        if (state.health !== "") {
+            newUrl += `&health=${state.health}`
+        }
+        if (state.excluded !== "") {
+            newUrl += `&excluded=${state.excluded}`
+        }
+        // if (state.calories !== "") {
+        //     newUrl += `&calories=${state.calories}`
+        // }
+        fetch(newUrl,
             {
                 method: 'GET',
                 headers: {
@@ -33,9 +49,12 @@ function RecipeCall(props) {
             .then(response => response.json())
             .then(data => {
                 if (data["more"]) {
-                    alert(`${data["hits"][0]["recipe"]["source"]}`)
+                    setResults(data)
+                    state.showHideDemo = true;
+
+                    alert(`${results["hits"][0]["recipe"]["shareAs"]}`)
                     // console.log(data)
-                    //Need to add Redirect after creating Product
+
                 }
                 else {
                     alert(`Error with parameters`)
@@ -46,13 +65,54 @@ function RecipeCall(props) {
 
     return (
         <div>
+            <br />
             <form onSubmit={submitForm}>
                 <div className="form_input">
                     <label className="form_label" for="q"> Search: </label>
                     <input className="form_field" type="text" value={state.q} name="q" onChange={handleChange} />
                 </div>
-                <input className="form_submit" type="submit" value="Submit" />
+                <div className="form_input">
+                    <label className="form_label" for="health"> Health: </label>
+                    <input className="form_field" type="text" value={state.health} name="health" onChange={handleChange} />
+                </div>
+                {/* <div className="form_input">
+                    <label className="form_label" for="calories"> Calories: </label>
+                    <input className="form_field" type="text" value={state.calories} name="calories" onChange={handleChange} />
+                </div> */}
+                <div className="form_input">
+                    <label className="form_label" for="excluded"> Excluded: </label>
+                    <input className="form_field" type="text" value={state.excluded} name="excluded" onChange={handleChange} />
+                </div>
+                <br /><br /><br />
+                <center><input className="form_submit" type="submit" value="Submit" /></center>
             </form>
+            {/* {isTrue === 1 ?
+                <Display
+                    website={results["hits"][0]["recipe"]["shareAs"]}
+                    imgUrl={results["hits"][0]["recipe"]["image"]}
+                    info={"hi"}
+                />
+                : null
+            } */}
+            {state.showHideDemo &&
+                <div className="all">
+                    <Display
+                        website={results["hits"][0]["recipe"]["shareAs"]}
+                        imgUrl={results["hits"][0]["recipe"]["image"]}
+                        info={results["hits"][0]["recipe"]["label"]}
+                    />
+                    <Display
+                        website={results["hits"][1]["recipe"]["shareAs"]}
+                        imgUrl={results["hits"][1]["recipe"]["image"]}
+                        info={results["hits"][1]["recipe"]["label"]}
+                    />
+                    <Display
+                        website={results["hits"][2]["recipe"]["shareAs"]}
+                        imgUrl={results["hits"][2]["recipe"]["image"]}
+                        info={results["hits"][2]["recipe"]["label"]}
+                    />
+                </div>
+            }
         </div>
     )
 }
