@@ -29,8 +29,8 @@ function ProductForm(props) {
     const submitForm = (evt) => {  //send creds to backend, nested arrow function
       evt.preventDefault();
 	
-      //let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-      let server = "http://localhost:8118/api"
+      let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+      // let server = "http://localhost:8118/api"
     
       let url = `${server}/product/?`
       for(const param in state){
