@@ -1,15 +1,16 @@
-// AdminPage.js
-// Engineer: Alex Mei
+// SubmitReportPage.js
+// Engineer: Pranav Acharya
 
 import React from 'react';
 
 import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar";
-import VendorApps from "./VendorApps"
-import ReportList from "./ReportList"
 
-function AdminPage (props) {
+import ReportForm from "./ReportForm";
+
+function SubmitReportPage (props) {
+
     function handleLoginChange(value) {
         props.onLoginChange(value)
     }
@@ -17,19 +18,16 @@ function AdminPage (props) {
         props.onUserChange(value)
     }
     return (
+        // TODO
         <div>
             <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} />
             {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
 
-            <h1> Admin Panel </h1>
-
-            <VendorApps user={props.user} onUserChange={handleUserChange} />
-
-            <ReportList user={props.user} onUserChange={handleUserChange} />
+            <ReportForm />
 
             <ContactUsFooter />
         </div>
     );
 };
 
-export default AdminPage;
+export default SubmitReportPage;
