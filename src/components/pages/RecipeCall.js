@@ -27,7 +27,7 @@ function RecipeCall(props) {
         // alert("button clicked")
         evt.preventDefault();
 
-        let url = `https://api.edamam.com/search?q=${state.q}&app_id=394088d7&app_key=cc0cb85ce098f755f855195231d1fe9f&from=0&to=3`
+        let url = `https://api.edamam.com/search?q=${state.q}&app_id=394088d7&app_key=cc0cb85ce098f755f855195231d1fe9f&from=0&to=60`
         let newUrl = url;
         if (state.health !== "") {
             newUrl += `&health=${state.health}`
@@ -97,21 +97,13 @@ function RecipeCall(props) {
             } */}
             {state.showHideDemo &&
                 <div className="all">
-                    <Display
-                        website={results["hits"][0]["recipe"]["shareAs"]}
-                        imgUrl={results["hits"][0]["recipe"]["image"]}
-                        info={results["hits"][0]["recipe"]["label"]}
-                    />
-                    <Display
-                        website={results["hits"][1]["recipe"]["shareAs"]}
-                        imgUrl={results["hits"][1]["recipe"]["image"]}
-                        info={results["hits"][1]["recipe"]["label"]}
-                    />
-                    <Display
-                        website={results["hits"][2]["recipe"]["shareAs"]}
-                        imgUrl={results["hits"][2]["recipe"]["image"]}
-                        info={results["hits"][2]["recipe"]["label"]}
-                    />
+                    {Object.values(results["hits"]).map(recipe => (
+                        <Display
+                            website={recipe["recipe"]["shareAs"]}
+                            imgUrl={recipe["recipe"]["image"]}
+                            info={recipe["recipe"]["label"]}
+                        />
+                    ))}
                 </div>
             }
         </div>
