@@ -33,25 +33,27 @@ function PostsList (props) {
     const [isListView, setIsListView] = useState(true);
     const [postView, setPostView] = useState(<BlogView />)
 
-    // useEffect(() => {
-    //     // let newUrl = url + `&product_name=${query}`
-    //     let newUrl = url
-    //     if(filters["subscription"] != null){
-    //         newUrl += `&subscription=${filters["subscription"]}`
-    //     }
-    //     fetch(newUrl, {
-    //         method: 'GET',
-    //         headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json'
-    //         },              
-    //     })
-    //     .then(response => response.json()) 
-    //     .then(data => {
-    //         setResults(data)
-    //     })
-    //     .catch((error) => console.log("Error: " + error))
-    // }, [isListView, filters, query, url])
+    useEffect(() => {
+        // let newUrl = url + `&product_name=${query}`
+        if (isListView) {
+            let newUrl = url
+            if(filters["subscription"] != null){
+                newUrl += `&subscription=${filters["subscription"]}`
+            }
+            fetch(newUrl, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },              
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                setResults(data)
+            })
+            .catch((error) => console.log("Error: " + error))
+        }
+    }, [isListView, filters, query, url])
 
     function search(e){
         if(e.key === "Enter"){
