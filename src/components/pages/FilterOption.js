@@ -19,7 +19,7 @@ function FilterOption(args) {
                             args["changeFilter"]({
                                 ...args["filters"],
                                 [args["param"]]: !!args["value"]
-                            }, args["onChange"]("subscription", !!args["value"]))
+                            }, args["onChange"](args["param"], !!args["value"]))
                         }
                     }
                     else if(args["field"] === !!args["value"]){
@@ -32,7 +32,7 @@ function FilterOption(args) {
                         args["changeFilter"]({
                             ...args["filters"],
                             [args["param"]]: !!!args["value"]
-                        }, args["onChange"]("subscription", !!!args["value"]))
+                        }, args["onChange"](args["param"], !!!args["value"]))
                     }
                 }} />
             <label for={args["name"]} className="filter_label"> {args["name"]} </label> 

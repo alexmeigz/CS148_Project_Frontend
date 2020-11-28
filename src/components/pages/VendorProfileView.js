@@ -1,21 +1,31 @@
 // VendorProfileView.js
 // Engineer: Joseph Ng
 
-import React from 'react';
+import React, {useState} from 'react';
 import "./MyProfilePage.css"
 import MyProductsList from "./MyProductsList";
 
 function VendorProfileView(props) {
+    const [displayInfo] = useState(
+        props.vendor ? {
+            ...props.vendor
+        }:
+        {
+            ...props.user
+        }
+    )
+    
     return (
         <div>
             <div className="vendor-picture-pane">
                 <img className="vendor-picture"
-                    src={props.user.vendor_image_url}
+                    src={displayInfo.vendor_image_url}
                     alt="Vendor Profile"
                 />
+                <h1> Welcome to {displayInfo.username}'s Store </h1>
             </div>
             <div className="vendor-details">
-                <MyProductsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={props.onUserChange} />
+                <MyProductsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={props.onUserChange} vendor_id={displayInfo.user_id}/>
             </div>
         </div>
     )

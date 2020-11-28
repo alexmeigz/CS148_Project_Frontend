@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import "./MyProfilePage.css"
+import "./Vendor.css"
 
 import VendorProfileView from "./VendorProfileView";
 
@@ -64,7 +65,6 @@ function MyVendorProfileView(props) {
             }
         });
         
-        console.log(url);
         fetch(url, 
             {
               method: 'PATCH',
@@ -113,7 +113,7 @@ function MyVendorProfileView(props) {
             </div>
             
             <div className="vendor-info">
-                <VendorProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange} />
+                <VendorProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange} vendor_id={props.user.user_id}/>
             </div>
         </div>
     )

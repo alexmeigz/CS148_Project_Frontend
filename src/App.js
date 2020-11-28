@@ -10,9 +10,10 @@ import { Route, Switch } from 'react-router-dom';
 // import AccountInfoBar from "./components/common/AccountInfoBar";
 
 import DefaultHomePage from './components/pages/DefaultHomePage';
-import MapsPage from './components/pages/MapsPage'
+import MapsPage from './components/pages/MapsPage';
 import VendorsPage from './components/pages/VendorsPage';
-import RecipesPage from './components/pages/RecipesPage'
+import RecipesPage from './components/pages/RecipesPage';
+import PostsPage from './components/pages/PostsPage';
 import ProductsPage from './components/pages/ProductsPage';
 import LoginPage from "./components/pages/LoginPage";
 import LogoutPage from "./components/pages/LogoutPage";
@@ -29,8 +30,9 @@ import ErrorPage from './components/pages/ErrorPage';
 
 //import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
-
-import RecipeCall from './components/pages/RecipeCall';
+import RecipeCall from './components/pages/RecipeCall'
+import RecipeCall2 from './components/pages/RecipeCall2';
+import RecipeCall3 from './components/pages/RecipeCall3';
 
 function App() {
     // eslint-disable-next-line
@@ -67,6 +69,14 @@ function App() {
             <Switch>
                 <Route path="/" exact>
                     <DefaultHomePage
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
+                </Route>
+                <Route path="/posts">
+                    <PostsPage
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
@@ -195,9 +205,26 @@ function App() {
                         onUserChange={handleUserChange}
                     />
                 </Route>
-
                 <Route path="/recipe-call">
                     <RecipeCall
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
+                </Route>
+
+                <Route path="/recipe-call2">
+                    <RecipeCall2
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
+                </Route>
+
+                <Route path="/recipe-call3">
+                    <RecipeCall3
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}

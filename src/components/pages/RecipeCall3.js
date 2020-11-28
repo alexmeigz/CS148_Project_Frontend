@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function RecipeIngredientCall(props) {
+function RecipeCall3(props) {
 
     const [state, updateState] = useState({
         q: ""
@@ -33,7 +33,7 @@ function RecipeIngredientCall(props) {
             .then(response => response.json())
             .then(data => {
                 if (data["more"]) {
-                    alert(`${data["hits"][0]["recipe"]["source"]}`)
+                    alert(`${data["hits"][0]["recipe"]["label"]}`)
                     // console.log(data)
                     //Need to add Redirect after creating Product
                 }
@@ -56,4 +56,4 @@ function RecipeIngredientCall(props) {
         </div>
     )
 }
-export default RecipeIngredientCall;
+export default RecipeCall3;
