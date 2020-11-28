@@ -93,7 +93,7 @@ function ReportList (props) {
 
             ? <div>   
                 <h1> Review Application </h1>
-                {<ApplicationView applicationData={applicationData} />}
+                {<ReportView applicationData={applicationData} />}
                 <button className="product_back_button" onClick={(e) => changeView(e, "product-view")}> Back </button>
                 <button className="product_back_button" onClick={() => approveApplication()}> Approve </button>
                 <button className="product_back_button" onClick={() => denyApplication()}> Deny </button>
