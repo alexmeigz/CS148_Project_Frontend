@@ -32,6 +32,7 @@ import ErrorPage from './components/pages/ErrorPage';
 import RecipeCall from './components/pages/RecipeCall'
 import RecipeCall2 from './components/pages/RecipeCall2';
 import RecipeCall3 from './components/pages/RecipeCall3';
+import GoogleMapLoader from "./components/pages/Maps"
 
 function App() {
     // eslint-disable-next-line
@@ -215,6 +216,15 @@ function App() {
 
                 <Route path="/recipe-call3">
                     <RecipeCall3
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
+                </Route>
+
+                <Route path="/google-maps">
+                    <GoogleMapLoader
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
