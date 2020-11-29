@@ -9,6 +9,7 @@ import React, {useState} from "react";
 
 // import ProductPane from "./ProductPane.js"
 
+import ProductUpdatePanel from "./ProductUpdatePanel"
 import "./ProductView.css"
 
 function ProductView(props) {
@@ -22,33 +23,11 @@ function ProductView(props) {
         // TODO
     }
 
+
     function updateProduct(event) {
         event.preventDefault();
-
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        // let server = "http://localhost:8118/api"
-
-        let url = `${server}/product/?product_id=${props.productData["product_id"]}`
-
-        fetch(url, 
-            {
-                method: 'PATCH',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },           
-            })
-            .then(response => response.json()) 
-                .then(data => {
-                if(data["message"] === "Product successfully removed"){
-                    alert("Product successfully removed")
-                    setRemoved(true);
-                }
-                else{
-                    alert(`Error deleting product: ${data["message"]}`)
-                }
-            })
-            .catch((error) => console.log("Product delete error: "+ error))
+        setUpdating((prevUpdating => !prevUpdating));
+        
     }
 
     function removeProduct(event) {
@@ -186,8 +165,13 @@ function ProductView(props) {
             {props.user.user_id === props.productData.vendor_id
             ? <div>
                 <button className="remove-product" onClick={removeProduct} disabled={removed}>{!removed ? "Remove Product": "Removed!"}</button>
-                <button className="update-product" onClick={updateProduct} disabled={true}>{!updating ? "Update Product": "Submit Update!"}</button>
+                <button className="update-product" onClick={updateProduct} >{!updating ? "Update Product": "Cancel Updating Product"}</button>
             </div>
+            : null
+            }
+
+            {updating
+            ? <ProductUpdatePanel productData={props.productData} cancelUpdate={() => setUpdating(false)}/>
             : null
             }
             

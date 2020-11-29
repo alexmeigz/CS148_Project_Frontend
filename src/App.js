@@ -35,7 +35,7 @@ import RecipeCall3 from './components/pages/RecipeCall3';
 
 function App() {
     // eslint-disable-next-line
-    var id = 1;
+    
     // eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false); // testing conditional rendering
     // eslint-disable-next-line
