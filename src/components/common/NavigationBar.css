@@ -6,7 +6,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #AC447D;
     width: 100%;
 }
 
@@ -17,7 +17,8 @@
 
 .logo img {
     height: 50px;
-    width: 50px;
+    width: auto;
+    margin: 8px 5px -8px 10px;
     object-fit: cover;
 }
 
@@ -26,7 +27,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #AC447D;
     float: right;
 }
 
@@ -35,7 +36,7 @@
 }
 
 .navigation-links ul li:last-child {
-    border-left: 1px solid #bbb;
+    border-left: 1px solid #f8c13a;
 }
 
 .navigation-links ul li:last-child li:last-child {
@@ -47,16 +48,17 @@
     color: white;
     text-align: center;
     padding: 14px 16px;
-    text-decoration: none;
+    font-weight: 600;
+    font-size: 20px;
 }
   
 /* Change the link color to #111 (black) on hover */
 .navigation-links a:hover {
-    background-color: #111;
+    background-color: #4783C7;
 }
 
 .profile {
-    border-left: 1px solid #bbb;
+    border-left: 1px solid #f8c13a;
 }
 
 /* .active {
