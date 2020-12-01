@@ -1,16 +1,16 @@
 // ReportList.js
-// Engineer: Alex Mei
+// Engineer: Pranav Acharya
 
 import React, { useState, useEffect } from 'react';
 
 import "./Application.css"
-import ApplicationView from "./ApplicationView";
+import ReportView from "./ReportView";
 import ReportPane from "./ReportPane"
 
 function ReportList (props) {   
     const [results, setResults] = useState({});
     const [isListView, setIsListView] = useState(true);
-    const [applicationData, setApplicationData] = useState({})
+    const [reportData, setReportData] = useState({})
 
     useEffect(() => {
         // const url = `https://nutriflix-flask-backend.herokuapp.com/api/application/?display_all=True`
@@ -29,21 +29,21 @@ function ReportList (props) {
         })
         .catch((error) => console.log("Error: " + error))
     }, [])
-    //Dont need this to just display reports
-    function changeView(event, type, applicationData) {
+
+    function changeView(event, type, reportData) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "product-pane") {
-            setApplicationData(applicationData);
+            setReportData(reportData);
         }
     };
-//Dont need this to just display reports
-    function approveApplication(){
-        console.log(applicationData)
+
+    function banUser(){
+        console.log(reportData)
         const url = `http://localhost:8118/api/`
-        const userurl = `user/?user_id=${applicationData["user"]}&account_type=${applicationData["type"]}`
-        const applicationurl = `application/?id=${applicationData["id"]}`
+        const userurl = `user/?user_id=${reportData["reportedUser_id"]}`
+        const reporturl = `report/?report_id=${reportData["report_id"]}`
         fetch(url+userurl, {
-            method: 'PATCH',
+            method: 'DELETE',
             headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ function ReportList (props) {
         .then(response => response.json()) 
         .then(data => {
             alert(data["message"])
-            fetch(url+applicationurl, {
+            fetch(url+reporturl, {
                 method: 'DELETE',
                 headers: {
                 'Accept': 'application/json',
@@ -68,9 +68,10 @@ function ReportList (props) {
         })
         .catch((error) => console.log("Error: " + error))
     }
-    //Dont need this to just display reports
-    function denyApplication(){
-        const url = `http://localhost:8118/api/application/?id=${applicationData["id"]}`
+    //Delete report
+    function deleteReport(){
+        const url = `http://localhost:8118/api/report/?report_id=${reportData["report_id"]}`
+        console.log(url)
         fetch(url, {
             method: 'DELETE',
             headers: {
@@ -93,10 +94,10 @@ function ReportList (props) {
 
             ? <div>   
                 <h1> Review Application </h1>
-                {<ApplicationView applicationData={applicationData} />}
+                {<ReportView reportData={reportData} />}
                 <button className="product_back_button" onClick={(e) => changeView(e, "product-view")}> Back </button>
-                <button className="product_back_button" onClick={() => approveApplication()}> Approve </button>
-                <button className="product_back_button" onClick={() => denyApplication()}> Deny </button>
+                <button className="product_back_button" onClick={() => banUser()}> Ban Reported User </button>
+                <button className="product_back_button" onClick={() => deleteReport()}> Delete Report</button>
             </div>
 
             : <div>
@@ -111,20 +112,28 @@ function ReportList (props) {
                             Report Date
                         </div>
                         <div className="application_user">
-                            Report Submitted By
+                            Report Submitted By (ID)
                         </div>
                         <div className="application_user">
-                            Reported User
+                            Reported User (ID)
                         </div>
                     </div>
 
                         {Object.values(results).map(report => (
+                            <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
+                                userReporter_id: report["userReporter_id"],
+                                reportedUser_id: report["reportedUser_id"],                               
+                                reportDate: report["reportDate"],
+                                reportText: report["reportText"],
+                                report_id: report["report_id"]
+                            })}>
 
                                 <ReportPane 
                                     reportDate={report["reportDate"]}
                                     userReporter={report["userReporter_id"]}
                                     reportedUser={report["reportedUser_id"]} 
                                 />   
+                                </button> 
                         ))}                
                 </div>
             }
