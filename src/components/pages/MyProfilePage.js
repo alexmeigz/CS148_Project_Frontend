@@ -12,6 +12,7 @@ import AccountInfoBar from "../common/AccountInfoBar";
 import ApplForm from "./CreateAppl";
 import ProfileView from "./ProfileView";
 import MyVendorProfileView from "./MyVendorProfileView";
+import MyPublicProfileView from "./MyPublicProfileView";
 
 import "./MyProfilePage.css";
 
@@ -22,20 +23,32 @@ function MyProfilePage (props) {
     const [isVendorApplicationView, setIsVendorApplicationView] = useState(false);
     // eslint-disable-next-line
     const [isVendorProfileView, setIsVendorProfileView] = useState(false);
+    // eslint-disable-next-line
+    const [isPublicProfileView, setIsPublicProfileView] = useState(false);
 
     function toggleView(e) {
         if (e.target.className === "vendor-application-button") {
             setIsProfileView(false);
             setIsVendorApplicationView(true);
             setIsVendorProfileView(false);
+            setIsPublicProfileView(false);
         } else if (e.target.className === "vendor-profile-button") {
             setIsProfileView(false);
             setIsVendorApplicationView(false);
             setIsVendorProfileView(true);
-        } else if (e.target.className === "back-button") {
+            setIsPublicProfileView(false);
+        }
+        else if (e.target.className === "public-profile-button") {
+            setIsProfileView(false);
+            setIsVendorApplicationView(false);
+            setIsVendorProfileView(false);
+            setIsPublicProfileView(true);
+        } 
+        else if (e.target.className === "back-button") {
             setIsProfileView(true);
             setIsVendorApplicationView(false);
             setIsVendorProfileView(false);
+            setIsPublicProfileView(false);
         }
         
     }
@@ -66,6 +79,10 @@ function MyProfilePage (props) {
                                 ? <button className="vendor-profile-button" onClick={toggleView}>Vendor Profile</button>
                                 : null
                             }
+                            {props.user.account_type === "Business" || props.user.account_type === "Home" || props.user.account_type === "Admin"
+                                ? <button className="public-profile-button" onClick={toggleView}> Public Profile </button>
+                                : null
+                            }
                         </div>
                         : <button className="back-button" onClick={toggleView}>Back</button>
                     }
@@ -82,6 +99,10 @@ function MyProfilePage (props) {
                     }
                     {isVendorProfileView
                         ? <MyVendorProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>
+                        : null
+                    }
+                    {isPublicProfileView
+                        ? <MyPublicProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>
                         : null
                     }
 

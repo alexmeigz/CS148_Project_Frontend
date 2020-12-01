@@ -1,10 +1,10 @@
-// MyProductsList.js
+// MyPostsList.js
 // Engineer: Alex Mei
 
 import React, { useState, useEffect } from 'react';
 
 import "./Product.css"
-import ProductPane from "./ProductPane.js"
+import PostsPane from "./PostsPane.js"
 
 import ProductView from "./ProductView";
 
@@ -12,7 +12,7 @@ import ProductView from "./ProductView";
 // import ContactUsFooter from "../common/ContactUsFooter";
 // import AccountInfoBar from "../common/AccountInfoBar"
 
-function MyProductsList (props) { 
+function MyPostsList (props) { 
     let vendor_id = props.user.user_id;
     if (props.vendor_id) {
         vendor_id = props.vendor_id;
@@ -33,9 +33,10 @@ function MyProductsList (props) {
     const [productView, setProductView] = useState(<ProductView />)
 
     useEffect(() => {
-        // const interval = setInterval(() => {
+        
         if (isListView) {
-            let newUrl = `${server}/product/?display_all=True&vendor_id=${vendor_id}`
+            let newUrl = `${server}/post/?display_all=True&user_id=${vendor_id}`
+            console.log(newUrl)
             fetch(newUrl, {
                 method: 'GET',
                 headers: {
@@ -78,32 +79,43 @@ function MyProductsList (props) {
             : <div className="container">
                 
                 <div className="my_product_panel">
-                    <div className="title">
-                        Product Results (Total: {Object.keys(results).length})
+                <div className="title">
+                        Post Results (Total: {Object.keys(results).length})
                     </div>
-                    {Object.values(results).map(product => (
-                        <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
-                            name: product["product_name"],
-                            price: product["price"],
-                            list_date: product["list_date"],
-                            location: product["location"],
-                            subscription: product["subscription"],
-                            caption: product["caption"],
-                            image_url: product["image_url"],
-                            vendor_id: product["vendor_id"],
-                            product_id: product["product_id"]
-                        })}>
-                            <ProductPane 
-                                name={product["product_name"]} 
-                                price={product["price"]}
-                                list_date={product["list_date"]}
-                                location={product["location"]}
-                                subscription={product["subscription"]}
-                                caption={product["caption"]}
-                                image_url={product["image_url"]}
-                                vendor_id={product["vendor_id"]}
-                                product_id={product["product_id"]}
-                            />
+                    {Object.values(results).map(post => (
+                        <button className="product_panel_button" 
+                            onClick={(e) => changeView(e, "product-pane", post)}>
+                            {post["post_type"] === "blog" &&
+                                <PostsPane 
+                                    title={post["title"]} 
+                                    image={post["image_url"]}
+                                    caption={post["content"]}
+                                    reacts={post["reacted_users"].length}
+                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                />
+                            }
+                            {post["post_type"] === "review" &&
+                                <PostsPane 
+                                    title={post["title"]} 
+                                    image={post["image_url"]}
+                                    caption={post["content"]}
+                                    rating={post["rating"]}
+                                    reacts={post["reacted_users"].length}
+                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                />
+                            }
+                            {post["post_type"] === "recipe" &&
+                                <PostsPane 
+                                    title={post["title"]} 
+                                    image={post["image_url"]}
+                                    caption={post["caption"]}
+                                    ingredients={post["ingredients"]}
+                                    instructions={post["instructions"]}
+                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                    reacts={post["reacted_users"].length}
+                                />
+                            }
+                            
                         </button>
                     ))}
                 </div>
@@ -113,4 +125,4 @@ function MyProductsList (props) {
     );
 };
 
-export default MyProductsList;
+export default MyPostsList;

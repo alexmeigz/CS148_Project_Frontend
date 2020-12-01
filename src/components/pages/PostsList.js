@@ -40,7 +40,6 @@ function PostsList (props) {
               newUrl += `&${f}=${filters[f]}`
             }
         }
-        console.log("Hello World: " + newUrl)
         fetch(newUrl, {
             method: 'GET',
             headers: {
