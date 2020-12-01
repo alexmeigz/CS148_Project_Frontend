@@ -13,33 +13,35 @@ import ReviewView from "./ReviewView";
 import RecipeView from "./RecipeView";
 
 function PostsList (props) {   
-    let server = "http://localhost:8118/api"
-    if (process.env.REACT_APP_REMOTE === "1") { 
-        server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    }
-    if (process.env.NODE_ENV !== "development") {
-        server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    }
-
-    const url = `${server}/post/?display_all=True`
-    
     const [results, setResults] = useState({});
     const [query, setQuery] = useState("");
     const [filters, setFilters] = useState({
-        subscription : null
+        recipe: null,
+        blog: null,
+        review: null
     });
 
     const [isListView, setIsListView] = useState(true);
     const [postView, setPostView] = useState(<BlogView />)
 
     useEffect(() => {
-        /*
-        let newUrl = url + `&product_name=${query}`
-        if(filters["subscription"] != null){
-            newUrl += `&subscription=${filters["subscription"]}`
+        let server = "http://localhost:8118/api"
+        if (process.env.REACT_APP_REMOTE === "1") { 
+            server = "https://nutriflix-flask-backend.herokuapp.com/api"
         }
-        */
-        fetch(url, {
+        if (process.env.NODE_ENV !== "development") {
+            server = "https://nutriflix-flask-backend.herokuapp.com/api"
+        }
+        const url = `${server}/post/?display_all=True`
+
+        let newUrl = url + `&title=${query}`
+        for(const f in filters){
+            if(filters[f] !== null){
+              newUrl += `&${f}=${filters[f]}`
+            }
+        }
+        console.log("Hello World: " + newUrl)
+        fetch(newUrl, {
             method: 'GET',
             headers: {
             'Accept': 'application/json',
@@ -51,50 +53,16 @@ function PostsList (props) {
             setResults(data)
         })
         .catch((error) => console.log("Error: " + error))
-    }, [isListView, filters, query, url])
+    }, [isListView, filters, query])
 
     function search(e){
         if(e.key === "Enter"){
             setQuery(e.target.value)
-            let newUrl = url + `&product_name=${e.target.value}`
-            if(filters["subscription"] != null){
-                newUrl += `&subscription=${filters["subscription"]}`
-            }
-            fetch(newUrl, {
-                method: 'GET',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },              
-            })
-            .then(response => response.json()) 
-            .then(data => {
-                setResults(data)
-            })
-            .catch((error) => console.log("Error: " + error))
         }
     }
 
     function filter(param, value){
-        console.log(query)
-        let newUrl = url + `&product_name=${query}`
-        if(param != null){
-            newUrl += `&${param}=${value}`
-        }
-        console.log(newUrl)
-        fetch(newUrl, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },              
-            })
-        .then(response => response.json()) 
-        .then(data => {
-            console.log(data)
-            setResults(data)
-        })
-        .catch((error) => console.log("SaveCreds saveCreds: Fetch Failure (is server up?): "+ error))
+        
     }
     
     function changeView(event, type, postData) {
@@ -140,16 +108,19 @@ function PostsList (props) {
             : <div className="container">
                 <h1> Posts </h1>
                 <div className="side_panel">
-                    <input className="search_bar" placeholder="Search products..." onKeyDown={search} />
+                    <input className="search_bar" placeholder="Search posts..." onKeyDown={search} />
                     <div className="title">
                         Filters
                     </div>
                     <div className="filters"> 
-                        <FilterOption name="Single Purchase" param="subscription" value="" 
-                            filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription} 
+                        <FilterOption name="Blog Posts" param="blog" value="true" 
+                            filters={filters} changeFilter={setFilters} onChange={filter} field={filters.blog} 
                         />
-                        <FilterOption name="Subscription Based" param="subscription" value="true" 
-                            filters={filters} changeFilter={setFilters} onChange={filter} field={filters.subscription}
+                        <FilterOption name="Reviews" param="review" value="true" 
+                            filters={filters} changeFilter={setFilters} onChange={filter} field={filters.review} 
+                        />
+                        <FilterOption name="Recipes" param="recipe" value="true" 
+                            filters={filters} changeFilter={setFilters} onChange={filter} field={filters.recipe} 
                         />
                     </div>
                 </div>
