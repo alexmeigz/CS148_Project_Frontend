@@ -5,6 +5,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './NavigationBar.css'
+import logo from '../../assets/logo.png'
 
 function NavigationBar(props) {
     var accountType = null;
@@ -21,9 +22,8 @@ function NavigationBar(props) {
         <div>
             <ul className="navigation-bar">
                 <Link to="/">
-                    <li className="logo"><img
-                        src="https://ih1.redbubble.net/image.1047402521.8408/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
-                        alt="Logo" />
+                    <li className="logo">
+                        <img src={logo} alt="" />
                     </li>
                 </Link>
                 <li className="navigation-links">

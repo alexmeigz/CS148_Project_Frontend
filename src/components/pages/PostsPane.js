@@ -7,6 +7,8 @@ import stars_4 from "../../assets/stars_4.png";
 import stars_3 from "../../assets/stars_3.png";
 import stars_2 from "../../assets/stars_2.png";
 import stars_1 from "../../assets/stars_1.png";
+import heart from "../../assets/heart.png";
+import heart_default from "../../assets/heart_default.png";
 
 function PostsPane(props) {
     if(props["image"]){
@@ -49,9 +51,17 @@ function PostsPane(props) {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="post_reacts">
-                        Reacts
-                    </div>
+                    { props["reacted"] ?
+                        <div className="post-reacts">
+                            <img className="react-image" alt="" src={heart} height="20px" />
+                            <div className="react-count"> {props["reacts"]} </div>
+                        </div>
+                        :
+                        <div className="post-reacts">
+                            <img className="react-image" alt="" src={heart_default} height="20px" />
+                            <div className="react-count"> {props["reacts"]} </div>
+                        </div>
+                    }                    
                     <div className="post_comments">
                         Comments
                     </div>
@@ -93,9 +103,17 @@ function PostsPane(props) {
                     {props["caption"]} 
                 </div>
                 <div className="row">
-                    <div className="post_reacts">
-                        Reacts
-                    </div>
+                    { props["reacted"] ?
+                        <div className="post-reacts">
+                            <img className="react-image" alt="" src={heart} height="20px" />
+                            <div className="react-count"> {props["reacts"]} </div>
+                        </div>
+                        :
+                        <div className="post-reacts">
+                            <img className="react-image" alt="" src={heart_default} height="20px" />
+                            <div className="react-count"> {props["reacts"]} </div>
+                        </div>
+                    }  
                     <div className="post_comments">
                         Comments
                     </div>
