@@ -95,56 +95,50 @@ function ProductView(props) {
             .then(response => response.json()) 
                 .then(data => {
                 if(data["message"] === "Order created successfully!"){
-                    alert("Product successfully purchased")
-                    props.onUserChange({credits: newCredits});
-                    setPurchased(true);
                     ordered = true;
                 }
                 else{
                     alert(`Error creating order info: ${data["message"]}`)
                 }
             })
+            .then(data => {
+                // update credits here
+                if (ordered) {
+                    url = `${server}/user/?`
+
+                    let required_params = ["user_id"];
+                    for(const param in props.user){
+                        if (required_params.includes(param)) {
+                            url += `&${param}=${props.user[param]}`
+                        }   
+                    }
+
+                    url += `&credits=${newCredits}`
+                
+                    fetch(url, 
+                    {
+                        method: 'PATCH',
+                        headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        },           
+                    })
+                    .then(response => response.json()) 
+                        .then(data => {
+                        if(data["message"] === "User successfully updated"){
+                            alert("Product successfully purchased")
+                            props.onUserChange({credits: newCredits});
+                            setPurchased(true);
+                        }
+                        else{
+                            alert(`Error updating user info: ${data["message"]}`)
+                        }
+                    })
+                    .catch((error) => console.log("User update error: "+ error))
+                
+                        }
+            })
             .catch((error) => console.log("Order creation error: "+ error))
-
-
-        // Update credits here
-
-        url = `${server}/user/?`
-
-        let required_params = ["user_id"];
-        for(const param in props.user){
-            if (required_params.includes(param)) {
-                url += `&${param}=${props.user[param]}`
-            }   
-        }
-
-        url += `&credits=${newCredits}`
-        if (ordered) {
-            fetch(url, 
-            {
-                method: 'PATCH',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },           
-            })
-            .then(response => response.json()) 
-                .then(data => {
-                if(data["message"] === "User successfully updated"){
-                    // alert("Product successfully purchased")
-                    // props.onUserChange({credits: newCredits});
-                    // setPurchased(true);
-                }
-                else{
-                    alert(`Error updating user info: ${data["message"]}`)
-                }
-            })
-            .catch((error) => console.log("User update error: "+ error))
-        }
-        
-
-        
-
 
     }
 
