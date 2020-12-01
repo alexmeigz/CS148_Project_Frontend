@@ -43,7 +43,7 @@ function VendorOrdersPage(props) {
     function changeView(event, type, orderData) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "order-pane" && orderData && isListView) {
-            // setVendorView(<VendorOrdersView 
+            // setOrderView(<VendorOrdersView 
             //     isLoggedIn={props.isLoggedIn} 
             //     user={props.user} 
             //     onUserChange={props.onUserChange} 
