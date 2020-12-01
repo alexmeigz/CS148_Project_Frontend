@@ -44,6 +44,11 @@ function NavigationBar(props) {
                                 : null
                             }
                         </li>
+                        <li>{(props.isLoggedIn) && (accountType === "Home" || accountType === "Business" || accountType === "Admin")
+                                ? <Link to="/vendor-orders">Vendor Orders</Link>
+                                : null
+                            }
+                        </li>
                         <li>{(props.isLoggedIn) && (accountType === "Admin")
                                 ? <Link to="/admin-panel"> Admin Panel </Link>
                                 : null

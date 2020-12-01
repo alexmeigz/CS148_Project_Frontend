@@ -23,6 +23,7 @@ import MyProductsPage from "./components/pages/MyProductsPage";
 import VendorApps from "./components/pages/VendorApps";
 import AdminPage from "./components/pages/AdminPage";
 import CreateUserPage from "./components/pages/CreateUserPage";
+import VendorOrdersPage from "./components/pages/VendorOrdersPage";
 
 import ErrorPage from './components/pages/ErrorPage';
 // import ContactUsFooter from './components/common/ContactUsFooter';
@@ -174,6 +175,18 @@ function App() {
                     </Route>)
                     : null
                 }
+                {isLoggedIn
+                    ? (<Route path="/vendor-orders">
+                        <VendorOrdersPage
+                            isLoggedIn={isLoggedIn}
+                            onLoginChange={handleLoginChange}
+                            user={user}
+                            onUserChange={handleUserChange}
+                        />
+                    </Route>)
+                    : null
+                }   
+
                 {!isLoggedIn
                     ? (<Route path="/create-user">
                         <CreateUserPage

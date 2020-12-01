@@ -75,7 +75,41 @@ function ProductView(props) {
         let server = "https://nutriflix-flask-backend.herokuapp.com/api"
         // let server = "http://localhost:8118/api"
 
-        let url = `${server}/user/?`
+
+        // TODO: send order to vendor
+
+        let url = `${server}/order/?`
+        let ordered = false;
+
+        console.log(props.productData)
+        url += `&product_id=${props.productData.product_id}&buyer_id=${props.user.user_id}&seller_id=${props.productData.vendor_id}&status=pending`
+
+        fetch(url, 
+            {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },           
+            })
+            .then(response => response.json()) 
+                .then(data => {
+                if(data["message"] === "Order created successfully!"){
+                    alert("Product successfully purchased")
+                    props.onUserChange({credits: newCredits});
+                    setPurchased(true);
+                    ordered = true;
+                }
+                else{
+                    alert(`Error creating order info: ${data["message"]}`)
+                }
+            })
+            .catch((error) => console.log("Order creation error: "+ error))
+
+
+        // Update credits here
+
+        url = `${server}/user/?`
 
         let required_params = ["user_id"];
         for(const param in props.user){
@@ -85,9 +119,8 @@ function ProductView(props) {
         }
 
         url += `&credits=${newCredits}`
-
-        
-        fetch(url, 
+        if (ordered) {
+            fetch(url, 
             {
                 method: 'PATCH',
                 headers: {
@@ -98,17 +131,21 @@ function ProductView(props) {
             .then(response => response.json()) 
                 .then(data => {
                 if(data["message"] === "User successfully updated"){
-                    alert("Product successfully purchased")
-                    props.onUserChange({credits: newCredits});
-                    setPurchased(true);
+                    // alert("Product successfully purchased")
+                    // props.onUserChange({credits: newCredits});
+                    // setPurchased(true);
                 }
                 else{
                     alert(`Error updating user info: ${data["message"]}`)
                 }
             })
             .catch((error) => console.log("User update error: "+ error))
+        }
+        
 
-        // TODO: send message to vendor
+        
+
+
     }
 
     return (
