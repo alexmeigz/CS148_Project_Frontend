@@ -64,7 +64,7 @@ function NavigationBar(props) {
 
                             <li>{!(props.isLoggedIn)
                                     ? <Link to="/login">Login</Link> // remove "onClick={() => handleLoginChange(true)}" when not testing
-                                    : <Link onClick={() => handleLoginChange(false)} to="/logout">Logout</Link>
+                                    : <Link onClick={() => handleLoginChange(false)} to="/">Logout</Link>
                                 }
                             </li>
                         </li>
