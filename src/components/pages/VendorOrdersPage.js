@@ -8,13 +8,19 @@ import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar";
 
 import OrderPane from "./OrderPane";
+import OrderView from "./OrderView";
 
+import "./Order.css"
 
 
 function VendorOrdersPage(props) {
     let server = "https://nutriflix-flask-backend.herokuapp.com/api"
     // let server = "http://localhost:8118/api"
-    const url = `${server}/order/?display_all=True`
+    let url = `${server}/order/?display_all=True&seller_id=${props.user.user_id}`
+
+    if (props.user.account_type === "Admin") {
+        url = `${server}/order/?display_all=True`
+    }
     
     const [results, setResults] = useState({});
 
@@ -43,12 +49,13 @@ function VendorOrdersPage(props) {
     function changeView(event, type, orderData) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "order-pane" && orderData && isListView) {
-            // setOrderView(<VendorOrdersView 
-            //     isLoggedIn={props.isLoggedIn} 
-            //     user={props.user} 
-            //     onUserChange={props.onUserChange} 
-            //     order={orderData.order}
-            // />);
+            setOrderView(<OrderView 
+                isLoggedIn={props.isLoggedIn} 
+                user={props.user} 
+                onUserChange={props.onUserChange} 
+                order={orderData.order}
+                isListView={isListView}
+            />);
         }
     };
 
@@ -60,7 +67,7 @@ function VendorOrdersPage(props) {
 
             {!isListView
 
-            ? <div><button className="order_back_button" onClick={(e) => changeView(e, "order-view")}>Back</button>
+            ? <div><button className="order-back-button" onClick={(e) => changeView(e, "order-view")}>Back</button>
                 {orderView}
             </div>
 
@@ -80,24 +87,18 @@ function VendorOrdersPage(props) {
                         />
                     </div>
                 </div> */}
-                <div className="order_panel">
+                <div className="order-panel">
                     <div className="title">
                         Order Results (Total: {Object.keys(results).length})
                     </div>
                     {Object.values(results).map(order => (
-                        <button className="order_panel_button" onClick={(e) => changeView(e, "order-pane", {
-                            // name: product["product_name"],
-                            // price: product["price"],
-                            // list_date: product["list_date"],
-                            // location: product["location"],
-                            // subscription: product["subscription"],
-                            // caption: product["caption"],
-                            // image_url: product["image_url"],
-                            // vendor_id: product["vendor_id"],
-                            // product_id: product["product_id"]
+                        <button className="order-panel-button" onClick={(e) => changeView(e, "order-pane", {
+                            order: order
                         })}>
                             <OrderPane 
                                 orderData={order}
+                                isListView={isListView}
+                                user={props.user}
                             />
                         </button>
                     ))}

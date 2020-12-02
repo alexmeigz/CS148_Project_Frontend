@@ -18,6 +18,7 @@ function ProductView(props) {
     // eslint-disable-next-line
     const [updating, setUpdating] = useState(false);
 
+    // eslint-disable-next-line
     function login(event) {
         event.preventDefault();
         // TODO
@@ -177,23 +178,23 @@ function ProductView(props) {
                 </div>
             </div>
 
-            {(props.isLoggedIn && props.user.user_id !== props.productData.vendor_id) || (props.user.account_type === "Admin")
+            {props.isLoggedIn && (props.user.user_id !== props.productData.vendor_id || props.user.account_type === "Admin")
             ? <div>
                 <button className="purchase-product" onClick={purchaseProduct} disabled={purchased}>{!purchased ? "Purchase Product": "Purchased!"}</button>
             </div>
             : null
             }
 
-            {!props.isLoggedIn
+            {/* {!props.isLoggedIn
             ? <div>
                 <button className="login-button" onClick={login} disabled={true}>Login to Purchase Product, use top right login button.</button> 
             </div>
             : null
-            }
+            } */}
 
 
             {/* TODO: Waiting for product model to get updated */}
-            {props.user.user_id === props.productData.vendor_id || props.user.account_type === "Admin"
+            {props.isLoggedIn && (props.user.user_id === props.productData.vendor_id || props.user.account_type === "Admin")
             ? <div>
                 <button className="remove-product" onClick={removeProduct} disabled={removed}>{!removed ? "Remove Product": "Removed!"}</button>
                 <button className="update-product" onClick={updateProduct} >{!updating ? "Update Product": "Cancel Updating Product"}</button>
