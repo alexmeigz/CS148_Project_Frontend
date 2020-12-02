@@ -82,7 +82,7 @@ function LoginForm(props) {
         </div>
         
         
-        <input className="form_submit" type="submit" value="Log in" />
+        <input className="form_submit" type="submit" value="Log in" disabled={props.isLoggedIn}/>
       </form>
       </div>
     )
