@@ -36,10 +36,83 @@ function OrderView(props) {
         
     }, [url])
 
+    function confirmOrder() {
+
+        // let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Confirmed`
+        let newUrl = `${server}/user/?user_id=${props.order.seller_id}`
+        let seller = {}
+        let sellerUpdated = false;
+
+        fetch(newUrl, {
+            method: 'GET',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },              
+        })
+        .then(response => response.json()) 
+        .then(data => {
+            seller = data;
+            newUrl = `${server}/user/?user_id=${props.order.seller_id}&credits=${seller.credits + result.price}`;
+            fetch(newUrl, {
+                method: 'PATCH',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },              
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                if(data["message"] === "User successfully updated"){
+                    sellerUpdated = true;
+                    if (sellerUpdated) {
+                        newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Confirmed`
+                        fetch(newUrl, {
+                            method: 'PATCH',
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                            },              
+                        })
+                        .then(response => response.json()) 
+                        .then(data => {
+                            if(data["message"] === "Order successfully updated"){
+                                alert("You indicated that you recieved your order")
+                                setDecided(true);
+                            }
+                        })
+                    }
+                    
+                }
+            })
+        })
+        .catch((error) => console.log("Error: " + error))
+    }
+
     function shipOrder() {
-        console.log("ship")
-        // TODO;
+
+        let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Shipped`
+
+        fetch(newUrl, {
+            method: 'PATCH',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },              
+        })
+        .then(response => response.json()) 
+        .then(data => {
+            if(data["message"] === "Order successfully updated"){
+                // alert("Order successfully updated")
+                alert("You indicated that you shipped your product")
+                setDecided(true);
+            }
+            else{
+                alert(`Error deleting order: ${data["message"]}`)
+            }
+        })
         
+        .catch((error) => console.log("Error: " + error))
     }
 
     function refundOrder() {
@@ -88,7 +161,7 @@ function OrderView(props) {
                     .then(response => response.json()) 
                     .then(data => {
                         if(data["message"] === "Order successfully updated"){
-                            alert("Order successfully updated")
+                            alert("Refund is issued to the buyer")
                             setDecided(true);
                         }
                         else{
@@ -159,13 +232,17 @@ function OrderView(props) {
                 </div>
                 {props.user.user_id === props.order.seller_id || props.user.account_type === "Admin"
                     ? <div className="order-buttons">
-                        <button className="ship-order-button" onClick={shipOrder} disabled={decided || props.order.status !== "Shipped" || props.order.status !== "Refunded"}>Ship Order</button>
-                        <button className="refund-order-button" onClick={refundOrder} disabled={decided || props.order.status !== "Refunded" || props.order.status !== "Shipped"}>Refund Order</button>
-                        <button className="delete-order-button" onClick={deleteOrder} disabled={!(!decided && props.user.account_type === "Admin") || props.order.status === "Confirmed"}>Delete Order</button>
+                        <button className="ship-order-button" onClick={shipOrder} disabled={decided || props.order.status === "Shipped" || props.order.status === "Refunded" || props.order.status === "Confirmed"}>Ship Order</button>
+                        <button className="refund-order-button" onClick={refundOrder} disabled={decided || props.order.status === "Refunded" || props.order.status === "Shipped" || props.order.status === "Confirmed"}>Refund Order</button>
+                        <button className="delete-order-button" onClick={deleteOrder} disabled={decided || !(props.user.account_type === "Admin" || props.order.status === "Confirmed")}>Delete Order</button>
                     </div>
-                    : <div className="order-buttons">
-                        {/* <button className="cancel-order-button" onClick={cancelOrder}>Cancel Order</button> */}
+                    : null
+                }
+                {props.user.user_id === props.order.buyer_id
+                    ? <div className="order-buttons">
+                        <button className="confirm-order-button" onClick={confirmOrder} disabled={(decided || props.order.status === "Pending" || props.order.status === "Confirmed")}>Confirm Order</button>
                     </div>
+                    : null
                 }
             </div>
             
