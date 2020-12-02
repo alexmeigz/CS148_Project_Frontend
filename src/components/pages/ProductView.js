@@ -177,7 +177,7 @@ function ProductView(props) {
                 </div>
             </div>
 
-            {props.isLoggedIn && props.user.user_id !== props.productData.vendor_id
+            {(props.isLoggedIn && props.user.user_id !== props.productData.vendor_id) || (props.user.account_type === "Admin")
             ? <div>
                 <button className="purchase-product" onClick={purchaseProduct} disabled={purchased}>{!purchased ? "Purchase Product": "Purchased!"}</button>
             </div>
@@ -193,7 +193,7 @@ function ProductView(props) {
 
 
             {/* TODO: Waiting for product model to get updated */}
-            {props.user.user_id === props.productData.vendor_id
+            {props.user.user_id === props.productData.vendor_id || props.user.account_type === "Admin"
             ? <div>
                 <button className="remove-product" onClick={removeProduct} disabled={removed}>{!removed ? "Remove Product": "Removed!"}</button>
                 <button className="update-product" onClick={updateProduct} >{!updating ? "Update Product": "Cancel Updating Product"}</button>
