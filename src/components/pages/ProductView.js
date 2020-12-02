@@ -83,7 +83,7 @@ function ProductView(props) {
         let ordered = false;
 
         console.log(props.productData)
-        url += `&product_id=${props.productData.product_id}&buyer_id=${props.user.user_id}&seller_id=${props.productData.vendor_id}&status=pending`
+        url += `&product_id=${props.productData.product_id}&buyer_id=${props.user.user_id}&seller_id=${props.productData.vendor_id}&status=Pending`
 
         fetch(url, 
             {

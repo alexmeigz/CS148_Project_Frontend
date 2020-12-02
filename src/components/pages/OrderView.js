@@ -13,6 +13,8 @@ function OrderView(props) {
         product_name: "Loading"
     })
 
+    const [decided, setDecided] = useState(false)
+
     let server = "https://nutriflix-flask-backend.herokuapp.com/api"
     // let server = "http://localhost:8118/api"
     let url = `${server}/product/?product_id=${props.order.product_id}`
@@ -36,9 +38,11 @@ function OrderView(props) {
 
     function shipOrder() {
         console.log("ship")
+        // TODO;
+        
     }
 
-    function cancelOrder() {
+    function refundOrder() {
         let newUrl = `${server}/user/?user_id=${props.order.buyer_id}`
         let buyer = {}
         let buyerUpdated = false;
@@ -71,11 +75,11 @@ function OrderView(props) {
                 
             })
             .then(data => {
-                console.log(buyerUpdated)
                 if (buyerUpdated) {
-                    newUrl = `${server}/order/?order_id=${props.order.order_id}`
+
+                    newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Refunded`
                     fetch(newUrl, {
-                        method: 'DELETE',
+                        method: 'PATCH',
                         headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
@@ -83,8 +87,9 @@ function OrderView(props) {
                     })
                     .then(response => response.json()) 
                     .then(data => {
-                        if(data["message"] === "Order successfully removed"){
-                            alert("Order successfully removed")
+                        if(data["message"] === "Order successfully updated"){
+                            alert("Order successfully updated")
+                            setDecided(true);
                         }
                         else{
                             alert(`Error deleting order: ${data["message"]}`)
@@ -94,6 +99,27 @@ function OrderView(props) {
             })
         })
         .catch((error) => console.log("Error: " + error))
+    }
+
+    function deleteOrder() {
+        let newUrl = `${server}/order/?order_id=${props.order.order_id}`
+            fetch(newUrl, {
+                method: 'DELETE',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },              
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                if(data["message"] === "Order successfully removed"){
+                    alert("Order successfully removed")
+                    setDecided(true);
+                }
+                else{
+                    alert(`Error deleting order: ${data["message"]}`)
+                }
+            })
     }
 
     return (
@@ -131,10 +157,16 @@ function OrderView(props) {
                         : null
                     }
                 </div>
-                <div className="order-buttons">
-                    <button className="ship-order-button" onClick={shipOrder}>Ship Order</button>
-                    <button className="cancel-order-button" onClick={cancelOrder}>Cancel Order</button>
-                </div>
+                {props.user.user_id === props.order.seller_id || props.user.account_type === "Admin"
+                    ? <div className="order-buttons">
+                        <button className="ship-order-button" onClick={shipOrder} disabled={decided || props.order.status !== "Shipped" || props.order.status !== "Refunded"}>Ship Order</button>
+                        <button className="refund-order-button" onClick={refundOrder} disabled={decided || props.order.status !== "Refunded" || props.order.status !== "Shipped"}>Refund Order</button>
+                        <button className="delete-order-button" onClick={deleteOrder} disabled={!(!decided && props.user.account_type === "Admin") || props.order.status === "Confirmed"}>Delete Order</button>
+                    </div>
+                    : <div className="order-buttons">
+                        {/* <button className="cancel-order-button" onClick={cancelOrder}>Cancel Order</button> */}
+                    </div>
+                }
             </div>
             
             <div className="product-details">
