@@ -77,7 +77,7 @@ function OrderView(props) {
                         .then(response => response.json()) 
                         .then(data => {
                             if(data["message"] === "Order successfully updated"){
-                                alert("You indicated that you recieved your order")
+                                alert("You indicated that you received your order")
                                 setDecided(true);
                             }
                         })
