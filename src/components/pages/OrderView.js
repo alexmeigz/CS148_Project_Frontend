@@ -42,14 +42,10 @@ function OrderView(props) {
     }, [url])
 
     function confirmOrder() {
-
-        // let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Confirmed`
-        let newUrl = `${server}/user/?user_id=${props.order.seller_id}`
-        let seller = {}
-        let sellerUpdated = false;
+        let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Confirmed`
 
         fetch(newUrl, {
-            method: 'GET',
+            method: 'PATCH',
             headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -57,45 +53,69 @@ function OrderView(props) {
         })
         .then(response => response.json()) 
         .then(data => {
-            seller = data;
-            newUrl = `${server}/user/?user_id=${props.order.seller_id}&credits=${seller.credits + result.price}`;
-            fetch(newUrl, {
-                method: 'PATCH',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },              
-            })
-            .then(response => response.json()) 
-            .then(data => {
-                if(data["message"] === "User successfully updated"){
-                    sellerUpdated = true;
-                    if (sellerUpdated) {
-                        newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Confirmed`
-                        fetch(newUrl, {
-                            method: 'PATCH',
-                            headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                            },              
-                        })
-                        .then(response => response.json()) 
-                        .then(data => {
-                            if(data["message"] === "Order successfully updated"){
-                                alert("You indicated that you received your order")
-                                setDecided(true);
-                            }
-                        })
-                    }
-                    
-                }
-            })
+            if(data["message"] === "Order successfully updated"){
+                alert("You indicated that you received your product")
+                setDecided(true);
+            }
+            else{
+                alert(`Error updating order: ${data["message"]}`)
+            }
         })
         .catch((error) => console.log("Error: " + error))
+
+
+        // let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Confirmed`
+        // let newUrl = `${server}/user/?user_id=${props.order.seller_id}`
+        // let seller = {}
+        // let sellerUpdated = false;
+
+        // fetch(newUrl, {
+        //     method: 'GET',
+        //     headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json'
+        //     },              
+        // })
+        // .then(response => response.json()) 
+        // .then(data => {
+        //     seller = data;
+        //     newUrl = `${server}/user/?user_id=${props.order.seller_id}&credits=${seller.credits + result.price}`;
+        //     fetch(newUrl, {
+        //         method: 'PATCH',
+        //         headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //         },              
+        //     })
+        //     .then(response => response.json()) 
+        //     .then(data => {
+        //         if(data["message"] === "User successfully updated"){
+        //             sellerUpdated = true;
+        //             if (sellerUpdated) {
+        //                 newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Confirmed`
+        //                 fetch(newUrl, {
+        //                     method: 'PATCH',
+        //                     headers: {
+        //                     'Accept': 'application/json',
+        //                     'Content-Type': 'application/json'
+        //                     },              
+        //                 })
+        //                 .then(response => response.json()) 
+        //                 .then(data => {
+        //                     if(data["message"] === "Order successfully updated"){
+        //                         alert("You indicated that you received your order")
+        //                         setDecided(true);
+        //                     }
+        //                 })
+        //             }
+                    
+        //         }
+        //     })
+        // })
+        // .catch((error) => console.log("Error: " + error))
     }
 
     function shipOrder() {
-
         let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Shipped`
 
         fetch(newUrl, {
@@ -108,25 +128,44 @@ function OrderView(props) {
         .then(response => response.json()) 
         .then(data => {
             if(data["message"] === "Order successfully updated"){
-                // alert("Order successfully updated")
                 alert("You indicated that you shipped your product")
                 setDecided(true);
             }
             else{
-                alert(`Error deleting order: ${data["message"]}`)
+                alert(`Error updating order: ${data["message"]}`)
             }
         })
-        
         .catch((error) => console.log("Error: " + error))
+
+        // let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Shipped`
+
+        // fetch(newUrl, {
+        //     method: 'PATCH',
+        //     headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json'
+        //     },              
+        // })
+        // .then(response => response.json()) 
+        // .then(data => {
+        //     if(data["message"] === "Order successfully updated"){
+        //         // alert("Order successfully updated")
+        //         alert("You indicated that you shipped your product")
+        //         setDecided(true);
+        //     }
+        //     else{
+        //         alert(`Error deleting order: ${data["message"]}`)
+        //     }
+        // })
+        
+        // .catch((error) => console.log("Error: " + error))
     }
 
     function refundOrder() {
-        let newUrl = `${server}/user/?user_id=${props.order.buyer_id}`
-        let buyer = {}
-        let buyerUpdated = false;
+        let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Refunded`
 
         fetch(newUrl, {
-            method: 'GET',
+            method: 'PATCH',
             headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -134,49 +173,72 @@ function OrderView(props) {
         })
         .then(response => response.json()) 
         .then(data => {
-            buyer = data;
-        })
-        .then(data => {
-            newUrl = `${server}/user/?user_id=${props.order.buyer_id}&credits=${buyer.credits + result.price}`;
-            fetch(newUrl, {
-                method: 'PATCH',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },              
-            })
-            .then(response => response.json()) 
-            .then(data => {
-                if(data["message"] === "User successfully updated"){
-                    buyerUpdated = true;
-                }
-                
-            })
-            .then(data => {
-                if (buyerUpdated) {
-
-                    newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Refunded`
-                    fetch(newUrl, {
-                        method: 'PATCH',
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                        },              
-                    })
-                    .then(response => response.json()) 
-                    .then(data => {
-                        if(data["message"] === "Order successfully updated"){
-                            alert("Refund is issued to the buyer")
-                            setDecided(true);
-                        }
-                        else{
-                            alert(`Error deleting order: ${data["message"]}`)
-                        }
-                    })
-                }
-            })
+            if(data["message"] === "Order successfully updated"){
+                alert("Refund is issued to the buyer")
+                setDecided(true);
+            }
+            else{
+                alert(`Error updating order: ${data["message"]}`)
+            }
         })
         .catch((error) => console.log("Error: " + error))
+
+        // let newUrl = `${server}/user/?user_id=${props.order.buyer_id}`
+        // let buyer = {}
+        // let buyerUpdated = false;
+
+        // fetch(newUrl, {
+        //     method: 'GET',
+        //     headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json'
+        //     },              
+        // })
+        // .then(response => response.json()) 
+        // .then(data => {
+        //     buyer = data;
+        // })
+        // .then(data => {
+        //     newUrl = `${server}/user/?user_id=${props.order.buyer_id}&credits=${buyer.credits + result.price}`;
+        //     fetch(newUrl, {
+        //         method: 'PATCH',
+        //         headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //         },              
+        //     })
+        //     .then(response => response.json()) 
+        //     .then(data => {
+        //         if(data["message"] === "User successfully updated"){
+        //             buyerUpdated = true;
+        //         }
+                
+        //     })
+        //     .then(data => {
+        //         if (buyerUpdated) {
+
+        //             newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Refunded`
+        //             fetch(newUrl, {
+        //                 method: 'PATCH',
+        //                 headers: {
+        //                 'Accept': 'application/json',
+        //                 'Content-Type': 'application/json'
+        //                 },              
+        //             })
+        //             .then(response => response.json()) 
+        //             .then(data => {
+        //                 if(data["message"] === "Order successfully updated"){
+        //                     alert("Refund is issued to the buyer")
+        //                     setDecided(true);
+        //                 }
+        //                 else{
+        //                     alert(`Error deleting order: ${data["message"]}`)
+        //                 }
+        //             })
+        //         }
+        //     })
+        // })
+        // .catch((error) => console.log("Error: " + error))
     }
 
     function deleteOrder() {
