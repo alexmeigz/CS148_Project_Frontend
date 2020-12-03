@@ -82,48 +82,50 @@ function ProductView(props) {
 
 
 
-        // TODO: send order to vendor
+        // send order to vendor
 
-        let url = `${server}/order/?`
-        let ordered = false;
+        let url = `${server}/user/?`
+        let updatedUser = false;
 
-        console.log(props.productData)
-        url += `&product_id=${props.productData.product_id}&buyer_id=${props.user.user_id}&seller_id=${props.productData.vendor_id}&status=Pending`
+        let required_params = ["user_id"];
+        for(const param in props.user){
+            if (required_params.includes(param)) {
+                url += `&${param}=${props.user[param]}`
+            }   
+        }
 
+        url += `&credits=${newCredits}`
+    
         fetch(url, 
-            {
-                method: 'POST',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },           
-            })
-            .then(response => response.json()) 
-                .then(data => {
-                if(data["message"] === "Order created successfully!"){
-                    ordered = true;
-                }
-                else{
-                    alert(`Error creating order info: ${data["message"]}`)
-                }
-            })
+        {
+            method: 'PATCH',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },           
+        })
+        .then(response => response.json()) 
             .then(data => {
-                // update credits here
-                if (ordered) {
-                    url = `${server}/user/?`
+            if(data["message"] === "User successfully updated"){
+                // alert("Product successfully purchased")
+                // props.onUserChange({credits: newCredits});
+                // setPurchased(true);
+                updatedUser = true;
+            }
+            else{
+                alert(`Error updating user info: ${data["message"]}`)
+            }
 
-                    let required_params = ["user_id"];
-                    for(const param in props.user){
-                        if (required_params.includes(param)) {
-                            url += `&${param}=${props.user[param]}`
-                        }   
-                    }
+        })
+        .then(data => {
+            if (updatedUser) {
+                let url = `${server}/order/?`
 
-                    url += `&credits=${newCredits}`
-                
-                    fetch(url, 
+                url += `&product_id=${props.productData.product_id}&buyer_id=${props.user.user_id}&seller_id=${props.productData.vendor_id}&status=Pending`
+
+                fetch(url, 
                     {
-                        method: 'PATCH',
+                        method: 'POST',
                         headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
@@ -131,20 +133,83 @@ function ProductView(props) {
                     })
                     .then(response => response.json()) 
                         .then(data => {
-                        if(data["message"] === "User successfully updated"){
+                        if(data["message"] === "Order created successfully!"){
                             alert("Product successfully purchased")
                             props.onUserChange({credits: newCredits});
                             setPurchased(true);
                         }
                         else{
-                            alert(`Error updating user info: ${data["message"]}`)
+                            alert(`Error creating order info: ${data["message"]}`)
                         }
                     })
-                    .catch((error) => console.log("User update error: "+ error))
+            }
+        })
+        .catch((error) => console.log("Order creation error: "+ error))
+        // TODO: fix ordering
+
+
+
+        // let url = `${server}/order/?`
+        // let change = false;
+
+        // console.log(props.productData)
+        // url += `&product_id=${props.productData.product_id}&buyer_id=${props.user.user_id}&seller_id=${props.productData.vendor_id}&status=Pending`
+
+        // fetch(url, 
+        //     {
+        //         method: 'POST',
+        //         headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //         },           
+        //     })
+        //     .then(response => response.json()) 
+        //         .then(data => {
+        //         if(data["message"] === "Order created successfully!"){
+        //             ordered = true;
+        //         }
+        //         else{
+        //             alert(`Error creating order info: ${data["message"]}`)
+        //         }
+        //     })
+        //     .then(data => {
+        //         // update credits here
+        //         if (ordered) {
+        //             url = `${server}/user/?`
+
+        //             let required_params = ["user_id"];
+        //             for(const param in props.user){
+        //                 if (required_params.includes(param)) {
+        //                     url += `&${param}=${props.user[param]}`
+        //                 }   
+        //             }
+
+        //             url += `&credits=${newCredits}`
                 
-                        }
-            })
-            .catch((error) => console.log("Order creation error: "+ error))
+        //             fetch(url, 
+        //             {
+        //                 method: 'PATCH',
+        //                 headers: {
+        //                 'Accept': 'application/json',
+        //                 'Content-Type': 'application/json'
+        //                 },           
+        //             })
+        //             .then(response => response.json()) 
+        //                 .then(data => {
+        //                 if(data["message"] === "User successfully updated"){
+        //                     alert("Product successfully purchased")
+        //                     props.onUserChange({credits: newCredits});
+        //                     setPurchased(true);
+        //                 }
+        //                 else{
+        //                     alert(`Error updating user info: ${data["message"]}`)
+        //                 }
+        //             })
+        //             .catch((error) => console.log("User update error: "+ error))
+                
+        //                 }
+        //     })
+        //     .catch((error) => console.log("Order creation error: "+ error))
 
     }
 
