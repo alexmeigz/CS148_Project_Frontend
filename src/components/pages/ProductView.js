@@ -18,6 +18,13 @@ function ProductView(props) {
     // eslint-disable-next-line
     const [updating, setUpdating] = useState(false);
 
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
 
     // eslint-disable-next-line
     function login(event) {
@@ -72,12 +79,6 @@ function ProductView(props) {
         }
 
         let newCredits = props.user.credits - parseFloat(props.productData.price);
-
-
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        // let server = "http://localhost:8118/api"
-
-
 
         // TODO: send order to vendor
 

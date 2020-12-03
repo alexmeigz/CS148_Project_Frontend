@@ -109,6 +109,7 @@ p {
 }
 
 .social {
+    width: 50%;
     text-align: center;
     margin: 10px;
 }

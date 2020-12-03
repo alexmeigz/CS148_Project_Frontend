@@ -15,8 +15,14 @@ function OrderView(props) {
 
     const [decided, setDecided] = useState(false)
 
-    let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    // let server = "http://localhost:8118/api"
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+
     let url = `${server}/product/?product_id=${props.order.product_id}`
 
     useEffect(() => {
@@ -54,6 +60,7 @@ function OrderView(props) {
         .then(data => {
             seller = data;
             newUrl = `${server}/user/?user_id=${props.order.seller_id}&credits=${seller.credits + result.price}`;
+            console.log(newUrl)
             fetch(newUrl, {
                 method: 'PATCH',
                 headers: {

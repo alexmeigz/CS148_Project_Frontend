@@ -71,6 +71,11 @@
     font-size: 25px;
 }
 
+li{
+    float: left;
+    width: calc(100% - 40px);
+}
+
 .post-instructions{
     margin: 10px 10px 30px 10px;
     float: left;
