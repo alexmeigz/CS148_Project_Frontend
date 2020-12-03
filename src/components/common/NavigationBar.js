@@ -39,8 +39,18 @@ function NavigationBar(props) {
                             : null
                         }
                         </li>
+                        <li>{(props.isLoggedIn)
+                                ? <Link to="/my-orders">My Orders</Link>
+                                : null
+                            }
+                        </li>
                         <li>{(props.isLoggedIn) && (accountType === "Home" || accountType === "Business" || accountType === "Admin")
                                 ? <Link to="/my-products">My Products</Link>
+                                : null
+                            }
+                        </li>
+                        <li>{(props.isLoggedIn) && (accountType === "Home" || accountType === "Business" || accountType === "Admin")
+                                ? <Link to="/vendor-orders">Vendor Orders</Link>
                                 : null
                             }
                         </li>
@@ -59,7 +69,7 @@ function NavigationBar(props) {
 
                             <li>{!(props.isLoggedIn)
                                     ? <Link to="/login">Login</Link> // remove "onClick={() => handleLoginChange(true)}" when not testing
-                                    : <Link onClick={() => handleLoginChange(false)} to="/logout">Logout</Link>
+                                    : <Link onClick={() => handleLoginChange(false)} to="/">Logout</Link>
                                 }
                             </li>
                         </li>
