@@ -16,7 +16,7 @@ import RecipesPage from './components/pages/RecipesPage';
 import PostsPage from './components/pages/PostsPage';
 import ProductsPage from './components/pages/ProductsPage';
 import LoginPage from "./components/pages/LoginPage";
-import LogoutPage from "./components/pages/LogoutPage";
+// import LogoutPage from "./components/pages/LogoutPage";
 import ContactUsPage from "./components/pages/ContactUsPage";
 import MyProfilePage from "./components/pages/MyProfilePage";
 import MyProductsPage from "./components/pages/MyProductsPage";
