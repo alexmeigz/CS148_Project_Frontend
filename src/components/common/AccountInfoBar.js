@@ -16,13 +16,7 @@ function AccountInfoBar(props) {
             <ul className="account-info-bar">
                 <li className="account-type">Account Type: {props.user.account_type}</li>
                 <li className="credits">
-                    <ul>
-                        {/* {props.user.account_type === "Resturant" || props.user.account_type === "Home"
-                            ? <li>Pending Credits: $0 (Coming soon)</li>
-                            : null
-                        }  */}
-                        <li>Credits: ${props.user.credits}</li>
-                    </ul>
+                    Credits: ${props.user.credits}
                 </li>
             </ul>
         </div>

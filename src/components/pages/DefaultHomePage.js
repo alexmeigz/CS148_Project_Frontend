@@ -8,7 +8,10 @@ import "./DefaultHomePage.css"
 
 import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
-import AccountInfoBar from "../common/AccountInfoBar"
+import AccountInfoBar from "../common/AccountInfoBar";
+import recipes from "../../assets/recipes.jpeg";
+import products from "../../assets/products.jpeg";
+
 
 function DefaultHomePage (props) {
     // TODO: get account info from backend
@@ -27,34 +30,30 @@ function DefaultHomePage (props) {
             {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
             
             <img className="banner"
-                src="https://www.helpguide.org/wp-content/uploads/table-with-grains-vegetables-fruit-768.jpg"
-                alt="Banner"
+                src="https://envato-shoebox-0.imgix.net/a81e/141e-7d0d-4cb4-aa0f-f31cc76f13bf/9D1A8934_b.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=91c4d09b742019a5265eb5df1f46139c"
+                alt=""
             />
+
+            <h1 className="home-header welcome"> Welcome! </h1>
             
             {/* <hr/> */}
 
             <Link to="/recipes" className="recipes">
-                <img
-                    src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg"
-                    alt="Recipes"
-                />
-                <h1>Recipes</h1>
+                <img src={recipes} alt=""/>
+                <h1 className="home-header">Recipes</h1>
             </Link>
 
             <Link to="/products" className="products">
-                <img
-                    src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2018/9/26/0/FNK_Tuscan-Chicken-Skillet_H2_s4x3.jpg.rend.hgtvcom.616.462.suffix/1537973085542.jpeg"
-                    alt="Products"
-                />
-                <h1>Products</h1>
+                <img src={products} alt=""/>
+                <h1 className="home-header">Products</h1>
             </Link>
 
             <Link to="/maps" className="maps">
                 <img
-                    src="https://arturodeza.wdfiles.com/local--files/data-log/ucsb-from-air.jpg"
-                    alt="Maps"
+                    src="https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=2000&h=1047&url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2016%2F08%2Fparadise-beach-santa-barbara-california-santabarbara0815-2000.jpg"
+                    alt=""
                 />
-                <h1>Maps</h1>
+                <h1 className="home-header">Maps</h1>
             </Link>
 
             <ContactUsFooter />

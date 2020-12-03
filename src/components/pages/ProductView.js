@@ -18,6 +18,7 @@ function ProductView(props) {
     // eslint-disable-next-line
     const [updating, setUpdating] = useState(false);
 
+
     // eslint-disable-next-line
     function login(event) {
         event.preventDefault();
@@ -27,16 +28,15 @@ function ProductView(props) {
 
     function updateProduct(event) {
         event.preventDefault();
+
         setUpdating((prevUpdating => !prevUpdating));
         
+
     }
 
     function removeProduct(event) {
         event.preventDefault();
         
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        // let server = "http://localhost:8118/api"
-
         let url = `${server}/product/?product_id=${props.productData["product_id"]}`
 
         fetch(url, 
@@ -73,8 +73,10 @@ function ProductView(props) {
 
         let newCredits = props.user.credits - parseFloat(props.productData.price);
 
+
         let server = "https://nutriflix-flask-backend.herokuapp.com/api"
         // let server = "http://localhost:8118/api"
+
 
 
         // TODO: send order to vendor

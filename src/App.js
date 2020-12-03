@@ -23,8 +23,12 @@ import MyProductsPage from "./components/pages/MyProductsPage";
 import VendorApps from "./components/pages/VendorApps";
 import AdminPage from "./components/pages/AdminPage";
 import CreateUserPage from "./components/pages/CreateUserPage";
+
 import VendorOrdersPage from "./components/pages/VendorOrdersPage";
 import OrdersPage from "./components/pages/OrdersPage";
+
+import SubmitReportPage from "./components/pages/SubmitReportPage";
+
 
 import ErrorPage from './components/pages/ErrorPage';
 // import ContactUsFooter from './components/common/ContactUsFooter';
@@ -140,6 +144,15 @@ function App() {
                         onUserChange={handleUserChange}
                     />
                 </Route>
+                
+                <Route path="/submit-report">
+                    <SubmitReportPage
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
+                </Route>
 
 
                 {/* Must be signed in to access pages */}
@@ -165,7 +178,7 @@ function App() {
                     </Route>)
                     : null
                 }
-                {isLoggedIn
+                {isLoggedIn 
                     ? (<Route path="/admin-panel">
                         <AdminPage
                             isLoggedIn={isLoggedIn}
