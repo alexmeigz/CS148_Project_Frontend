@@ -152,7 +152,7 @@ function RecipeView(props) {
                         </div>
                         <ul> 
                             {parsedIngredients.map(ingredient => (
-                                <li> {ingredient} </li>
+                                <li className="post-item"> {ingredient} </li>
                             ))}
                         </ul>
                     </div>
@@ -162,7 +162,7 @@ function RecipeView(props) {
                         </div>
                         <ol>
                             {parsedInstructions.map(instruction => (
-                                <li> {instruction} </li>
+                                <li className="post-item"> {instruction} </li>
                             ))}
                         </ol>
                     </div>

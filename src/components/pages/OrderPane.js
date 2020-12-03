@@ -18,7 +18,6 @@ function OrderPane(props) {
     if (process.env.NODE_ENV !== "development") {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
-    
     let url = `${server}/product/?product_id=${props.orderData.product_id}`
     
 

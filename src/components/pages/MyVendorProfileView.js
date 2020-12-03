@@ -9,7 +9,14 @@ import VendorProfileView from "./VendorProfileView";
 
 
 function MyVendorProfileView(props) {
-
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    
     const [settingsMode, setSettingsMode] = useState(false);
     const [newUserInfo, setNewUserInfo] = useState({
         ...props.user
@@ -44,8 +51,7 @@ function MyVendorProfileView(props) {
         let updatable_params = ["vendor_image_url"];
 
         event.preventDefault();
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        // let server = "http://localhost:8118/api"
+        
 
         let url = `${server}/user/?`
 

@@ -22,22 +22,25 @@ function VendorApps (props) {
     console.log(server)
 
     useEffect(() => {
-        //const url = `${server}/application/?display_all=True`
-        const url = `http://localhost:8118/api/application/?display_all=True`
-        fetch(url, {
-            method: 'GET',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },              
-        })
-        .then(response => response.json()) 
-        .then(data => {
-            console.log(data)
-            setResults(data)
-        })
-        .catch((error) => console.log("Error: " + error))
-    }, [])
+        if (isListView) {
+            const url = `${server}/application/?display_all=True`
+            // const url = `http://localhost:8118/api/application/?display_all=True`
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },              
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                console.log(data)
+                setResults(data)
+            })
+            .catch((error) => console.log("Error: " + error))
+        }
+        
+    }, [server, isListView])
     
     function changeView(event, type, applicationData) {
         setIsListView(prevIsListView => !prevIsListView);
@@ -48,10 +51,10 @@ function VendorApps (props) {
 
     function approveApplication(){
         console.log(applicationData)
-        const url = `http://localhost:8118/api/`
-        const userurl = `user/?user_id=${applicationData["user"]}&account_type=${applicationData["type"]}`
-        const applicationurl = `application/?id=${applicationData["id"]}`
-        fetch(url+userurl, {
+        // const url = `http://localhost:8118/api/`
+        const userurl = `/user/?user_id=${applicationData["user"]}&account_type=${applicationData["type"]}`
+        const applicationurl = `/application/?id=${applicationData["id"]}`
+        fetch(server+userurl, {
             method: 'PATCH',
             headers: {
             'Accept': 'application/json',
@@ -61,7 +64,7 @@ function VendorApps (props) {
         .then(response => response.json()) 
         .then(data => {
             alert(data["message"])
-            fetch(url+applicationurl, {
+            fetch(server+applicationurl, {
                 method: 'DELETE',
                 headers: {
                 'Accept': 'application/json',
@@ -79,7 +82,7 @@ function VendorApps (props) {
     }
 
     function denyApplication(){
-        const url = `http://localhost:8118/api/application/?id=${applicationData["id"]}`
+        const url = `${server}/application/?id=${applicationData["id"]}`
         fetch(url, {
             method: 'DELETE',
             headers: {

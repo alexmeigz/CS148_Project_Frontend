@@ -108,3 +108,8 @@ ul{
 ol{
     margin: 10px 0;
 }
+
+.post-item {
+    float: left;
+    width: calc(100% - 40px);
+}

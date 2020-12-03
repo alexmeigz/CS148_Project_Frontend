@@ -37,7 +37,7 @@ function BlogForm(props) {
           server = "https://nutriflix-flask-backend.herokuapp.com/api"
       }
       if (process.env.NODE_ENV !== "development") {
-          server = "https://nutriflix-flask-backend.herokuapp.com//api"
+          server = "https://nutriflix-flask-backend.herokuapp.com/api"
       }
     
       let url = `${server}/post/?`

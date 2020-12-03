@@ -12,9 +12,17 @@ function ReportList (props) {
     const [isListView, setIsListView] = useState(true);
     const [reportData, setReportData] = useState({})
 
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+
     useEffect(() => {
         // const url = `https://nutriflix-flask-backend.herokuapp.com/api/application/?display_all=True`
-        const url = `http://localhost:8118/api/report/?display_all=True`
+        const url = `${server}/report/?display_all=True`
         fetch(url, {
             method: 'GET',
             headers: {
@@ -28,7 +36,7 @@ function ReportList (props) {
             setResults(data)
         })
         .catch((error) => console.log("Error: " + error))
-    }, [])
+    }, [server, isListView])
 
     function changeView(event, type, reportData) {
         setIsListView(prevIsListView => !prevIsListView);
@@ -39,10 +47,10 @@ function ReportList (props) {
 
     function banUser(){
         console.log(reportData)
-        const url = `http://localhost:8118/api/`
-        const userurl = `user/?user_id=${reportData["reportedUser_id"]}`
-        const reporturl = `report/?report_id=${reportData["report_id"]}`
-        fetch(url+userurl, {
+        // const url = `http://localhost:8118/api/`
+        const userurl = `/user/?user_id=${reportData["reportedUser_id"]}`
+        const reporturl = `/report/?report_id=${reportData["report_id"]}`
+        fetch(server+userurl, {
             method: 'DELETE',
             headers: {
             'Accept': 'application/json',
@@ -52,7 +60,7 @@ function ReportList (props) {
         .then(response => response.json()) 
         .then(data => {
             alert(data["message"])
-            fetch(url+reporturl, {
+            fetch(server+reporturl, {
                 method: 'DELETE',
                 headers: {
                 'Accept': 'application/json',
@@ -70,7 +78,7 @@ function ReportList (props) {
     }
     //Delete report
     function deleteReport(){
-        const url = `http://localhost:8118/api/report/?report_id=${reportData["report_id"]}`
+        const url = `${server}/report/?report_id=${reportData["report_id"]}`
         console.log(url)
         fetch(url, {
             method: 'DELETE',

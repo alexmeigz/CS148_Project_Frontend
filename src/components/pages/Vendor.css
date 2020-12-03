@@ -9,12 +9,13 @@
 
 .vendor_panel{
     float: left;
-    /* width: 70%; */
+    width: 100%;
     height: 100vh;
     overflow-y: scroll;
 }
 
 .my_vendor_panel{
+    /* margin: 10px; */
     /* float: left;
     width: 70%; */
     height: 100vh;
@@ -112,8 +113,9 @@
 }
 
 .vendor_panel_button {
+    margin: 10px;
     background: none;
-    width: 100%;
+    min-width: calc(100% - 20px);
     border-width: 1px;
     border-radius: 10px;
     cursor: pointer;

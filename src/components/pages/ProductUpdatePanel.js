@@ -4,6 +4,13 @@
 import React, {useState} from "react";
 
 function ProductUpdatePanel(props) {
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
     // eslint-disable-next-line
     const [newInfo, setNewInfo] = useState({
         ...props.productData,
@@ -49,8 +56,6 @@ function ProductUpdatePanel(props) {
         let requiredParams = ["product_id", "vendor_id", "product_name", "subscription", "price", "caption", "image_url"]
         let optionalParams = ["location"]
 
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        // let server = "http://localhost:8118/api"
 
         let url = `${server}/product/?`
 
