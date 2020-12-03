@@ -14,8 +14,13 @@ import "./Order.css"
 
 
 function OrdersPage(props) {
-    let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    // let server = "http://localhost:8118/api"
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
     let url = `${server}/order/?display_all=True&buyer_id=${props.user.user_id}`
 
     // if (props.user.account_type === "Admin") {

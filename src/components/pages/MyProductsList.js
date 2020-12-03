@@ -18,14 +18,21 @@ function MyProductsList (props) {
         vendor_id = props.vendor_id;
     }
     
-
-    let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
-        server = "http://localhost:8118/api"
-	}
-    if (process.env.NODE_ENV !== 'development') {
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+
+    // let server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    // if (process.env.REACT_APP_REMOTE) { //set this in .env file: REACT_APP_REMOTE=1
+    //     server = "http://localhost:8118/api"
+	// }
+    // if (process.env.NODE_ENV !== 'development') {
+    //     server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    // }
     // const url = `${server}/product/?display_all=True`
     
     const [results, setResults] = useState({});
