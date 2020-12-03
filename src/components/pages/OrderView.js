@@ -301,7 +301,7 @@ function OrderView(props) {
                     ? <div className="order-buttons">
                         <button className="ship-order-button" onClick={shipOrder} disabled={decided || props.order.status === "Shipped" || props.order.status === "Refunded" || props.order.status === "Confirmed"}>Ship Order</button>
                         <button className="refund-order-button" onClick={refundOrder} disabled={decided || props.order.status === "Refunded" || props.order.status === "Shipped" || props.order.status === "Confirmed"}>Refund Order</button>
-                        <button className="delete-order-button" onClick={deleteOrder} disabled={decided || !(props.user.account_type === "Admin" || props.order.status === "Confirmed" || props.order.status === "Refunded")}>Delete Order</button>
+                        <button className="delete-order-button" onClick={deleteOrder} disabled={decided || !(props.user.account_type === "Admin" || props.order.status === "Confirmed")}>Delete Order</button>
                     </div>
                     : null
                 }
