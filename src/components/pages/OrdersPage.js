@@ -77,7 +77,7 @@ function OrdersPage(props) {
             </div>
 
             : <div className="container">
-                <h1> Orders </h1>
+                <h1> My Orders </h1>
                 {/* <div className="side_panel">
                     <input className="search_bar" placeholder="Search products..." onKeyDown={search} />
                     <div className="title">
