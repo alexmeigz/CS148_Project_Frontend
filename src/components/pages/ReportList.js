@@ -48,8 +48,8 @@ function ReportList (props) {
     function banUser(){
         console.log(reportData)
         // const url = `http://localhost:8118/api/`
-        const userurl = `user/?user_id=${reportData["reportedUser_id"]}`
-        const reporturl = `report/?report_id=${reportData["report_id"]}`
+        const userurl = `/user/?user_id=${reportData["reportedUser_id"]}`
+        const reporturl = `/report/?report_id=${reportData["report_id"]}`
         fetch(server+userurl, {
             method: 'DELETE',
             headers: {
