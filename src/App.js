@@ -33,6 +33,7 @@ import RecipeCall from './components/pages/RecipeCall'
 import RecipeCall2 from './components/pages/RecipeCall2';
 import RecipeCall3 from './components/pages/RecipeCall3';
 import GoogleMapLoader from "./components/pages/Maps"
+import Maps1 from "./components/pages/Maps1"
 
 function App() {
     // eslint-disable-next-line
@@ -225,6 +226,15 @@ function App() {
 
                 <Route path="/google-maps">
                     <GoogleMapLoader
+                        isLoggedIn={isLoggedIn}
+                        onLoginChange={handleLoginChange}
+                        user={user}
+                        onUserChange={handleUserChange}
+                    />
+                </Route>
+
+                <Route path="/google-maps1">
+                    <Maps1
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
