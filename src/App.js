@@ -128,14 +128,14 @@ function App() {
                         onUserChange={handleUserChange}
                     />
                 </Route>
-                <Route path="/logout">
+                {/* <Route path="/logout">
                     <LogoutPage
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
                         onUserChange={handleUserChange}
                     />
-                </Route>
+                </Route> */}
                 <Route path="/contact-us">
                     <ContactUsPage
                         isLoggedIn={isLoggedIn}
