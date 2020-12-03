@@ -13,12 +13,8 @@ import ProductView from "./ProductView";
 // import AccountInfoBar from "../common/AccountInfoBar"
 
 function MyPostsList (props) { 
-    let vendor_id = props.user.user_id;
-    if (props.vendor_id) {
-        vendor_id = props.vendor_id;
-    }
+    let user_id = props.user.user_id;
     
-
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
@@ -35,7 +31,7 @@ function MyPostsList (props) {
     useEffect(() => {
         
         if (isListView) {
-            let newUrl = `${server}/post/?display_all=True&user_id=${vendor_id}`
+            let newUrl = `${server}/post/?display_all=True&user_id=${user_id}`
             console.log(newUrl)
             fetch(newUrl, {
                 method: 'GET',
@@ -52,7 +48,7 @@ function MyPostsList (props) {
         }
         // }, 500);
         // return () => clearInterval(interval);
-    }, [server, vendor_id, isListView])
+    }, [server, user_id, isListView])
     
     function changeView(event, type, productData) {
         setIsListView(prevIsListView => !prevIsListView);

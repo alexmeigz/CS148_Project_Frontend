@@ -7,25 +7,31 @@ import MyPostsList from "./MyPostsList";
 
 function PublicProfileView(props) {
     const [displayInfo] = useState(
-        props.vendor ? {
-            ...props.vendor
-        }:
         {
             ...props.user
         }
     )
+    console.log(displayInfo)
     
     return (
-        <div>
-            <div className="vendor-picture-pane">
-                <img className="vendor-picture"
-                    src={displayInfo.vendor_image_url}
-                    alt="Vendor Profile"
-                />
-                <h1> Welcome to {displayInfo.username}'s Profile </h1>
+        <div className="view-pane">
+            <div className="row">
+                <img className="public-profile-photo" alt=""
+                    src={displayInfo.profile_image_url}/>
+                <h1> {displayInfo.username} </h1>
+                <div className="social"> 
+                    <a href={`mailto:${displayInfo.email}`}> 
+                        Email: {displayInfo.email}
+                    </a> 
+                </div>
+                <div className="social"> 
+                    <a href={`https://www.instagram.com/${displayInfo.instagram}`}> 
+                        Instagram: {displayInfo.instagram}
+                    </a> 
+                </div>
             </div>
             <div className="vendor-details">
-                <MyPostsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={props.onUserChange} vendor_id={displayInfo.user_id}/>
+                <MyPostsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={props.onUserChange}/>
             </div>
         </div>
     )

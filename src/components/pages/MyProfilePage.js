@@ -69,22 +69,21 @@ function MyProfilePage (props) {
             <div>
                 <div className="button-bar">
                     {isProfileView
-                        ? <div>
-                            {props.user.account_type !== "Business"
-                            // {props.user.account_type !== "Business"
-                                ? <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button>
-                                : null
-                            }
-                            {props.user.account_type === "Business" || props.user.account_type === "Home" || props.user.account_type === "Admin"
-                                ? <button className="vendor-profile-button" onClick={toggleView}>Vendor Profile</button>
-                                : null
-                            }
-                            {props.user.account_type === "Business" || props.user.account_type === "Home" || props.user.account_type === "Admin"
-                                ? <button className="public-profile-button" onClick={toggleView}> Public Profile </button>
-                                : null
-                            }
-                        </div>
-                        : <button className="back-button" onClick={toggleView}>Back</button>
+                        ? 
+                            <div>
+                                {props.user.account_type !== "Business"
+                                // {props.user.account_type !== "Business"
+                                    ? <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button>
+                                    : null
+                                }
+                                {props.user.account_type === "Business" || props.user.account_type === "Home" || props.user.account_type === "Admin"
+                                    ? <button className="vendor-profile-button" onClick={toggleView}>Vendor Profile</button>
+                                    : null
+                                }
+                                <button className="public-profile-button" onClick={toggleView}> Public Profile </button>
+                            </div>
+                        : 
+                            <button className="back-button" onClick={toggleView}>Back</button>
                     }
                 </div>
 

@@ -18,7 +18,8 @@ function MyPublicProfileView(props) {
     function resetNewUserInfo() {
         setNewUserInfo({
             ...props.user,
-            vendor_image_url: ""
+            instagram: "",
+            email: ""
         })
     }
 
@@ -41,14 +42,17 @@ function MyPublicProfileView(props) {
 
     function submitNewUserInfo(event) {
         let required_params = ["user_id"];
-        let updatable_params = ["vendor_image_url"];
+        let updatable_params = ["email", "instagram"];
 
         event.preventDefault();
-        let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-        // let server = "http://localhost:8118/api"
-
+        let server = "http://localhost:8118/api"
+        if (process.env.REACT_APP_REMOTE === "1") { 
+            server = "https://nutriflix-flask-backend.herokuapp.com/api"
+        }
+        if (process.env.NODE_ENV !== "development") {
+            server = "https://nutriflix-flask-backend.herokuapp.com/api"
+        }
         let url = `${server}/user/?`
-
 
         required_params.forEach((param, index) => {
             if (newUserInfo[param] === "") {
@@ -88,7 +92,7 @@ function MyPublicProfileView(props) {
 
     return (
         <div>
-            <div className="vendor-profile">
+            <div className="vendor-profile row">
                 <h1>
                     Public Profile
                     <h3>Info outlined in red shows how others will see your profile:</h3>
@@ -97,14 +101,20 @@ function MyPublicProfileView(props) {
             <div className="settings-pane">
                 {!settingsMode 
                     ? <div>
-                        <button className="change-info" onClick={(event) => {toggleView(); resetNewUserInfo()}}>Change Vendor Info/Settings</button>
+                        <button className="change-info" onClick={(event) => {toggleView(); resetNewUserInfo()}}> Update Profile Information </button>
                     </div>
                     : <div>
                         <button className="cancel-info" onClick={(event)=> {toggleView()}}>Cancel</button>
                         <button className="submit-info" onClick={(event)=> {toggleView(); submitNewUserInfo(event)}}>Submit Changes</button>
                         <div>
-                            <label className="form-label" for="vendor_image_url">New Vendor Profile Image URL: </label>         
-                            <input className="form-field" type="text" value={newUserInfo.vendor_image_url} name="vendor_image_url" onChange={handleNewUserChange} />
+                            <div>
+                                <label className="form-label" for="email"> Email </label>         
+                                <input className="form-field" type="text" value={newUserInfo.email} name="email" onChange={handleNewUserChange} />
+                            </div>
+                            <div>
+                                <label className="form-label" for="instagram"> Instagram </label>         
+                                <input className="form-field" type="text" value={newUserInfo.instagram} name="instagram" onChange={handleNewUserChange} />
+                            </div>
                             <br />
                         </div>
                     </div>
@@ -113,7 +123,7 @@ function MyPublicProfileView(props) {
             </div>
             
             <div className="vendor-info">
-                <PublicProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange} vendor_id={props.user.user_id}/>
+                <PublicProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange} user_id={props.user.user_id}/>
             </div>
         </div>
     )
