@@ -54,7 +54,7 @@ function OrderView(props) {
         .then(response => response.json()) 
         .then(data => {
             if(data["message"] === "Order successfully updated"){
-                alert("You indicated that you received your product")
+                alert("You indicated that you acknowledge the order status")
                 setDecided(true);
             }
             else{
@@ -307,7 +307,7 @@ function OrderView(props) {
                 }
                 {props.user.user_id === props.order.buyer_id
                     ? <div className="order-buttons">
-                        <button className="confirm-order-button" onClick={confirmOrder} disabled={(decided || props.order.status === "Pending" || props.order.status === "Confirmed" || props.order.status === "Refunded")}>Confirm Order</button>
+                        <button className="confirm-order-button" onClick={confirmOrder} disabled={(decided || props.order.status === "Pending" || props.order.status === "Confirmed")}>Confirm Status</button>
                     </div>
                     : null
                 }
