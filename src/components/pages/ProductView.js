@@ -9,6 +9,7 @@ import React, {useState} from "react";
 
 // import ProductPane from "./ProductPane.js"
 
+import ProductUpdatePanel from "./ProductUpdatePanel"
 import "./ProductView.css"
 
 function ProductView(props) {
@@ -22,38 +23,22 @@ function ProductView(props) {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
     if (process.env.NODE_ENV !== "development") {
-        server = "https://nutriflix-flask-backend.herokuapp.com//api"
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
-        
+
+    // eslint-disable-next-line
     function login(event) {
         event.preventDefault();
         // TODO
     }
 
+
     function updateProduct(event) {
         event.preventDefault();
 
-        let url = `${server}/product/?product_id=${props.productData["product_id"]}`
+        setUpdating((prevUpdating => !prevUpdating));
+        
 
-        fetch(url, 
-            {
-                method: 'PATCH',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },           
-            })
-            .then(response => response.json()) 
-                .then(data => {
-                if(data["message"] === "Product successfully removed"){
-                    alert("Product successfully removed")
-                    setRemoved(true);
-                }
-                else{
-                    alert(`Error deleting product: ${data["message"]}`)
-                }
-            })
-            .catch((error) => console.log("Product delete error: "+ error))
     }
 
     function removeProduct(event) {
@@ -94,7 +79,13 @@ function ProductView(props) {
         }
 
         let newCredits = props.user.credits - parseFloat(props.productData.price);
+
+
+
+        // send order to vendor
+
         let url = `${server}/user/?`
+        let updatedUser = false;
 
         let required_params = ["user_id"];
         for(const param in props.user){
@@ -104,30 +95,122 @@ function ProductView(props) {
         }
 
         url += `&credits=${newCredits}`
-
-        
+    
         fetch(url, 
-            {
-                method: 'PATCH',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },           
-            })
-            .then(response => response.json()) 
-                .then(data => {
-                if(data["message"] === "User successfully updated"){
-                    alert("Product successfully purchased")
-                    props.onUserChange({credits: newCredits});
-                    setPurchased(true);
-                }
-                else{
-                    alert(`Error updating user info: ${data["message"]}`)
-                }
-            })
-            .catch((error) => console.log("User update error: "+ error))
+        {
+            method: 'PATCH',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },           
+        })
+        .then(response => response.json()) 
+            .then(data => {
+            if(data["message"] === "User successfully updated"){
+                // alert("Product successfully purchased")
+                // props.onUserChange({credits: newCredits});
+                // setPurchased(true);
+                updatedUser = true;
+            }
+            else{
+                alert(`Error updating user info: ${data["message"]}`)
+            }
 
-        // TODO: send message to vendor
+        })
+        .then(data => {
+            if (updatedUser) {
+                let url = `${server}/order/?`
+
+                url += `&product_id=${props.productData.product_id}&buyer_id=${props.user.user_id}&seller_id=${props.productData.vendor_id}&status=Pending`
+
+                fetch(url, 
+                    {
+                        method: 'POST',
+                        headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        },           
+                    })
+                    .then(response => response.json()) 
+                        .then(data => {
+                        if(data["message"] === "Order created successfully!"){
+                            alert("Product successfully purchased")
+                            props.onUserChange({credits: newCredits});
+                            setPurchased(true);
+                        }
+                        else{
+                            alert(`Error creating order info: ${data["message"]}`)
+                        }
+                    })
+            }
+        })
+        .catch((error) => console.log("Order creation error: "+ error))
+        // TODO: fix ordering
+
+
+
+        // let url = `${server}/order/?`
+        // let change = false;
+
+        // console.log(props.productData)
+        // url += `&product_id=${props.productData.product_id}&buyer_id=${props.user.user_id}&seller_id=${props.productData.vendor_id}&status=Pending`
+
+        // fetch(url, 
+        //     {
+        //         method: 'POST',
+        //         headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //         },           
+        //     })
+        //     .then(response => response.json()) 
+        //         .then(data => {
+        //         if(data["message"] === "Order created successfully!"){
+        //             ordered = true;
+        //         }
+        //         else{
+        //             alert(`Error creating order info: ${data["message"]}`)
+        //         }
+        //     })
+        //     .then(data => {
+        //         // update credits here
+        //         if (ordered) {
+        //             url = `${server}/user/?`
+
+        //             let required_params = ["user_id"];
+        //             for(const param in props.user){
+        //                 if (required_params.includes(param)) {
+        //                     url += `&${param}=${props.user[param]}`
+        //                 }   
+        //             }
+
+        //             url += `&credits=${newCredits}`
+                
+        //             fetch(url, 
+        //             {
+        //                 method: 'PATCH',
+        //                 headers: {
+        //                 'Accept': 'application/json',
+        //                 'Content-Type': 'application/json'
+        //                 },           
+        //             })
+        //             .then(response => response.json()) 
+        //                 .then(data => {
+        //                 if(data["message"] === "User successfully updated"){
+        //                     alert("Product successfully purchased")
+        //                     props.onUserChange({credits: newCredits});
+        //                     setPurchased(true);
+        //                 }
+        //                 else{
+        //                     alert(`Error updating user info: ${data["message"]}`)
+        //                 }
+        //             })
+        //             .catch((error) => console.log("User update error: "+ error))
+                
+        //                 }
+        //     })
+        //     .catch((error) => console.log("Order creation error: "+ error))
+
     }
 
     return (
@@ -165,27 +248,32 @@ function ProductView(props) {
                 </div>
             </div>
 
-            {props.isLoggedIn && props.user.user_id !== props.productData.vendor_id
+            {props.isLoggedIn && (props.user.user_id !== props.productData.vendor_id || props.user.account_type === "Admin")
             ? <div>
                 <button className="purchase-product" onClick={purchaseProduct} disabled={purchased}>{!purchased ? "Purchase Product": "Purchased!"}</button>
             </div>
             : null
             }
 
-            {!props.isLoggedIn
+            {/* {!props.isLoggedIn
             ? <div>
                 <button className="login-button" onClick={login} disabled={true}>Login to Purchase Product, use top right login button.</button> 
             </div>
             : null
-            }
+            } */}
 
 
             {/* TODO: Waiting for product model to get updated */}
-            {props.user.user_id === props.productData.vendor_id
+            {props.isLoggedIn && (props.user.user_id === props.productData.vendor_id || props.user.account_type === "Admin")
             ? <div>
                 <button className="remove-product" onClick={removeProduct} disabled={removed}>{!removed ? "Remove Product": "Removed!"}</button>
-                <button className="update-product" onClick={updateProduct} disabled={true}>{!updating ? "Update Product": "Submit Update!"}</button>
+                <button className="update-product" onClick={updateProduct} >{!updating ? "Update Product": "Cancel Updating Product"}</button>
             </div>
+            : null
+            }
+
+            {updating
+            ? <ProductUpdatePanel productData={props.productData} cancelUpdate={() => setUpdating(false)}/>
             : null
             }
             

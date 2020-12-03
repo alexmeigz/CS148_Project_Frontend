@@ -16,14 +16,19 @@ import RecipesPage from './components/pages/RecipesPage';
 import PostsPage from './components/pages/PostsPage';
 import ProductsPage from './components/pages/ProductsPage';
 import LoginPage from "./components/pages/LoginPage";
-import LogoutPage from "./components/pages/LogoutPage";
+// import LogoutPage from "./components/pages/LogoutPage";
 import ContactUsPage from "./components/pages/ContactUsPage";
 import MyProfilePage from "./components/pages/MyProfilePage";
 import MyProductsPage from "./components/pages/MyProductsPage";
 import VendorApps from "./components/pages/VendorApps";
 import AdminPage from "./components/pages/AdminPage";
 import CreateUserPage from "./components/pages/CreateUserPage";
+
+import VendorOrdersPage from "./components/pages/VendorOrdersPage";
+import OrdersPage from "./components/pages/OrdersPage";
+
 import SubmitReportPage from "./components/pages/SubmitReportPage";
+
 
 import ErrorPage from './components/pages/ErrorPage';
 // import ContactUsFooter from './components/common/ContactUsFooter';
@@ -36,7 +41,7 @@ import RecipeCall3 from './components/pages/RecipeCall3';
 
 function App() {
     // eslint-disable-next-line
-    var id = 1;
+    
     // eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false); // testing conditional rendering
     // eslint-disable-next-line
@@ -123,14 +128,14 @@ function App() {
                         onUserChange={handleUserChange}
                     />
                 </Route>
-                <Route path="/logout">
+                {/* <Route path="/logout">
                     <LogoutPage
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
                         onUserChange={handleUserChange}
                     />
-                </Route>
+                </Route> */}
                 <Route path="/contact-us">
                     <ContactUsPage
                         isLoggedIn={isLoggedIn}
@@ -184,6 +189,29 @@ function App() {
                     </Route>)
                     : null
                 }
+                {isLoggedIn
+                    ? (<Route path="/my-orders">
+                        <OrdersPage
+                            isLoggedIn={isLoggedIn}
+                            onLoginChange={handleLoginChange}
+                            user={user}
+                            onUserChange={handleUserChange}
+                        />
+                    </Route>)
+                    : null
+                }
+                {isLoggedIn
+                    ? (<Route path="/vendor-orders">
+                        <VendorOrdersPage
+                            isLoggedIn={isLoggedIn}
+                            onLoginChange={handleLoginChange}
+                            user={user}
+                            onUserChange={handleUserChange}
+                        />
+                    </Route>)
+                    : null
+                }   
+
                 {!isLoggedIn
                     ? (<Route path="/create-user">
                         <CreateUserPage
