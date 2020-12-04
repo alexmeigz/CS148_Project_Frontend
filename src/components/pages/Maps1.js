@@ -5,24 +5,25 @@ import GoogleMapReact from 'google-map-react';
 
 function Maps1(props) {
 
-    const defaultProps = {
-        center: {
-            lat: 59.95,
-            lng: 30.33
-        },
-        zoom: 11
-    };
-
     const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
     const [state, updateState] = useState({
         q: "",
         longitude: 0,
-        latitude: 0
-        // showHideDemo: false
+        latitude: 0,
+        z: 1,
+        showHideDemo: false
     })
 
-    const [results, setResults] = useState({});
+    const defaultProps = {
+        center: {
+            lat: state.latitude,
+            lng: state.longitude
+        },
+        zoom: state.z
+    };
+
+    // const [results, setResults] = useState({});
 
     function handleChange(evt) { //updating form elements, nested function
         const name = evt.target.name //defined in render
@@ -52,11 +53,14 @@ function Maps1(props) {
             .then(response => response.json())
             .then(data => {
                 if (data["user_has_addresses"]) {
-                    setResults(data)
-                    // state.showHideDemo = true;
-                    console.log(newUrl)
-                    alert(`${results["location_suggestions"][0]["title"]}`)
-                    console.log(data)
+                    //setResults(data)
+                    state.showHideDemo = true;
+                    state.longitude = data["location_suggestions"][0]["longitude"]
+                    state.latitude = data["location_suggestions"][0]["latitude"]
+                    alert(`${state.longitude}`)
+                    //console.log(data)
+
+                    // let secondUrl = 
 
                 }
                 else {
@@ -66,7 +70,6 @@ function Maps1(props) {
             .catch((error) => console.log("Search error: " + error))
     }
 
-    // render() {
     return (
         <div>
             <form onSubmit={submitForm}>
@@ -78,21 +81,41 @@ function Maps1(props) {
             </form>
             < div style={{ height: '100vh', width: '100%' }
             }>
-                <GoogleMapReact
-                    bootstrapURLKeys={{ key: 'AIzaSyBZP0ZV1R148SNRp2uxco36NbK-675hKAE' }}
-                    defaultCenter={defaultProps.center}
-                    defaultZoom={defaultProps.zoom}
-                >
-                    <AnyReactComponent
-                        lat={59.955413}
-                        lng={30.337844}
-                        text="My Marker"
-                    />
-                </GoogleMapReact>
+
+
+                {state.showHideDemo &&
+                    <GoogleMapReact
+                        bootstrapURLKeys={{ key: 'AIzaSyBZP0ZV1R148SNRp2uxco36NbK-675hKAE' }}
+                        defaultCenter={defaultProps.center}
+                        center={defaultProps.center}
+                        defaultZoom={defaultProps.zoom}
+                    >
+                        <AnyReactComponent
+                            lat={state.latitude}
+                            lng={state.longitude}
+                            text="My Marker"
+                        />
+                    </GoogleMapReact>
+                }
+
+                {!state.showHideDemo &&
+                    <GoogleMapReact
+                        bootstrapURLKeys={{ key: 'AIzaSyBZP0ZV1R148SNRp2uxco36NbK-675hKAE' }}
+                        defaultCenter={defaultProps.center}
+                        center={defaultProps.center}
+                        defaultZoom={defaultProps.zoom}
+                    >
+                        <AnyReactComponent
+                            lat={state.latitude}
+                            lng={state.longitude}
+                            text="My Marker"
+                        />
+                    </GoogleMapReact>
+                }
+
             </div >
         </div>
     );
-    // }
 }
 
 export default Maps1;
