@@ -25,7 +25,6 @@ function BlogForm(props) {
           ...state,
           [name]: value
         })
-        console.log(state["title"])
       }
     }
 

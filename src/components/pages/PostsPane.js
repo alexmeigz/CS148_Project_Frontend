@@ -46,7 +46,7 @@ function PostsPane(props) {
                     :
                         <div className="post_title row"> {props["title"]} </div>
                     }
-                    <div className="post_caption row">
+                    <div className="post_caption row caption-adjust">
                         {props["caption"]} 
                     </div>
                 </div>

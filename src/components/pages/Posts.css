@@ -12,21 +12,21 @@
     margin: 10px;
     float: left;
     width: 200px;
-    height: auto;
+    height: 200px;
+    object-fit: cover;
 }
 
 .post_header {
     margin: 0 10px;
     float: left;
     width: calc(100% - 240px);
-    min-height: 200px;
 }
 
 .post_title{
     float: left;
     text-align: center;
     font-size: 24px;
-    margin: 10px 30px 10px 0px;
+    height: 40px;
 }
 
 .rating_adjust{
@@ -43,7 +43,7 @@
     float: left;
     text-align: justify;
     max-width: calc(100% - 60px);
-    margin: 10px 50px 10px 10px;
+    margin: 10px 50px 0px 10px;
 }
 
 .post_reacts{
@@ -53,14 +53,19 @@
 
 .post_comments{
     float: right;
-    margin: 10px 30px 10px 0px;
+    padding: 10px 30px 5px 0;
 }
 
 .react-image{
     float: left;
+    margin: 10px 0 5px 10px;
 }
 
 .react-count{
     float: left;
-    margin: -1px 0 0 5px;
+    padding: 9px 0 5px 5px;
+}
+
+.caption-adjust{
+    margin-bottom: 0px !important;
 }

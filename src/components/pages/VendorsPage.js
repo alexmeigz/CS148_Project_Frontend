@@ -123,7 +123,7 @@ function VendorsPage (props) {
                         Vendor Results (Total: {Object.keys(results).length})
                     </div>
                     {Object.values(results).map(vendor => (
-                        <button className="vendor_panel_button" onClick={(e) => changeView(e, "vendor-pane", {
+                        <button className="panel_button" onClick={(e) => changeView(e, "vendor-pane", {
                             vendor: vendor
                         })}>
                             <VendorPane user={props.user} onUserChange={handleUserChange} vendor={vendor}/>

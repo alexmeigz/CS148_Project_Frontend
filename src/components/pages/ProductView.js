@@ -15,7 +15,6 @@ import "./ProductView.css"
 function ProductView(props) {
     const [purchased, setPurchased] = useState(false);
     const [removed, setRemoved] = useState(false);
-    // eslint-disable-next-line
     const [updating, setUpdating] = useState(false);
 
     let server = "http://localhost:8118/api"
@@ -32,13 +31,9 @@ function ProductView(props) {
         // TODO
     }
 
-
     function updateProduct(event) {
         event.preventDefault();
-
         setUpdating((prevUpdating => !prevUpdating));
-        
-
     }
 
     function removeProduct(event) {
@@ -80,10 +75,7 @@ function ProductView(props) {
 
         let newCredits = props.user.credits - parseFloat(props.productData.price);
 
-
-
         // send order to vendor
-
         let url = `${server}/user/?`
         let updatedUser = false;
 
@@ -267,7 +259,7 @@ function ProductView(props) {
             {props.isLoggedIn && (props.user.user_id === props.productData.vendor_id || props.user.account_type === "Admin")
             ? <div>
                 <button className="remove-product" onClick={removeProduct} disabled={removed}>{!removed ? "Remove Product": "Removed!"}</button>
-                <button className="update-product" onClick={updateProduct} >{!updating ? "Update Product": "Cancel Updating Product"}</button>
+                <button className="update-product" onClick={updateProduct} disabled={removed}>{!updating ? "Update Product": "Cancel Updating Product"}</button>
             </div>
             : null
             }

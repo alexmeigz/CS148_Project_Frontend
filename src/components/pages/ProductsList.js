@@ -136,7 +136,7 @@ function ProductsList (props) {
                         Product Results (Total: {Object.keys(results).length})
                     </div>
                     {Object.values(results).map(product => (
-                        <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
+                        <button className="panel_button" onClick={(e) => changeView(e, "product-pane", {
                             name: product["product_name"],
                             price: product["price"],
                             list_date: product["list_date"],
