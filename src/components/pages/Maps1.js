@@ -12,7 +12,7 @@ function Maps1(props) {
         longitude: 0,
         latitude: 0,
         z: 1,
-        showHideDemo: false
+        // showHideDemo: false
     })
 
     const defaultProps = {
@@ -54,10 +54,16 @@ function Maps1(props) {
             .then(data => {
                 if (data["user_has_addresses"]) {
                     //setResults(data)
-                    state.showHideDemo = true;
-                    state.longitude = data["location_suggestions"][0]["longitude"]
-                    state.latitude = data["location_suggestions"][0]["latitude"]
-                    alert(`${state.longitude}`)
+                    updateState({
+                        ...state,
+                        longitude: data["location_suggestions"][0]["longitude"],
+                        latitude: data["location_suggestions"][0]["latitude"],
+                        z: 7,
+                        // showHideDemo: true
+                    })
+                    // console.log(state)
+                    console.log(data)
+                    // alert(`${state.longitude}`)
                     //console.log(data)
 
                     // let secondUrl = 
@@ -82,36 +88,20 @@ function Maps1(props) {
             < div style={{ height: '100vh', width: '100%' }
             }>
 
-
-                {state.showHideDemo &&
-                    <GoogleMapReact
-                        bootstrapURLKeys={{ key: 'AIzaSyBZP0ZV1R148SNRp2uxco36NbK-675hKAE' }}
-                        defaultCenter={defaultProps.center}
-                        center={defaultProps.center}
-                        defaultZoom={defaultProps.zoom}
-                    >
-                        <AnyReactComponent
-                            lat={state.latitude}
-                            lng={state.longitude}
-                            text="My Marker"
-                        />
-                    </GoogleMapReact>
-                }
-
-                {!state.showHideDemo &&
-                    <GoogleMapReact
-                        bootstrapURLKeys={{ key: 'AIzaSyBZP0ZV1R148SNRp2uxco36NbK-675hKAE' }}
-                        defaultCenter={defaultProps.center}
-                        center={defaultProps.center}
-                        defaultZoom={defaultProps.zoom}
-                    >
-                        <AnyReactComponent
-                            lat={state.latitude}
-                            lng={state.longitude}
-                            text="My Marker"
-                        />
-                    </GoogleMapReact>
-                }
+                <GoogleMapReact
+                    bootstrapURLKeys={{ key: 'AIzaSyBZP0ZV1R148SNRp2uxco36NbK-675hKAE' }}
+                    defaultCenter={defaultProps.center}
+                    center={defaultProps.center}
+                    defaultZoom={defaultProps.zoom}
+                    zoom={state.z}
+                >
+                    {console.log(state)}
+                    <AnyReactComponent
+                        lat={state.latitude}
+                        lng={state.longitude}
+                        text="My Marker"
+                    />
+                </GoogleMapReact>
 
             </div >
         </div>

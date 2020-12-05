@@ -50,9 +50,12 @@ function RecipeCall(props) {
             .then(data => {
                 if (data["more"]) {
                     setResults(data)
-                    state.showHideDemo = true;
+                    updateState({
+                        ...state,
+                        showHideDemo: true
+                    })
 
-                    alert(`${results["hits"][0]["recipe"]["shareAs"]}`)
+                    // alert(`${results["hits"][0]["recipe"]["shareAs"]}`)
                     // console.log(data)
 
                 }
