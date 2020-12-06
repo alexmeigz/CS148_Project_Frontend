@@ -79,6 +79,7 @@ function App() {
         }))
     }
 
+
     useEffect(() => {
         if (JSON.parse(sessionStorage.getItem("isLoggedIn")) && JSON.parse(sessionStorage.getItem("user")).user_id !== 0) {
             const interval = setInterval(() => {
