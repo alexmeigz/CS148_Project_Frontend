@@ -2,21 +2,24 @@
 
 .post-pane{
     margin: 50px;
-    margin-top: 30px;
+    min-height: calc(100vh - 280px);
+    min-width: 800px;
 }
 
 .post-image {
-    margin-bottom: 50px;
+    margin: 0 30px 30px 0;
     float: left;
-    width: 30%;
-    height: auto;
+    width: 20vw;
+    height: 20vw;
+    object-fit: cover;
     min-width: 200px;
+    min-height: 200px;
 }
 
 .post-column {
-    margin: 0 20px;
+    margin: 0 50px;
     float: left;
-    width: 65%;
+    width: calc(65% - 100px);
 }
 
 .post-title {
@@ -78,12 +81,12 @@
     font-size: 25px;
 }
 .post-reacts{
-    margin: 10px 10px 100px 10px;
+    margin: 10px 10px 10px 10px;
     float: left;
 }
 
 .post-comments{
-    margin: 10px 10px 100px 10px;
+    padding: 10px 10px 10px 10px;
     float: right;
 }
 
@@ -108,3 +111,24 @@ ol{
     float: left;
     width: calc(100% - 40px);
 }
+
+.comment-button {
+    border: none;
+    background: none;
+}
+
+.comment-button:hover {
+    color: #ED3369;
+}
+.comment-button:focus{
+    outline: 0;
+}
+
+.comment-pane {
+    float: center;
+    width: 60%;
+    padding: 10px 10px;
+    margin: 0 20% !important;
+    border-top: 1px solid grey;
+}
+

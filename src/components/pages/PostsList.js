@@ -40,7 +40,6 @@ function PostsList (props) {
               newUrl += `&${f}=${filters[f]}`
             }
         }
-        console.log("Hello World: " + newUrl)
         fetch(newUrl, {
             method: 'GET',
             headers: {
@@ -67,7 +66,7 @@ function PostsList (props) {
     
     function changeView(event, type, postData) {
         setIsListView(prevIsListView => !prevIsListView);
-        if (type === "product-pane") {
+        if (type === "post-pane") {
             if(postData["post_type"] === "recipe"){
                 setPostView(<RecipeView 
                     postData={postData} 
@@ -129,11 +128,12 @@ function PostsList (props) {
                         Post Results (Total: {Object.keys(results).length})
                     </div>
                     {Object.values(results).map(post => (
-                        <button className="product_panel_button" 
-                            onClick={(e) => changeView(e, "product-pane", post)}>
+                        <button className="panel_button" 
+                            onClick={(e) => changeView(e, "post-pane", post)}>
                             {post["post_type"] === "blog" &&
                                 <PostsPane 
                                     title={post["title"]} 
+                                    username={post["username"]}
                                     image={post["image_url"]}
                                     caption={post["content"]}
                                     reacts={post["reacted_users"].length}
@@ -143,6 +143,7 @@ function PostsList (props) {
                             {post["post_type"] === "review" &&
                                 <PostsPane 
                                     title={post["title"]} 
+                                    username={post["username"]}
                                     image={post["image_url"]}
                                     caption={post["content"]}
                                     rating={post["rating"]}
@@ -153,6 +154,7 @@ function PostsList (props) {
                             {post["post_type"] === "recipe" &&
                                 <PostsPane 
                                     title={post["title"]} 
+                                    username={post["username"]}
                                     image={post["image_url"]}
                                     caption={post["caption"]}
                                     ingredients={post["ingredients"]}

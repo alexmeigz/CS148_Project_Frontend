@@ -12,6 +12,7 @@ import AccountInfoBar from "../common/AccountInfoBar";
 import ApplForm from "./CreateAppl";
 import ProfileView from "./ProfileView";
 import MyVendorProfileView from "./MyVendorProfileView";
+import MyPublicProfileView from "./MyPublicProfileView";
 
 import "./MyProfilePage.css";
 
@@ -22,20 +23,32 @@ function MyProfilePage (props) {
     const [isVendorApplicationView, setIsVendorApplicationView] = useState(false);
     // eslint-disable-next-line
     const [isVendorProfileView, setIsVendorProfileView] = useState(false);
+    // eslint-disable-next-line
+    const [isPublicProfileView, setIsPublicProfileView] = useState(false);
 
     function toggleView(e) {
         if (e.target.className === "vendor-application-button") {
             setIsProfileView(false);
             setIsVendorApplicationView(true);
             setIsVendorProfileView(false);
+            setIsPublicProfileView(false);
         } else if (e.target.className === "vendor-profile-button") {
             setIsProfileView(false);
             setIsVendorApplicationView(false);
             setIsVendorProfileView(true);
-        } else if (e.target.className === "back-button") {
+            setIsPublicProfileView(false);
+        }
+        else if (e.target.className === "public-profile-button") {
+            setIsProfileView(false);
+            setIsVendorApplicationView(false);
+            setIsVendorProfileView(false);
+            setIsPublicProfileView(true);
+        } 
+        else if (e.target.className === "back-button") {
             setIsProfileView(true);
             setIsVendorApplicationView(false);
             setIsVendorProfileView(false);
+            setIsPublicProfileView(false);
         }
         
     }
@@ -82,6 +95,10 @@ function MyProfilePage (props) {
                     }
                     {isVendorProfileView
                         ? <MyVendorProfileView isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/>
+                        : null
+                    }
+                    {isPublicProfileView
+                        ? <MyPublicProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>
                         : null
                     }
 

@@ -112,18 +112,6 @@
     font-size: 18px;
 }
 
-.vendor_panel_button {
-    margin: 10px;
-    background: none;
-    min-width: calc(100% - 20px);
-    border-width: 1px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-.vendor_panel_button:active {
-    border: none;
-}
-
 .vendor_back_button {
     margin-top: 20px;
     margin-left: 20px;
