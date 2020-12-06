@@ -39,7 +39,21 @@ import RecipeCall from './components/pages/RecipeCall'
 import RecipeCall2 from './components/pages/RecipeCall2';
 import RecipeCall3 from './components/pages/RecipeCall3';
 
+// sessionStorage.setItem("isLoggedIn", JSON.stringify(false))
+// sessionStorage.setItem("user", JSON.stringify({
+//     user_id: 0,
+//     username: "Loading",
+//     password_hash: "",
+//     email: "Loading",
+//     account_type: "Loading",
+//     vendor_location: "Loading",
+//     credits: 0,
+//     profile_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif",
+//     vendor_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
+// }))
+
 function App() {
+    // sessionStorage.clear();
     // eslint-disable-next-line
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -48,6 +62,8 @@ function App() {
     if (process.env.NODE_ENV !== "development") {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
+
+    
     // eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false); // testing conditional rendering
     // eslint-disable-next-line
@@ -63,26 +79,31 @@ function App() {
         vendor_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
     })
 
+    
+
     function onLoginChange(value) {
+        sessionStorage.setItem("isLoggedIn", value)
         setIsLoggedIn(value);
-        sessionStorage.setItem("isLoggedIn", JSON.stringify(value))
     }
     // eslint-disable-next-line
     function onUserChange(value) {
+        sessionStorage.setItem("user", JSON.stringify({
+            ...JSON.parse(sessionStorage.getItem("user")),
+            ...value
+        }))
         setUser({
             ...user,
             ...value
         });
-        sessionStorage.setItem("user", JSON.stringify({
-            ...user,
-            ...value
-        }))
     }
 
 
     useEffect(() => {
-        if (JSON.parse(sessionStorage.getItem("isLoggedIn")) && JSON.parse(sessionStorage.getItem("user")).user_id !== 0) {
-            const interval = setInterval(() => {
+        // console.log(JSON.parse(sessionStorage.getItem("isLoggedIn")))
+        // console.log(JSON.parse(sessionStorage.getItem("user")))
+        const interval = setInterval(() => {
+            if (JSON.parse(sessionStorage.getItem("isLoggedIn")) && JSON.parse(sessionStorage.getItem("user")) !== 0) {
+                console.log("ping")
                 let url = `${server}/user/?user_id=${JSON.parse(sessionStorage.getItem("user")).user_id}`
 
                 fetch(url, 
@@ -97,19 +118,16 @@ function App() {
                     .then(data => {
                     if(data["user_id"] === JSON.parse(sessionStorage.getItem("user"))["user_id"]){
                         onUserChange(data)
-                        console.log(JSON.parse(sessionStorage.getItem("user")))
                     }
                     else{
                         alert(`Error logging in JSON.parse(sessionStorage.getItem("user")): ${data["message"]}`)
                     }
                     })
                     .catch((error) => console.log("User login error: "+ error))
-            }, 60000);
-            return () => clearInterval(interval);
-            
-
-        }
-    }, [server, onUserChange])
+            }
+        }, 60000);
+        return () => clearInterval(interval);
+    }, [server, onUserChange, isLoggedIn, user])
 
     return (
         // TODO: Change to new Nutriflix components

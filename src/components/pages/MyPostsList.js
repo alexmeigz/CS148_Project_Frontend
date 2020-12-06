@@ -13,7 +13,7 @@ import ProductView from "./ProductView";
 // import AccountInfoBar from "../common/AccountInfoBar"
 
 function MyPostsList (props) { 
-    let user_id = props.user.user_id;
+    let user_id = JSON.parse(sessionStorage.getItem("user")).user_id;
     
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -55,8 +55,8 @@ function MyPostsList (props) {
         if (type === "product-pane" && isListView) {
             setProductView(<ProductView 
                 productData={productData} 
-                isLoggedIn={props.isLoggedIn} 
-                user={props.user} 
+                isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} 
+                user={JSON.parse(sessionStorage.getItem("user"))} 
                 onUserChange={props.onUserChange}
             />);
         }
@@ -87,7 +87,7 @@ function MyPostsList (props) {
                                     image={post["image_url"]}
                                     caption={post["content"]}
                                     reacts={post["reacted_users"].length}
-                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
                                 />
                             }
                             {post["post_type"] === "review" &&
@@ -97,7 +97,7 @@ function MyPostsList (props) {
                                     caption={post["content"]}
                                     rating={post["rating"]}
                                     reacts={post["reacted_users"].length}
-                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
                                 />
                             }
                             {post["post_type"] === "recipe" &&
@@ -107,7 +107,7 @@ function MyPostsList (props) {
                                     caption={post["caption"]}
                                     ingredients={post["ingredients"]}
                                     instructions={post["instructions"]}
-                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
                                     reacts={post["reacted_users"].length}
                                 />
                             }

@@ -12,12 +12,12 @@ function MyPublicProfileView(props) {
 
     const [settingsMode, setSettingsMode] = useState(false);
     const [newUserInfo, setNewUserInfo] = useState({
-        ...props.user
+        ...JSON.parse(sessionStorage.getItem("user"))
     })
 
     function resetNewUserInfo() {
         setNewUserInfo({
-            ...props.user,
+            ...JSON.parse(sessionStorage.getItem("user")),
             instagram: "",
             email: ""
         })
@@ -56,7 +56,7 @@ function MyPublicProfileView(props) {
 
         required_params.forEach((param, index) => {
             if (newUserInfo[param] === "") {
-                newUserInfo[param] = props.user[param]; 
+                newUserInfo[param] = JSON.parse(sessionStorage.getItem("user"))[param]; 
             }
             url += `&${param}=${newUserInfo[param]}`
         });
@@ -65,7 +65,7 @@ function MyPublicProfileView(props) {
             if (newUserInfo[param] !== "") {
                  url += `&${param}=${newUserInfo[param]}`
             } else {
-                newUserInfo[param] = props.user[param]; 
+                newUserInfo[param] = JSON.parse(sessionStorage.getItem("user"))[param]; 
             }
         });
         
@@ -123,7 +123,7 @@ function MyPublicProfileView(props) {
             </div>
             
             <div className="vendor-info">
-                <PublicProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange} user_id={props.user.user_id}/>
+                <PublicProfileView isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={handleUserChange} user_id={JSON.parse(sessionStorage.getItem("user")).user_id}/>
             </div>
         </div>
     )

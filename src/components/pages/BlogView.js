@@ -242,7 +242,7 @@ function BlogView(props) {
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>
                     </div>
                 }
-                { props.isLoggedIn &&
+                { JSON.parse(sessionStorage.getItem("isLoggedIn")) &&
                     <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
                 }
 

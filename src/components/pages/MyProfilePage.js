@@ -98,7 +98,7 @@ function MyProfilePage (props) {
                         : null
                     }
                     {isPublicProfileView
-                        ? <MyPublicProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>
+                        ? <MyPublicProfileView isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/>
                         : null
                     }
 
