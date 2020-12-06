@@ -110,5 +110,6 @@ textarea{
 
 .update-form{
     float: left;
+    width: 800px;
     margin: 20px;
 }

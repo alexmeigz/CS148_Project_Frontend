@@ -111,3 +111,24 @@ ol{
     float: left;
     width: calc(100% - 40px);
 }
+
+.comment-button {
+    border: none;
+    background: none;
+}
+
+.comment-button:hover {
+    color: #ED3369;
+}
+.comment-button:focus{
+    outline: 0;
+}
+
+.comment-pane {
+    float: center;
+    width: 60%;
+    padding: 10px 10px;
+    margin: 0 20% !important;
+    border-top: 1px solid grey;
+}
+

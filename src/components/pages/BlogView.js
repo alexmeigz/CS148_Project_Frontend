@@ -2,6 +2,8 @@
 // Engineer: Alex Mei
 
 import React, {useState} from "react";
+import AddComment from "./AddComment.js"
+import CommentPane from "./CommentPane.js"
 import BlogUpdatePanel from "./BlogUpdatePanel.js"
 
 import "./PostView.css"
@@ -11,8 +13,11 @@ import heart_default from "../../assets/heart_default.png";
 function BlogView(props) {
     const [removed, setRemoved] = useState(false);
     const [updating, setUpdating] = useState(false);
+    const [adding, setAdding] = useState(false);
     const [liked, setLiked] = useState(props.postData["reacted_users"].includes(props.user.user_id));
     const [numLikes, setLikes] =useState(props.postData["reacted_users"].length);
+    const [comments, setComments] = useState({});
+    const [showing, setShowing] = useState(false);
 
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -20,6 +25,29 @@ function BlogView(props) {
     }
     if (process.env.NODE_ENV !== "development") {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+
+    function showComments(event){
+        if(showing === true){
+            setShowing(false);
+        }
+        else{
+            let url = `${server}/comment/?display_all=True&post_id=${props.postData.post_id}`
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },           
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                console.log(data)
+                setComments(data)
+                setShowing(true)
+            })
+            .catch((error) => console.log("Show comment error: "+ error))
+        }
     }
 
     function react(event){
@@ -70,8 +98,15 @@ function BlogView(props) {
         }
     }
 
+    function addComment(event) {
+        event.preventDefault();
+        setAdding((prevAdding => !prevAdding));
+        setUpdating(false);
+    }
+
     function updatePost(event) {
         event.preventDefault();
+        setAdding(false);
         setUpdating((prevUpdating => !prevUpdating));
     }
 
@@ -186,8 +221,20 @@ function BlogView(props) {
                         </div>
                     }  
                     <div className="post-comments">
-                        Comments
+                        <button className="comment-button" onClick={showComments}> {!showing ? "Show Comments (X)": "Hide Comments"} </button> 
                     </div>
+
+                    { showing && 
+                        <div className="row comments">
+                            {Object.values(comments).map(comment => (
+                                <CommentPane 
+                                    content={comment["com_info"]}
+                                    user={comment["user_id"]}
+                                    date={comment["com_date"]}
+                                    />
+                            ))}
+                        </div>
+                    }
                 </div>
                 
                 {((props.user.user_id === props.postData.user_id) || props.user.account_type === "Admin") &&
@@ -196,10 +243,18 @@ function BlogView(props) {
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>
                     </div>
                 }
+                { props.isLoggedIn &&
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                }
 
                 {updating
                 ? <BlogUpdatePanel postData={props.postData} cancelUpdate={() => setUpdating(false)}/>
                 : null
+                }
+                {adding ?
+                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                :
+                    null
                 }
             </div>
         );
