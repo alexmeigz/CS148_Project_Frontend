@@ -18,8 +18,8 @@ function RecipeUpdatePanel(props) {
     const [newInfo, setNewInfo] = useState({
         ...props.postData,
         title: "",
-        image_url: "",
-        rating: ""
+        caption: "",
+        image_url: ""
     })
 
     function handleChange(evt) { 
@@ -29,7 +29,7 @@ function RecipeUpdatePanel(props) {
         if(name === "ingredients"){
             setNewIngredients(value)
         }
-        else if(name === "ingredients"){
+        else if(name === "instructions"){
             setNewInstructions(value)
         }
         else{
@@ -60,10 +60,10 @@ function RecipeUpdatePanel(props) {
         };
 
         if(newIngredients !== ""){
-            body["ingredients"] = newIngredients;
+            body["ingredients"] = JSON.stringify(newIngredients.split("\n"));
         }
-        if(newIngredients !== ""){
-            body["ingredients"] = newIngredients;
+        if(newInstructions !== ""){
+            body["instructions"] = JSON.stringify(newInstructions.split("\n"));;
         }
 
         console.log(url)
@@ -76,7 +76,7 @@ function RecipeUpdatePanel(props) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
                 },      
-                body: body     
+                body: JSON.stringify(body)   
             })
             .then(response => response.json()) 
                 .then(data => {
