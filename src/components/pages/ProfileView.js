@@ -10,7 +10,7 @@ function ProfileView(props) {
     const [settingsMode, setSettingsMode] = useState(false);
     // eslint-disable-next-line
     const [newUserInfo, setNewUserInfo] = useState({
-        ...props.user
+        ...JSON.parse(sessionStorage.getItem("user"))
     })
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -22,7 +22,7 @@ function ProfileView(props) {
 
     function resetNewUserInfo() {
         setNewUserInfo({
-            ...props.user,
+            ...JSON.parse(sessionStorage.getItem("user")),
             email: "",
             coupon_code: "",
             coupon_amount: "",
@@ -36,7 +36,7 @@ function ProfileView(props) {
 
 
     // eslint-disable-next-line
-    function handleUserChange(value) {
+    function onUserChange(value) {
         props.onUserChange(value)
     }
 
@@ -56,7 +56,7 @@ function ProfileView(props) {
                 alert("User update error: Invalid coupon amount.");
                 return;
             }
-            newUserInfo["credits"] = parseFloat(props.user["credits"]) + parseFloat(newUserInfo["coupon_amount"]);
+            newUserInfo["credits"] = parseFloat(JSON.parse(sessionStorage.getItem("user"))["credits"]) + parseFloat(newUserInfo["coupon_amount"]);
             updatable_params.push("credits")
         } else if (newUserInfo["coupon_code"] !== "") {
             alert("User update error: Invalid coupon code.");
@@ -71,7 +71,7 @@ function ProfileView(props) {
 
         required_params.forEach((param, index) => {
             if (newUserInfo[param] === "") {
-                newUserInfo[param] = props.user[param]; 
+                newUserInfo[param] = JSON.parse(sessionStorage.getItem("user"))[param]; 
             }
             url += `&${param}=${newUserInfo[param]}`
         });
@@ -80,7 +80,7 @@ function ProfileView(props) {
             if (newUserInfo[param] !== "") {
                  url += `&${param}=${newUserInfo[param]}`
             } else {
-                newUserInfo[param] = props.user[param]; 
+                newUserInfo[param] = JSON.parse(sessionStorage.getItem("user"))[param]; 
             }
         });
         
@@ -97,7 +97,7 @@ function ProfileView(props) {
               .then(data => {
               if(data["message"] === "User successfully updated"){
                 alert(`${data["message"]}`)
-                handleUserChange(newUserInfo);
+                onUserChange(newUserInfo);
               }
               else{
                 alert(`Error updating user info: ${data["message"]}`)
@@ -114,7 +114,7 @@ function ProfileView(props) {
             <div className="user-info">
                 <div className="profile-picture-pane">
                     <img className="profile-picture"
-                        src={props.user.profile_image_url}
+                        src={JSON.parse(sessionStorage.getItem("user")).profile_image_url}
                         alt="Profile"
                     />
                     {!settingsMode 
@@ -135,13 +135,13 @@ function ProfileView(props) {
                         </div>
                      }
                     <p>
-                        Username: {props.user.username}
+                        Username: {JSON.parse(sessionStorage.getItem("user")).username}
                     </p>
                     <p>
-                        Account Type: {props.user.account_type}
+                        Account Type: {JSON.parse(sessionStorage.getItem("user")).account_type}
                     </p>
                     <p>
-                        Email: {props.user.email}
+                        Email: {JSON.parse(sessionStorage.getItem("user")).email}
                         {settingsMode 
                         ? <div>
                             <label className="form-label" for="email">New Email: </label>         
@@ -151,7 +151,7 @@ function ProfileView(props) {
                         : null}
                     </p>
                     <p>
-                        Credits: ${props.user.credits}
+                        Credits: ${JSON.parse(sessionStorage.getItem("user")).credits}
                         {settingsMode 
                         ? <div>
                             <label className="form-label" for="coupon_code">Coupon Code: </label>         

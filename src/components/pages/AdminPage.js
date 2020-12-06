@@ -10,22 +10,22 @@ import VendorApps from "./VendorApps"
 import ReportList from "./ReportList"
 
 function AdminPage (props) {
-    function handleLoginChange(value) {
+    function onLoginChange(value) {
         props.onLoginChange(value)
     }
-    function handleUserChange(value) {
+    function onUserChange(value) {
         props.onUserChange(value)
     }
     return (
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} />
-            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
+            <NavigationBar isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} onLoginChange={onLoginChange} user={JSON.parse(sessionStorage.getItem("user"))} />
+            {JSON.parse(sessionStorage.getItem("isLoggedIn")) ? <AccountInfoBar user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/> : null}
 
             <h1> Admin Panel </h1>
 
-            <VendorApps user={props.user} onUserChange={handleUserChange} />
+            <VendorApps user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange} />
 
-            <ReportList user={props.user} onUserChange={handleUserChange} />
+            <ReportList user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange} />
 
             <ContactUsFooter />
         </div>

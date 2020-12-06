@@ -11,7 +11,7 @@ function VendorProfileView(props) {
             ...props.vendor
         }:
         {
-            ...props.user
+            ...JSON.parse(sessionStorage.getItem("user"))
         }
     )
     
@@ -25,7 +25,7 @@ function VendorProfileView(props) {
                 <h1> Welcome to {displayInfo.username}'s Store </h1>
             </div>
             <div className="vendor-details">
-                <MyProductsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={props.onUserChange} vendor_id={displayInfo.user_id}/>
+                <MyProductsList isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={props.onUserChange} vendor_id={displayInfo.user_id}/>
             </div>
         </div>
     )

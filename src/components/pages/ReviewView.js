@@ -16,7 +16,7 @@ function ReviewView(props) {
     const [removed, setRemoved] = useState(false);
     // eslint-disable-next-line
     const [updating, setUpdating] = useState(false);
-    const [liked, setLiked] = useState(props.postData["reacted_users"].includes(props.user.user_id));
+    const [liked, setLiked] = useState(props.postData["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id));
     const [numLikes, setLikes] =useState(props.postData["reacted_users"].length);
 
     let server = "http://localhost:8118/api"
@@ -28,7 +28,7 @@ function ReviewView(props) {
     }
 
     function react(event){
-        let url = `${server}/reaction/?user_id=${props.user.user_id}&post_id=${props.postData.post_id}`
+        let url = `${server}/reaction/?user_id=${JSON.parse(sessionStorage.getItem("user")).user_id}&post_id=${props.postData.post_id}`
         if(liked){
             fetch(url, 
                 {
@@ -104,7 +104,7 @@ function ReviewView(props) {
     function removePost(event) {
         event.preventDefault();
         
-        let url = `${server}/post/?post_id=${props.postData["post_id"]}&user_id=${props.user["user_id"]}`
+        let url = `${server}/post/?post_id=${props.postData["post_id"]}&user_id=${JSON.parse(sessionStorage.getItem("user"))["user_id"]}`
 
         fetch(url, 
             {
@@ -189,7 +189,7 @@ function ReviewView(props) {
                         Comments
                     </div>
                 </div>
-                {(props.user.user_id === props.postData.user_id) &&
+                {(JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id) &&
                     <div>
                         <button className="post-button" onClick={removePost} disabled={removed}>{!removed ? "Remove Post": "Removed!"}</button>
                         <button className="post-button" onClick={updatePost} disabled={true}>{!updating ? "Update Post": "Submit Update!"}</button>
@@ -253,7 +253,7 @@ function ReviewView(props) {
                         Comments
                     </div>
                 </div>
-                {(props.user.user_id === props.postData.user_id) &&
+                {(JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id) &&
                     <div>
                         <button className="post-button" onClick={removePost} disabled={removed}>{!removed ? "Remove Post": "Removed!"}</button>
                         <button className="post-button" onClick={updatePost} disabled={true}>{!updating ? "Update Post": "Submit Update!"}</button>

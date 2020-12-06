@@ -9,18 +9,18 @@ import AccountInfoBar from "../common/AccountInfoBar"
 
 function ErrorPage (props) {
 
-    function handleLoginChange(value) {
+    function onLoginChange(value) {
         props.onLoginChange(value)
     }
-    function handleUserChange(value) {
+    function onUserChange(value) {
         props.onUserChange(value)
     }
 
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} />
-            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
+            <NavigationBar isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} onLoginChange={onLoginChange} user={JSON.parse(sessionStorage.getItem("user"))} />
+            {JSON.parse(sessionStorage.getItem("isLoggedIn")) ? <AccountInfoBar user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/> : null}
 
             <img style={{width: "50%", marginLeft: "25%"}}
                 src="https://www.ideasmama.com/wp-content/uploads/pepega.jpg"

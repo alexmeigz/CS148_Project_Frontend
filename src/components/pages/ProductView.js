@@ -70,18 +70,18 @@ function ProductView(props) {
     function purchaseProduct(event) {
         event.preventDefault();
 
-        if (!props.isLoggedIn) {
+        if (!JSON.parse(sessionStorage.getItem("isLoggedIn"))) {
             alert("Purchase Failed: Not Logged In!");
             return;
-        } else if (props.productData["price"] > props.user.credits) {
+        } else if (props.productData["price"] > JSON.parse(sessionStorage.getItem("user")).credits) {
             alert("Purchase Failed: Not enough credits");
             return;
         }
 
-        let newCredits = props.user.credits - parseFloat(props.productData.price);
+        let newCredits = JSON.parse(sessionStorage.getItem("user")).credits - parseFloat(props.productData.price);
 
 
-        let url = `${server}/order/?product_id=${props.productData["product_id"]}&price=${props.productData["price"]}&buyer_id=${props.user.user_id}&seller_id=${props.productData.vendor_id}`
+        let url = `${server}/order/?product_id=${props.productData["product_id"]}&price=${props.productData["price"]}&buyer_id=${JSON.parse(sessionStorage.getItem("user")).user_id}&seller_id=${props.productData.vendor_id}`
 
         fetch(url, 
         {
@@ -143,14 +143,14 @@ function ProductView(props) {
                 </div>
             </div>
 
-            {props.isLoggedIn && (props.user.user_id !== props.productData.vendor_id || props.user.account_type === "Admin")
+            {JSON.parse(sessionStorage.getItem("isLoggedIn")) && (JSON.parse(sessionStorage.getItem("user")).user_id !== props.productData.vendor_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin")
             ? <div>
                 <button className="purchase-product" onClick={purchaseProduct} disabled={purchased}>{!purchased ? "Purchase Product": "Purchased!"}</button>
             </div>
             : null
             }
 
-            {/* {!props.isLoggedIn
+            {/* {!JSON.parse(sessionStorage.getItem("isLoggedIn"))
             ? <div>
                 <button className="login-button" onClick={login} disabled={true}>Login to Purchase Product, use top right login button.</button> 
             </div>
@@ -159,7 +159,7 @@ function ProductView(props) {
 
 
             {/* TODO: Waiting for product model to get updated */}
-            {props.isLoggedIn && (props.user.user_id === props.productData.vendor_id || props.user.account_type === "Admin")
+            {JSON.parse(sessionStorage.getItem("isLoggedIn")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.productData.vendor_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin")
             ? <div>
                 <button className="remove-product" onClick={removeProduct} disabled={removed}>{!removed ? "Remove Product": "Removed!"}</button>
                 <button className="update-product" onClick={updateProduct} >{!updating ? "Update Product": "Cancel Updating Product"}</button>

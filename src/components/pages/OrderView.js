@@ -159,7 +159,7 @@ function OrderView(props) {
                             Update Date: {props.order.update_date}
                         </div>
                     </div>
-                    {props.user.account_type === "Admin"
+                    {JSON.parse(sessionStorage.getItem("user")).account_type === "Admin"
                         ? <div className="row">
                             <div className="seller-id">
                                 Seller Id: {props.order.seller_id}
@@ -171,15 +171,15 @@ function OrderView(props) {
                         : null
                     }
                 </div>
-                {props.user.user_id === props.order.seller_id || props.user.account_type === "Admin"
+                {JSON.parse(sessionStorage.getItem("user")).user_id === props.order.seller_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin"
                     ? <div className="order-buttons">
                         <button className="ship-order-button" onClick={shipOrder} disabled={decided || props.order.status === "Shipped" || props.order.status === "Refunded" || props.order.status === "Confirmed"}>Ship Order</button>
                         <button className="refund-order-button" onClick={refundOrder} disabled={decided || props.order.status === "Refunded" || props.order.status === "Shipped" || props.order.status === "Confirmed"}>Refund Order</button>
-                        <button className="delete-order-button" onClick={deleteOrder} disabled={decided || !(props.user.account_type === "Admin" || props.order.status === "Confirmed")}>Delete Order</button>
+                        <button className="delete-order-button" onClick={deleteOrder} disabled={decided || !(JSON.parse(sessionStorage.getItem("user")).account_type === "Admin" || props.order.status === "Confirmed")}>Delete Order</button>
                     </div>
                     : null
                 }
-                {props.user.user_id === props.order.buyer_id
+                {JSON.parse(sessionStorage.getItem("user")).user_id === props.order.buyer_id
                     ? <div className="order-buttons">
                         <button className="confirm-order-button" onClick={confirmOrder} disabled={(decided || props.order.status === "Pending" || props.order.status === "Confirmed")}>Confirm Status</button>
                     </div>
@@ -193,7 +193,7 @@ function OrderView(props) {
                 <ProductView 
                     productData={result} 
                     isLoggedIn={false} 
-                    user={props.user} 
+                    user={JSON.parse(sessionStorage.getItem("user"))} 
                     onUserChange={props.onUserChange}
                 />
             </div>

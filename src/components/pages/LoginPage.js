@@ -14,13 +14,13 @@ import LoginForm from "./LoginForm";
 function LoginPage (props) {
     const [redirect, setRedirect] = useState(false)
 
-    function handleLoginChange(value) {
+    function onLoginChange(value) {
         props.onLoginChange(value)
         if (value) {
             setRedirect(value)
         }
     }
-    function handleUserChange(value) {
+    function onUserChange(value) {
         props.onUserChange(value)
     }
     if (redirect) {
@@ -29,10 +29,10 @@ function LoginPage (props) {
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} user={props.user} onLoginChange={handleLoginChange}/>
-            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
+            <NavigationBar isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onLoginChange={onLoginChange}/>
+            {JSON.parse(sessionStorage.getItem("isLoggedIn")) ? <AccountInfoBar user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/> : null}
 
-            <LoginForm isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} onUserChange={handleUserChange}/>
+            <LoginForm isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} onLoginChange={onLoginChange} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/>
 
             <ContactUsFooter />
         </div>
