@@ -197,35 +197,9 @@ function App() {
                         onUserChange={handleUserChange}
                     />
                 </Route>
+
                 <Route path="/recipe-call">
                     <RecipeCall
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
-                    />
-                </Route>
-
-                <Route path="/recipe-call2">
-                    <RecipeCall2
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
-                    />
-                </Route>
-
-                <Route path="/recipe-call3">
-                    <RecipeCall3
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
-                    />
-                </Route>
-
-                <Route path="/google-maps">
-                    <GoogleMapLoader
                         isLoggedIn={isLoggedIn}
                         onLoginChange={handleLoginChange}
                         user={user}
