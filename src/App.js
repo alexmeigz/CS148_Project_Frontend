@@ -41,7 +41,13 @@ import RecipeCall3 from './components/pages/RecipeCall3';
 
 function App() {
     // eslint-disable-next-line
-    
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
     // eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false); // testing conditional rendering
     // eslint-disable-next-line
@@ -67,6 +73,36 @@ function App() {
             ...value
         });
     }
+
+    useEffect(() => {
+        if (isLoggedIn && user.user_id !== 0) {
+            const interval = setInterval(() => {
+                let url = `${server}/user/?user_id=${user.user_id}`
+
+                fetch(url, 
+                    {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },           
+                    })
+                    .then(response => response.json()) 
+                    .then(data => {
+                    if(data["user_id"] === user["user_id"]){
+                        setUser(data)
+                    }
+                    else{
+                        alert(`Error logging in user: ${data["message"]}`)
+                    }
+                    })
+                    .catch((error) => console.log("User login error: "+ error))
+            }, 60000);
+            return () => clearInterval(interval);
+            
+
+        }
+    }, [isLoggedIn, user, server])
 
     return (
         // TODO: Change to new Nutriflix components
