@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import GoogleMapReact from 'google-map-react';
-
+import Marker from './Marker.tsx'
 
 
 function Maps1(props) {
@@ -12,18 +12,18 @@ function Maps1(props) {
         longitude: 0,
         latitude: 0,
         z: 1,
-        // showHideDemo: false
+        showHideDemo: false
     })
 
-    const defaultProps = {
-        center: {
-            lat: state.latitude,
-            lng: state.longitude
-        },
-        zoom: state.z
-    };
+    // const defaultProps = {
+    //     center: {
+    //         lat: state.latitude,
+    //         lng: state.longitude
+    //     },
+    //     zoom: state.z
+    // };
 
-    // const [results, setResults] = useState({});
+    const [results, setResults] = useState({});
 
     function handleChange(evt) { //updating form elements, nested function
         const name = evt.target.name //defined in render
@@ -40,8 +40,7 @@ function Maps1(props) {
         evt.preventDefault();
 
         let url = `https://developers.zomato.com/api/v2.1/locations?query=${state.q}`
-        let newUrl = url;
-        fetch(newUrl,
+        fetch(url,
             {
                 method: 'GET',
                 headers: {
@@ -52,28 +51,50 @@ function Maps1(props) {
             })
             .then(response => response.json())
             .then(data => {
+                setResults(data)
                 if (data["user_has_addresses"]) {
-                    //setResults(data)
+
                     updateState({
                         ...state,
                         longitude: data["location_suggestions"][0]["longitude"],
                         latitude: data["location_suggestions"][0]["latitude"],
-                        z: 7,
-                        // showHideDemo: true
+                        z: 12,
                     })
-                    // console.log(state)
-                    console.log(data)
-                    // alert(`${state.longitude}`)
-                    //console.log(data)
-
-                    // let secondUrl = 
-
+                    // console.log(data)
                 }
                 else {
                     alert(`Error with parameters`)
                 }
             })
             .catch((error) => console.log("Search error: " + error))
+        // console.log("LATITUDE")
+        // console.log(state.latitude)
+        let newUrl = `https://developers.zomato.com/api/v2.1/search?lat=${state.latitude}&lon=${state.longitude}&radius=100`
+        fetch(newUrl,
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'user-key': 'b0a63821c480eabed3ce36ee8033df7d'
+                }
+            })
+            .then(response => response.json())
+            .then(data2 => {
+                //data2["results_found"] !== 0
+                // console.log(data2["results_found"])
+                if (data2["results_found"] !== 0) {
+                    setResults(data2)
+                    //console.log(data2);
+                    console.log("not zero yay")
+                    updateState({
+                        ...state,
+                        showHideDemo: true
+                    })
+                    console.log(results)
+                }
+            })
+
     }
 
     return (
@@ -87,24 +108,36 @@ function Maps1(props) {
             </form>
             < div style={{ height: '100vh', width: '100%' }
             }>
-
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyBZP0ZV1R148SNRp2uxco36NbK-675hKAE' }}
-                    defaultCenter={defaultProps.center}
-                    center={defaultProps.center}
-                    defaultZoom={defaultProps.zoom}
+                    defaultCenter={{
+                        lat: 0,
+                        lng: 0
+                    }}
+                    center={{
+                        lat: state.latitude,
+                        lng: state.longitude
+                    }}
+                    defaultZoom={1}
                     zoom={state.z}
                 >
-                    {console.log(state)}
-                    <AnyReactComponent
-                        lat={state.latitude}
-                        lng={state.longitude}
-                        text="My Marker"
-                    />
+                    {state.showHideDemo &&
+                        Object.values(results["restaurants"]).map(rest => (
+                            <Marker
+                                lat={parseInt(rest["restaurant"]["location"]["latitude"])}
+                                lng={parseInt(rest["restaurant"]["location"]["longitude"])}
+                                name="My Marker"
+
+                            />
+                        ))
+                    }
+
+
+
                 </GoogleMapReact>
 
             </div >
-        </div>
+        </div >
     );
 }
 
