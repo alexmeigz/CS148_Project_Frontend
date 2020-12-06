@@ -30,9 +30,6 @@ import ErrorPage from './components/pages/ErrorPage';
 //import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 import RecipeCall from './components/pages/RecipeCall'
-import RecipeCall2 from './components/pages/RecipeCall2';
-import RecipeCall3 from './components/pages/RecipeCall3';
-import GoogleMapLoader from "./components/pages/Maps"
 import Maps1 from "./components/pages/Maps1"
 
 function App() {

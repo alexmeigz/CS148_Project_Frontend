@@ -5,7 +5,7 @@ import Marker from './Marker.tsx'
 
 function Maps1(props) {
 
-    const AnyReactComponent = ({ text }) => <div>{text}</div>;
+    // const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
     const [state, updateState] = useState({
         q: "",
