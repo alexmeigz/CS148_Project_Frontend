@@ -174,8 +174,20 @@ function BlogView(props) {
                         }  
                     </div>
                     <div className="post-comments">
-                        Comments
+                        <button className="comment-button" onClick={showComments}> {!showing ? "Show Comments (X)": "Hide Comments"} </button> 
                     </div>
+
+                    { showing && 
+                        <div className="row comments">
+                            {Object.values(comments).map(comment => (
+                                <CommentPane 
+                                    content={comment["com_info"]}
+                                    user={comment["user_id"]}
+                                    date={comment["com_date"]}
+                                    />
+                            ))}
+                        </div>
+                    }
                 </div>
                 {((props.user.user_id === props.postData.user_id) || props.user.account_type === "Admin") &&
                     <div>
@@ -183,10 +195,19 @@ function BlogView(props) {
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>
                     </div>
                 }
+                { props.isLoggedIn &&
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                }
 
                 {updating
                     ? <BlogUpdatePanel postData={props.postData} cancelUpdate={() => setUpdating(false)}/>
                     : null
+                }
+
+                {adding ?
+                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                :
+                    null
                 }
             </div>
         );
@@ -251,6 +272,7 @@ function BlogView(props) {
                 ? <BlogUpdatePanel postData={props.postData} cancelUpdate={() => setUpdating(false)}/>
                 : null
                 }
+
                 {adding ?
                     <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
                 :

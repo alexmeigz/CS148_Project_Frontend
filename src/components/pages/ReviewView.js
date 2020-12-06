@@ -2,6 +2,8 @@
 // Engineer: Alex Mei
 
 import React, {useState} from "react";
+import AddComment from "./AddComment.js"
+import CommentPane from "./CommentPane.js"
 import ReviewUpdatePanel from "./ReviewUpdatePanel.js"
 
 import "./PostView.css";
@@ -18,6 +20,9 @@ function ReviewView(props) {
     const [updating, setUpdating] = useState(false);
     const [liked, setLiked] = useState(props.postData["reacted_users"].includes(props.user.user_id));
     const [numLikes, setLikes] =useState(props.postData["reacted_users"].length);
+    const [comments, setComments] = useState({});
+    const [showing, setShowing] = useState(false);
+    const [adding, setAdding] = useState(false);
 
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -25,6 +30,29 @@ function ReviewView(props) {
     }
     if (process.env.NODE_ENV !== "development") {
         server = "https://nutriflix-flask-backend.herokuapp.com//api"
+    }
+
+    function showComments(event){
+        if(showing === true){
+            setShowing(false);
+        }
+        else{
+            let url = `${server}/comment/?display_all=True&post_id=${props.postData.post_id}`
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },           
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                console.log(data)
+                setComments(data)
+                setShowing(true)
+            })
+            .catch((error) => console.log("Show comment error: "+ error))
+        }
     }
 
     function react(event){
@@ -73,6 +101,12 @@ function ReviewView(props) {
                 })
                 .catch((error) => console.log("Reaction delete error: "+ error))
         }
+    }
+
+    function addComment(event) {
+        event.preventDefault();
+        setAdding((prevAdding => !prevAdding));
+        setUpdating(false);
     }
 
     function updatePost(event) {
@@ -164,8 +198,20 @@ function ReviewView(props) {
                             </div>
                         }  
                     <div className="post-comments">
-                        Comments
+                        <button className="comment-button" onClick={showComments}> {!showing ? "Show Comments (X)": "Hide Comments"} </button> 
                     </div>
+
+                    { showing && 
+                        <div className="row comments">
+                            {Object.values(comments).map(comment => (
+                                <CommentPane 
+                                    content={comment["com_info"]}
+                                    user={comment["user_id"]}
+                                    date={comment["com_date"]}
+                                    />
+                            ))}
+                        </div>
+                    }
                 </div>
                 {((props.user.user_id === props.postData.user_id) || props.user.account_type === "Admin") &&
                     <div>
@@ -173,10 +219,19 @@ function ReviewView(props) {
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>
                     </div>
                 }
+                { props.isLoggedIn &&
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                }
 
                 {updating
                     ? <ReviewUpdatePanel postData={props.postData} cancelUpdate={() => setUpdating(false)}/>
                     : null
+                }
+
+                {adding ?
+                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                :
+                    null
                 }
             </div>
         );
@@ -233,8 +288,20 @@ function ReviewView(props) {
                             </div>
                         }  
                     <div className="post-comments">
-                        Comments
+                        <button className="comment-button" onClick={showComments}> {!showing ? "Show Comments (X)": "Hide Comments"} </button> 
                     </div>
+
+                    { showing && 
+                        <div className="row comments">
+                            {Object.values(comments).map(comment => (
+                                <CommentPane 
+                                    content={comment["com_info"]}
+                                    user={comment["user_id"]}
+                                    date={comment["com_date"]}
+                                    />
+                            ))}
+                        </div>
+                    }
                 </div>
                 {((props.user.user_id === props.postData.user_id) || props.user.account_type === "Admin") &&
                     <div>
@@ -242,10 +309,19 @@ function ReviewView(props) {
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>
                     </div>
                 }
+                { props.isLoggedIn &&
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                }
 
                 {updating
                     ? <ReviewUpdatePanel postData={props.postData} cancelUpdate={() => setUpdating(false)}/>
                     : null
+                }
+
+                {adding ?
+                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                :
+                    null
                 }
             </div>
         );
