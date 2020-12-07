@@ -63,7 +63,7 @@ function PostsPane(props) {
                         </div>
                     }                    
                     <div className="post_comments">
-                        Comments
+                        Comments: {props["comments"]}
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@ function PostsPane(props) {
                         </div>
                     }  
                     <div className="post_comments">
-                        Comments
+                        Comments: {props["comments"]}
                     </div>
                 </div>
             </div>

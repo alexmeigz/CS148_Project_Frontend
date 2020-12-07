@@ -198,7 +198,7 @@ function ReviewView(props) {
                             </div>
                         }  
                     <div className="post-comments">
-                        <button className="comment-button" onClick={showComments}> {!showing ? "Show Comments (X)": "Hide Comments"} </button> 
+                        <button className="comment-button" onClick={showComments}> {!showing ? `Show Comments (${props.postData["comments"]})`: "Hide Comments"} </button> 
                     </div>
 
                     { showing && 
@@ -288,7 +288,7 @@ function ReviewView(props) {
                             </div>
                         }  
                     <div className="post-comments">
-                        <button className="comment-button" onClick={showComments}> {!showing ? "Show Comments (X)": "Hide Comments"} </button> 
+                        <button className="comment-button" onClick={showComments}> {!showing ? `Show Comments (${props.postData["comments"]})`: "Hide Comments"} </button> 
                     </div>
 
                     { showing && 

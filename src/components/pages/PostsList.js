@@ -134,6 +134,7 @@ function PostsList (props) {
                                 <PostsPane 
                                     title={post["title"]} 
                                     username={post["username"]}
+                                    comments={post["comments"]}
                                     image={post["image_url"]}
                                     caption={post["content"]}
                                     reacts={post["reacted_users"].length}
@@ -144,6 +145,7 @@ function PostsList (props) {
                                 <PostsPane 
                                     title={post["title"]} 
                                     username={post["username"]}
+                                    comments={post["comments"]}
                                     image={post["image_url"]}
                                     caption={post["content"]}
                                     rating={post["rating"]}
@@ -155,6 +157,7 @@ function PostsList (props) {
                                 <PostsPane 
                                     title={post["title"]} 
                                     username={post["username"]}
+                                    comments={post["comments"]}
                                     image={post["image_url"]}
                                     caption={post["caption"]}
                                     ingredients={post["ingredients"]}
