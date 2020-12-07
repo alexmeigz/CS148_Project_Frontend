@@ -75,7 +75,7 @@ function RecipeCall(props) {
                     <input className="form_field" type="text" value={state.q} name="q" onChange={handleChange} />
                 </div>
                 <div className="form_input">
-                    <label className="form_label" for="health"> Health: </label>
+                    <label className="form_label" for="health"> Health: (ie paleo, low-sugar) </label>
                     <input className="form_field" type="text" value={state.health} name="health" onChange={handleChange} />
                 </div>
                 {/* <div className="form_input">
@@ -83,7 +83,7 @@ function RecipeCall(props) {
                     <input className="form_field" type="text" value={state.calories} name="calories" onChange={handleChange} />
                 </div> */}
                 <div className="form_input">
-                    <label className="form_label" for="excluded"> Excluded: </label>
+                    <label className="form_label" for="excluded"> Excluded: (any ingredient) </label>
                     <input className="form_field" type="text" value={state.excluded} name="excluded" onChange={handleChange} />
                 </div>
                 <br /><br /><br />
