@@ -36,8 +36,7 @@ import ErrorPage from './components/pages/ErrorPage';
 //import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 import RecipeCall from './components/pages/RecipeCall'
-import RecipeCall2 from './components/pages/RecipeCall2';
-import RecipeCall3 from './components/pages/RecipeCall3';
+import Maps1 from "./components/pages/Maps1"
 
 // sessionStorage.setItem("isLoggedIn", JSON.stringify(false))
 // sessionStorage.setItem("user", JSON.stringify({
@@ -294,6 +293,7 @@ function App() {
                         onUserChange={onUserChange}
                     />
                 </Route>
+
                 <Route path="/recipe-call">
                     <RecipeCall
                         isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
@@ -303,21 +303,10 @@ function App() {
                     />
                 </Route>
 
-                <Route path="/recipe-call2">
-                    <RecipeCall2
-                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
-                        onLoginChange={onLoginChange}
-                        user={JSON.parse(sessionStorage.getItem("user"))}
-                        onUserChange={onUserChange}
-                    />
-                </Route>
-
-                <Route path="/recipe-call3">
-                    <RecipeCall3
-                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
-                        onLoginChange={onLoginChange}
-                        user={JSON.parse(sessionStorage.getItem("user"))}
-                        onUserChange={onUserChange}
+                <Route path="/google-maps1">
+                    <Maps1
+                        isLoggedIn={isLoggedIn}
+                        user={user}
                     />
                 </Route>
 

@@ -13,7 +13,7 @@ import ProductView from "./ProductView";
 // import AccountInfoBar from "../common/AccountInfoBar"
 
 function MyProductsList (props) { 
-    let vendor_id = JSON.parse(sessionStorage.getItem("user")).user_id;
+    let vendor_id = JSON.parse(sessionStorage.getItem("user")) && JSON.parse(sessionStorage.getItem("user")).user_id;
     if (props.vendor_id) {
         vendor_id = props.vendor_id;
     }

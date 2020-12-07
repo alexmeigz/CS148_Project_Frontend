@@ -14,7 +14,7 @@ function BlogView(props) {
     const [removed, setRemoved] = useState(false);
     const [updating, setUpdating] = useState(false);
     const [adding, setAdding] = useState(false);
-    const [liked, setLiked] = useState(props.postData["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id));
+    const [liked, setLiked] = useState(props.postData["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")) && JSON.parse(sessionStorage.getItem("user")).user_id));
     const [numLikes, setLikes] =useState(props.postData["reacted_users"].length);
     const [comments, setComments] = useState({});
     const [showing, setShowing] = useState(false);

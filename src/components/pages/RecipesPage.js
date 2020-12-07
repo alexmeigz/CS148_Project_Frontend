@@ -1,6 +1,3 @@
-// RecipesPage.js
-// Engineer: Joseph Ng
-
 import React from 'react';
 
 import NavigationBar from '../common/NavigationBar';

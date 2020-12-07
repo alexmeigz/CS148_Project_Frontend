@@ -138,7 +138,7 @@ function PostsList (props) {
                                     image={post["image_url"]}
                                     caption={post["content"]}
                                     reacts={post["reacted_users"].length}
-                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")) && sessionStorage.getItem("user").user_id)}
                                 />
                             }
                             {post["post_type"] === "review" &&
@@ -150,7 +150,7 @@ function PostsList (props) {
                                     caption={post["content"]}
                                     rating={post["rating"]}
                                     reacts={post["reacted_users"].length}
-                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")) && sessionStorage.getItem("user").user_id)}
                                 />
                             }
                             {post["post_type"] === "recipe" &&
@@ -162,7 +162,7 @@ function PostsList (props) {
                                     caption={post["caption"]}
                                     ingredients={post["ingredients"]}
                                     instructions={post["instructions"]}
-                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")) && sessionStorage.getItem("user").user_id)}
                                     reacts={post["reacted_users"].length}
                                 />
                             }
