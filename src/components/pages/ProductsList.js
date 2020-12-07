@@ -99,8 +99,8 @@ function ProductsList (props) {
         if (type === "product-pane") {
             setProductView(<ProductView 
                 productData={productData} 
-                isLoggedIn={props.isLoggedIn} 
-                user={props.user} 
+                isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} 
+                user={JSON.parse(sessionStorage.getItem("user"))} 
                 onUserChange={props.onUserChange}
             />);
         }

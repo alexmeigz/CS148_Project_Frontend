@@ -9,7 +9,7 @@ function CommentPane(props) {
     return (
         <div className="comment-pane">
             <div className="row">
-                {props.user}: {props.content}
+                {JSON.parse(sessionStorage.getItem("user"))}: {props.content}
             </div>
             <div className="row">
                 {props.date}

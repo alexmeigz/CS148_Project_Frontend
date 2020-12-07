@@ -70,24 +70,24 @@ function PostsList (props) {
             if(postData["post_type"] === "recipe"){
                 setPostView(<RecipeView 
                     postData={postData} 
-                    isLoggedIn={props.isLoggedIn} 
-                    user={props.user} 
+                    isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} 
+                    user={JSON.parse(sessionStorage.getItem("user"))} 
                     onUserChange={props.onUserChange}
                 />);
             }
             else if(postData["post_type"] === "review"){
                 setPostView(<ReviewView 
                     postData={postData} 
-                    isLoggedIn={props.isLoggedIn} 
-                    user={props.user} 
+                    isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} 
+                    user={JSON.parse(sessionStorage.getItem("user"))} 
                     onUserChange={props.onUserChange}
                 />);
             }
             else{
                 setPostView(<BlogView 
                     postData={postData} 
-                    isLoggedIn={props.isLoggedIn} 
-                    user={props.user} 
+                    isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} 
+                    user={JSON.parse(sessionStorage.getItem("user"))} 
                     onUserChange={props.onUserChange}
                 />);
             }
@@ -138,7 +138,7 @@ function PostsList (props) {
                                     image={post["image_url"]}
                                     caption={post["content"]}
                                     reacts={post["reacted_users"].length}
-                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
                                 />
                             }
                             {post["post_type"] === "review" &&
@@ -150,7 +150,7 @@ function PostsList (props) {
                                     caption={post["content"]}
                                     rating={post["rating"]}
                                     reacts={post["reacted_users"].length}
-                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
                                 />
                             }
                             {post["post_type"] === "recipe" &&
@@ -162,7 +162,7 @@ function PostsList (props) {
                                     caption={post["caption"]}
                                     ingredients={post["ingredients"]}
                                     instructions={post["instructions"]}
-                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
                                     reacts={post["reacted_users"].length}
                                 />
                             }

@@ -18,7 +18,7 @@ import heart_default from "../../assets/heart_default.png";
 function ReviewView(props) {
     const [removed, setRemoved] = useState(false);
     const [updating, setUpdating] = useState(false);
-    const [liked, setLiked] = useState(props.postData["reacted_users"].includes(props.user.user_id));
+    const [liked, setLiked] = useState(props.postData["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id));
     const [numLikes, setLikes] =useState(props.postData["reacted_users"].length);
     const [comments, setComments] = useState({});
     const [showing, setShowing] = useState(false);
@@ -56,7 +56,7 @@ function ReviewView(props) {
     }
 
     function react(event){
-        let url = `${server}/reaction/?user_id=${props.user.user_id}&post_id=${props.postData.post_id}`
+        let url = `${server}/reaction/?user_id=${JSON.parse(sessionStorage.getItem("user")).user_id}&post_id=${props.postData.post_id}`
         if(liked){
             fetch(url, 
                 {
@@ -213,7 +213,7 @@ function ReviewView(props) {
                         </div>
                     }
                 </div>
-                {((props.user.user_id === props.postData.user_id) || props.user.account_type === "Admin") &&
+                {(JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin") &&
                     <div>
                         <button className="post-button" onClick={removePost} disabled={removed}>{!removed ? "Remove Post": "Removed!"}</button>
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>
@@ -303,7 +303,7 @@ function ReviewView(props) {
                         </div>
                     }
                 </div>
-                {((props.user.user_id === props.postData.user_id) || props.user.account_type === "Admin") &&
+                {(JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin") &&
                     <div>
                         <button className="post-button" onClick={removePost} disabled={removed}>{!removed ? "Remove Post": "Removed!"}</button>
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>

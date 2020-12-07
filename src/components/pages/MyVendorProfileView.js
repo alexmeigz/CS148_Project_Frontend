@@ -19,12 +19,12 @@ function MyVendorProfileView(props) {
     
     const [settingsMode, setSettingsMode] = useState(false);
     const [newUserInfo, setNewUserInfo] = useState({
-        ...props.user
+        ...JSON.parse(sessionStorage.getItem("user"))
     })
 
     function resetNewUserInfo() {
         setNewUserInfo({
-            ...props.user,
+            ...JSON.parse(sessionStorage.getItem("user")),
             vendor_image_url: ""
         })
     }
@@ -35,7 +35,7 @@ function MyVendorProfileView(props) {
 
 
     // eslint-disable-next-line
-    function handleUserChange(value) {
+    function onUserChange(value) {
         props.onUserChange(value)
     }
 
@@ -58,7 +58,7 @@ function MyVendorProfileView(props) {
 
         required_params.forEach((param, index) => {
             if (newUserInfo[param] === "") {
-                newUserInfo[param] = props.user[param]; 
+                newUserInfo[param] = JSON.parse(sessionStorage.getItem("user"))[param]; 
             }
             url += `&${param}=${newUserInfo[param]}`
         });
@@ -67,7 +67,7 @@ function MyVendorProfileView(props) {
             if (newUserInfo[param] !== "") {
                  url += `&${param}=${newUserInfo[param]}`
             } else {
-                newUserInfo[param] = props.user[param]; 
+                newUserInfo[param] = JSON.parse(sessionStorage.getItem("user"))[param]; 
             }
         });
         
@@ -83,7 +83,7 @@ function MyVendorProfileView(props) {
               .then(data => {
               if(data["message"] === "User successfully updated"){
                 alert(`${data["message"]}`)
-                handleUserChange(newUserInfo);
+                onUserChange(newUserInfo);
               }
               else{
                 alert(`Error updating user info: ${data["message"]}`)
@@ -119,7 +119,7 @@ function MyVendorProfileView(props) {
             </div>
             
             <div className="vendor-info">
-                <VendorProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange} vendor_id={props.user.user_id}/>
+                <VendorProfileView isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange} vendor_id={JSON.parse(sessionStorage.getItem("user")).user_id}/>
             </div>
         </div>
     )

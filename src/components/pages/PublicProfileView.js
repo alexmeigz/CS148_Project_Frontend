@@ -8,7 +8,7 @@ import MyPostsList from "./MyPostsList";
 function PublicProfileView(props) {
     const [displayInfo] = useState(
         {
-            ...props.user
+            ...JSON.parse(sessionStorage.getItem("user"))
         }
     )
     console.log(displayInfo)
@@ -31,7 +31,7 @@ function PublicProfileView(props) {
                 </div>
             </div>
             <div className="vendor-details">
-                <MyPostsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={props.onUserChange}/>
+                <MyPostsList isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={props.onUserChange}/>
             </div>
         </div>
     )

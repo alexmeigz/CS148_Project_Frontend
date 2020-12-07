@@ -21,9 +21,9 @@ function VendorOrdersPage(props) {
     if (process.env.NODE_ENV !== "development") {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
-    let url = `${server}/order/?display_all=True&seller_id=${props.user.user_id}`
+    let url = `${server}/order/?display_all=True&seller_id=${JSON.parse(sessionStorage.getItem("user")).user_id}`
 
-    if (props.user.account_type === "Admin") {
+    if (JSON.parse(sessionStorage.getItem("user")).account_type === "Admin") {
         url = `${server}/order/?display_all=True`
     }
     
@@ -55,8 +55,8 @@ function VendorOrdersPage(props) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "order-pane" && orderData && isListView) {
             setOrderView(<OrderView 
-                isLoggedIn={props.isLoggedIn} 
-                user={props.user} 
+                isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} 
+                user={JSON.parse(sessionStorage.getItem("user"))} 
                 onUserChange={props.onUserChange} 
                 order={orderData.order}
                 isListView={isListView}
@@ -66,8 +66,8 @@ function VendorOrdersPage(props) {
 
     return (
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={props.onLoginChange} user={props.user}/>
-            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={props.onUserChange}/> : null}
+            <NavigationBar isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} onLoginChange={props.onLoginChange} user={JSON.parse(sessionStorage.getItem("user"))}/>
+            {JSON.parse(sessionStorage.getItem("isLoggedIn")) ? <AccountInfoBar user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={props.onUserChange}/> : null}
 
 
             {!isListView
@@ -103,7 +103,7 @@ function VendorOrdersPage(props) {
                             <OrderPane 
                                 orderData={order}
                                 isListView={isListView}
-                                user={props.user}
+                                user={JSON.parse(sessionStorage.getItem("user"))}
                             />
                         </button>
                     ))}

@@ -53,8 +53,8 @@ function LoginForm(props) {
         if(data["username"] === state["username"]){
           alert(`Successfully logged in to account ${state["username"]}`)
           //Need to add Redirect after creating User
-          handleLoginChange(true); // Joseph: This makes the webpage in logged in state
-          handleUserChange(data);
+          onLoginChange(true); // Joseph: This makes the webpage in logged in state
+          onUserChange(data);
         }
         else{
           alert(`Error logging in user: ${data["message"]}`)
@@ -64,11 +64,11 @@ function LoginForm(props) {
     }
 
     // Joseph: for updating login state
-    function handleLoginChange(value) {
+    function onLoginChange(value) {
       props.onLoginChange(value)
     }
 
-    function handleUserChange(value) {
+    function onUserChange(value) {
       props.onUserChange(value)
     }
 
@@ -87,7 +87,7 @@ function LoginForm(props) {
         </div>
         
         
-        <input className="form_submit" type="submit" value="Log in" disabled={props.isLoggedIn}/>
+        <input className="form_submit" type="submit" value="Log in" disabled={JSON.parse(sessionStorage.getItem("isLoggedIn"))}/>
       </form>
       </div>
     )
