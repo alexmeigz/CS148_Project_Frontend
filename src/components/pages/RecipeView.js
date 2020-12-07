@@ -16,7 +16,7 @@ function RecipeView(props) {
     
     const [removed, setRemoved] = useState(false);
     const [updating, setUpdating] = useState(false);
-    const [liked, setLiked] = useState(props.postData["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id));
+    const [liked, setLiked] = useState(props.postData["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")) && JSON.parse(sessionStorage.getItem("user")).user_id));
     const [numLikes, setLikes] =useState(props.postData["reacted_users"].length);
     const [comments, setComments] = useState({});
     const [showing, setShowing] = useState(false);
@@ -179,6 +179,51 @@ function RecipeView(props) {
                             ))}
                         </ol>
                     </div>
+                    <div className="post-nutrition">
+                        <div className="post-header">
+                            Nutrition Facts
+                        </div>
+                        <div className="nutrient">
+                            Calories: {props.postData["calories"]}
+                        </div>
+                        <div className="nutrient">
+                            Carbohydrates: {props.postData["carbs"]}
+                        </div>
+                        
+                        <div className="nutrient">
+                            Cholesterol: {props.postData["cholesterol"]}
+                        </div>
+                        
+                        <div className="nutrient">
+                            Protein: {props.postData["protein"]}
+                        </div>
+
+                        <div className="nutrient">
+                            Fiber: {props.postData["fiber"]}
+                        </div>
+
+                        <div className="nutrient">
+                            Total Fat: {props.postData["fat"]}
+                        </div>
+                        
+                        <div className="nutrient">
+                            Saturated Fat: {props.postData["saturated"]}
+                        </div>
+                        
+                        <div className="nutrient">
+                            Trans Fat: {props.postData["trans"]}
+                        </div>
+
+                        <div className="nutrient">
+                            Sodium: {props.postData["sodium"]}
+                        </div>
+                        
+                        <div className="nutrient">
+                            Sugars: {props.postData["sugars"]}
+                        </div>
+                        
+                        
+                    </div>
                 </div>
                 <div className="row">
                     <div className="post-reacts">
@@ -205,14 +250,14 @@ function RecipeView(props) {
                             {Object.values(comments).map(comment => (
                                 <CommentPane 
                                     content={comment["com_info"]}
-                                    user={comment["user_id"]}
+                                    userID={comment["user_id"]}
                                     date={comment["com_date"]}
                                     />
                             ))}
                         </div>
                     }
                 </div>
-                {(JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin") &&
+                {(JSON.parse(sessionStorage.getItem("user")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).user_id.account_type === "Admin")) &&
                     <div>
                         <button className="post-button" onClick={removePost} disabled={removed}>{!removed ? "Remove Post": "Removed!"}</button>
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>

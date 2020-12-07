@@ -41,7 +41,7 @@
 }
 
 .post-header {
-    margin: 10px 20px;
+    margin: 10px 20px !important;
     float: left;
     width: calc(100% - 40px);
     font-size: 30px;
@@ -132,3 +132,14 @@ ol{
     border-top: 1px solid grey;
 }
 
+.post-nutrition{
+    float: left;
+    width: 100%;
+    margin: 20px !important;
+}
+
+.nutrient {
+    float: left;
+    width: 200px;
+    margin: 5px !important;
+}
