@@ -1,44 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
+import { InfoWindow } from "react-google-maps";
 import Marker from './Marker.tsx'
 
+//const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
+//const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 function Maps1(props) {
-
-    // const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
     const [state, updateState] = useState({
         q: "",
-        longitude: 0,
-        latitude: 0,
+        longitude: 0.0,
+        latitude: 0.0,
         z: 1,
-        showHideDemo: false
     })
-
-    // const defaultProps = {
-    //     center: {
-    //         lat: state.latitude,
-    //         lng: state.longitude
-    //     },
-    //     zoom: state.z
-    // };
-
-    const [results, setResults] = useState({});
-
-    function handleChange(evt) { //updating form elements, nested function
-        const name = evt.target.name //defined in render
-        const value = evt.target.value //defined in render
-        //because we are using a single state object above to hold multiple properties, we must save off the current state first (b/c we are only updating part of the object).  To do this, we "spread" state via ...state and add it to the new copy of state that updateState is creating, followed by any updates we want:
+    const [show, setShow] = useState(false);
+    const [restaurantResults, setRestaurantResults] = useState({});
+    const [selectedCenter, setSelectedCenter] = useState(false);
+    useEffect(() => {
+        let newUrl = `https://developers.zomato.com/api/v2.1/search?lat=${state.latitude}&lon=${state.longitude}`
+        fetch(newUrl,
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'user-key': 'b0a63821c480eabed3ce36ee8033df7d'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data["results_found"] !== 0) {
+                    setRestaurantResults(data)
+                    setShow(true)
+                }
+            })
+            .catch((error) => console.log("Search error: " + error))
+    }, [state])
+    function handleChange(evt) {
+        const name = evt.target.name
+        const value = evt.target.value
         updateState({
             ...state,
             [name]: value
         })
     }
-
-    const submitForm = (evt) => {  //send creds to backend, nested arrow function
-        // alert("button clicked")
+    const submitForm = (evt) => {
         evt.preventDefault();
-
         let url = `https://developers.zomato.com/api/v2.1/locations?query=${state.q}`
         fetch(url,
             {
@@ -51,52 +58,20 @@ function Maps1(props) {
             })
             .then(response => response.json())
             .then(data => {
-                setResults(data)
                 if (data["user_has_addresses"]) {
-
                     updateState({
                         ...state,
                         longitude: data["location_suggestions"][0]["longitude"],
                         latitude: data["location_suggestions"][0]["latitude"],
                         z: 12,
                     })
-                    // console.log(data)
                 }
                 else {
                     alert(`Error with parameters`)
                 }
             })
             .catch((error) => console.log("Search error: " + error))
-        // console.log("LATITUDE")
-        // console.log(state.latitude)
-        let newUrl = `https://developers.zomato.com/api/v2.1/search?lat=${state.latitude}&lon=${state.longitude}&radius=100`
-        fetch(newUrl,
-            {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'user-key': 'b0a63821c480eabed3ce36ee8033df7d'
-                }
-            })
-            .then(response => response.json())
-            .then(data2 => {
-                //data2["results_found"] !== 0
-                // console.log(data2["results_found"])
-                if (data2["results_found"] !== 0) {
-                    setResults(data2)
-                    //console.log(data2);
-                    console.log("not zero yay")
-                    updateState({
-                        ...state,
-                        showHideDemo: true
-                    })
-                    console.log(results)
-                }
-            })
-
     }
-
     return (
         <div>
             <form onSubmit={submitForm}>
@@ -121,24 +96,68 @@ function Maps1(props) {
                     defaultZoom={1}
                     zoom={state.z}
                 >
-                    {state.showHideDemo &&
-                        Object.values(results["restaurants"]).map(rest => (
+                    {/* <div></div>
+                    <AnyReactComponent
+                        lat={0}
+                        lng={0}
+                        text="Hi"
+                    />
+                    <Marker
+                        lat={0}
+                        lng={0}
+                        name="My Marker"
+                    /> */}
+                    <InfoWindow
+                        visible={true}
+                        onCloseClick={() => {
+                            setSelectedCenter(null);
+                        }}
+                        position={{
+                            lat: 0,
+                            lng: 0
+                        }}
+                    >
+                        <h1>Hi</h1>
+                    </InfoWindow>
+                    {show &&
+                        Object.values(restaurantResults["restaurants"]).map(rest => (
                             <Marker
-                                lat={parseInt(rest["restaurant"]["location"]["latitude"])}
-                                lng={parseInt(rest["restaurant"]["location"]["longitude"])}
-                                name="My Marker"
+                                lat={parseFloat(rest["restaurant"]["location"]["latitude"])}
+                                lng={parseFloat(rest["restaurant"]["location"]["longitude"])}
+                                // name="My Marker"
+                                onClick={() => {
+                                    setSelectedCenter({
+                                        lat: parseFloat(rest["restaurant"]["location"]["latitude"]),
+                                        lng: parseFloat(rest["restaurant"]["location"]["longitude"])
+                                    });
+                                }}
 
-                            />
+                            >
+                            </Marker>
+
+                            // { selectedCenter &&
+                            //     <InfoWindow
+                            //     visible={true}
+                            //     onCloseClick={() => {
+                            //         setSelectedCenter(null);
+                            //     }}
+                            //     position={{
+                            //         lat: parseFloat(rest["restaurant"]["location"]["latitude"]),
+                            //         lng: parseFloat(rest["restaurant"]["location"]["longitude"])
+                            //     }}
+
+                            // >
+                            //     <h1>Hi</h1>
+                            // </InfoWindow>
+                            // }
+
                         ))
                     }
 
 
-
                 </GoogleMapReact>
-
             </div >
         </div >
     );
 }
-
 export default Maps1;
