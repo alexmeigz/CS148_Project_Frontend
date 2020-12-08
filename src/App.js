@@ -62,6 +62,8 @@ function App() {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
 
+    const [isLoading, setIsloading] = useState(true);
+
     
     // eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false); // testing conditional rendering
@@ -128,21 +130,28 @@ function App() {
         return () => clearInterval(interval);
     }, [server, onUserChange, isLoggedIn, user])
 
+    useEffect(() => {
+        if (!JSON.parse(sessionStorage.getItem("user"))) {
+            sessionStorage.setItem("isLoggedIn", JSON.stringify(false))
+            sessionStorage.setItem("user", JSON.stringify({
+                user_id: 0,
+                username: "Loading",
+                password_hash: "",
+                email: "Loading",
+                account_type: "Loading",
+                vendor_location: "Loading",
+                credits: 0,
+                profile_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif",
+                vendor_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
+            }))
+            window.location.reload()
+        } else {
+            setIsloading(false)
+        }
+    }, [])
 
-    if (!JSON.parse(sessionStorage.getItem("user"))) {
-        sessionStorage.setItem("isLoggedIn", JSON.stringify(false))
-        sessionStorage.setItem("user", JSON.stringify({
-            user_id: 0,
-            username: "Loading",
-            password_hash: "",
-            email: "Loading",
-            account_type: "Loading",
-            vendor_location: "Loading",
-            credits: 0,
-            profile_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif",
-            vendor_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
-        }))
-        return <h1>Webpage loading</h1>;
+    if (isLoading) {
+        return <div><h1>Webpage loading</h1><p style={{textAlign: "center"}}>If you are not redirected in the next 5 seconds, please refresh the page!</p></div>;
     }
     
     return (
