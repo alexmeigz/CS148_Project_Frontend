@@ -144,6 +144,7 @@ function App() {
                 profile_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif",
                 vendor_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
             }))
+            window.location.reload()
         } else {
             setIsloading(false)
         }
