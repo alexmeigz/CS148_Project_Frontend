@@ -10,7 +10,6 @@ import React from "react";
 // import ProductPane from "./ProductPane.js"
 
 function ApplicationView(props) {
-    console.log(props)
     return (
         <div className="application_view">
             <div className="row">

@@ -24,7 +24,6 @@ function VendorApps (props) {
     useEffect(() => {
         if (isListView) {
             const url = `${server}/application/?display_all=True`
-            // const url = `http://localhost:8118/api/application/?display_all=True`
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -52,7 +51,7 @@ function VendorApps (props) {
     function approveApplication(){
         console.log(applicationData)
         // const url = `http://localhost:8118/api/`
-        const userurl = `/user/?user_id=${applicationData["user"]}&account_type=${applicationData["type"]}`
+        const userurl = `/user/?user_id=${applicationData["user"]}&account_type=${applicationData["type"]}&vendor_name=${applicationData["name"]}`
         const applicationurl = `/application/?id=${applicationData["id"]}`
         fetch(server+userurl, {
             method: 'PATCH',
