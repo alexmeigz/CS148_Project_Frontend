@@ -8,7 +8,7 @@ import React from 'react';
 import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
 import AccountInfoBar from "../common/AccountInfoBar"
-import BingMapsReact from "bingmaps-react";
+import Maps1 from "./Maps1";
 import "../common/Maps.css"
 
 function MapsPage(props) {
@@ -31,9 +31,7 @@ function MapsPage(props) {
 
                 {/* ADAPTED FROM https://github.com/milespratt/bingmaps-react */}
                 <div key="bingMap">
-                    <BingMapsReact
-                        bingMapsKey="Al6xM6_6DfVwdCAvRULkiOWrW0SYTDfS13YApD5QUruQJ-fIi4IuobDFRNzHeFQB"
-                    />
+                    <Maps1 />
                 </div>
             </div>
 
