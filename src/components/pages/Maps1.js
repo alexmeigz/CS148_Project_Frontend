@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
-import { InfoWindow } from "react-google-maps";
 import Marker from './Marker.tsx'
+import "./Info.css";
 
-//const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
-//const AnyReactComponent = ({ text }) => <div>{text}</div>;
+const AnyReactComponent = ({ text }) => <div className="info">{text}</div>;
 
 function Maps1(props) {
     const [state, updateState] = useState({
@@ -96,29 +95,19 @@ function Maps1(props) {
                     defaultZoom={1}
                     zoom={state.z}
                 >
-                    {/* <div></div>
-                    <AnyReactComponent
+                    {/* <AnyReactComponent
                         lat={0}
                         lng={0}
-                        text="Hi"
-                    />
-                    <Marker
+                        text="My Marker"
+                    /> */}
+
+                    {/* <Marker
                         lat={0}
                         lng={0}
                         name="My Marker"
-                    /> */}
-                    <InfoWindow
-                        visible={true}
-                        onCloseClick={() => {
-                            setSelectedCenter(null);
-                        }}
-                        position={{
-                            lat: 0,
-                            lng: 0
-                        }}
-                    >
-                        <h1>Hi</h1>
-                    </InfoWindow>
+                    > */}
+                    {/* </Marker> */}
+
                     {show &&
                         Object.values(restaurantResults["restaurants"]).map(rest => (
                             <Marker
@@ -126,34 +115,36 @@ function Maps1(props) {
                                 lng={parseFloat(rest["restaurant"]["location"]["longitude"])}
                                 // name="My Marker"
                                 onClick={() => {
+                                    console.log(rest)
                                     setSelectedCenter({
                                         lat: parseFloat(rest["restaurant"]["location"]["latitude"]),
-                                        lng: parseFloat(rest["restaurant"]["location"]["longitude"])
+                                        lng: parseFloat(rest["restaurant"]["location"]["longitude"]),
+                                        name: rest["restaurant"]["name"],
+                                        url: rest["restaurant"]["url"],
+                                        cuisine: rest["restaurant"]["cuisines"],
+                                        rating: rest["restaurant"]["user_rating"]["aggregate_rating"],
+                                        address: rest["restaurant"]["location"]["address"]
                                     });
                                 }}
-
                             >
                             </Marker>
-
-                            // { selectedCenter &&
-                            //     <InfoWindow
-                            //     visible={true}
-                            //     onCloseClick={() => {
-                            //         setSelectedCenter(null);
-                            //     }}
-                            //     position={{
-                            //         lat: parseFloat(rest["restaurant"]["location"]["latitude"]),
-                            //         lng: parseFloat(rest["restaurant"]["location"]["longitude"])
-                            //     }}
-
-                            // >
-                            //     <h1>Hi</h1>
-                            // </InfoWindow>
-                            // }
-
                         ))
                     }
-
+                    {
+                        selectedCenter &&
+                        <AnyReactComponent className="info"
+                            lat={selectedCenter.lat}
+                            lng={selectedCenter.lng}
+                            text={
+                                <div >
+                                    <a href={selectedCenter.url}><h2>{selectedCenter.name}</h2></a>
+                                    <h2>Cuisine: {selectedCenter.cuisine}</h2>
+                                    <h2>Rating: {selectedCenter.rating}</h2>
+                                    <h2>Location: {selectedCenter.address} </h2>
+                                </div>
+                            }
+                        />
+                    }
 
                 </GoogleMapReact>
             </div >
