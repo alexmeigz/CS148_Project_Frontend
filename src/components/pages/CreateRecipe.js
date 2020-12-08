@@ -56,8 +56,6 @@ function RecipeForm(props) {
       let ingredients = JSON.stringify(content.ingredients.split("\n"))
       let instructions = JSON.stringify(content.instructions.split("\n"))
 
-      console.log(ingredients)
-      console.log(instructions)
       if(ingredients === "[\"\"]"){
         alert("ingredients cannot be empty")
       }
