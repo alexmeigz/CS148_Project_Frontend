@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Redirect} from "react-router-dom";
 //import Input from "../common/InputComponent.js"
 
 function UserForm(props) {
@@ -12,6 +13,7 @@ function UserForm(props) {
     })
     //Remember that updating state means we make a complete new copy and overwrite the exisiting state
     //Remember that React.useState on state objects requires that we copy the existing state upon each update (using the "spread" operator ...state) -- see below
+    const [redirect, setRedirect] = useState(false)
 
     function handleChange(evt) { //updating form elements, nested function
         const name = evt.target.name //defined in render
@@ -54,12 +56,18 @@ function UserForm(props) {
         if(data["message"] === "User created successfully!"){
           alert(`${data["message"]}`)
           //Need to add Redirect after creating User
+          setRedirect(true)
         }
         else{
           alert(`Error creating user: ${data["message"]}`)
+          // setRedirect(true)
         }
       })
       .catch((error) => console.log("User Creation error: "+ error))
+    }
+
+    if (redirect) {
+      return (<Redirect to="/login" />)
     }
 
     return (
