@@ -42,14 +42,10 @@ function OrderView(props) {
     }, [url])
 
     function confirmOrder() {
-
-        // let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Confirmed`
-        let newUrl = `${server}/user/?user_id=${props.order.seller_id}`
-        let seller = {}
-        let sellerUpdated = false;
+        let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Confirmed`
 
         fetch(newUrl, {
-            method: 'GET',
+            method: 'PATCH',
             headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -57,45 +53,19 @@ function OrderView(props) {
         })
         .then(response => response.json()) 
         .then(data => {
-            seller = data;
-            newUrl = `${server}/user/?user_id=${props.order.seller_id}&credits=${seller.credits + result.price}`;
-            fetch(newUrl, {
-                method: 'PATCH',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },              
-            })
-            .then(response => response.json()) 
-            .then(data => {
-                if(data["message"] === "User successfully updated"){
-                    sellerUpdated = true;
-                    if (sellerUpdated) {
-                        newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Confirmed`
-                        fetch(newUrl, {
-                            method: 'PATCH',
-                            headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                            },              
-                        })
-                        .then(response => response.json()) 
-                        .then(data => {
-                            if(data["message"] === "Order successfully updated"){
-                                alert("You indicated that you received your order")
-                                setDecided(true);
-                            }
-                        })
-                    }
-                    
-                }
-            })
+            if(data["message"] === "Order successfully updated"){
+                alert("You indicated that you acknowledge the order status")
+                setDecided(true);
+            }
+            else{
+                alert(`Error updating order: ${data["message"]}`)
+            }
         })
         .catch((error) => console.log("Error: " + error))
+
     }
 
     function shipOrder() {
-
         let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Shipped`
 
         fetch(newUrl, {
@@ -108,25 +78,23 @@ function OrderView(props) {
         .then(response => response.json()) 
         .then(data => {
             if(data["message"] === "Order successfully updated"){
-                // alert("Order successfully updated")
                 alert("You indicated that you shipped your product")
                 setDecided(true);
             }
             else{
-                alert(`Error deleting order: ${data["message"]}`)
+                alert(`Error updating order: ${data["message"]}`)
             }
         })
-        
         .catch((error) => console.log("Error: " + error))
+
+        
     }
 
     function refundOrder() {
-        let newUrl = `${server}/user/?user_id=${props.order.buyer_id}`
-        let buyer = {}
-        let buyerUpdated = false;
+        let newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Refunded`
 
         fetch(newUrl, {
-            method: 'GET',
+            method: 'PATCH',
             headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -134,49 +102,17 @@ function OrderView(props) {
         })
         .then(response => response.json()) 
         .then(data => {
-            buyer = data;
-        })
-        .then(data => {
-            newUrl = `${server}/user/?user_id=${props.order.buyer_id}&credits=${buyer.credits + result.price}`;
-            fetch(newUrl, {
-                method: 'PATCH',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },              
-            })
-            .then(response => response.json()) 
-            .then(data => {
-                if(data["message"] === "User successfully updated"){
-                    buyerUpdated = true;
-                }
-                
-            })
-            .then(data => {
-                if (buyerUpdated) {
-
-                    newUrl = `${server}/order/?order_id=${props.order.order_id}&status=Refunded`
-                    fetch(newUrl, {
-                        method: 'PATCH',
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                        },              
-                    })
-                    .then(response => response.json()) 
-                    .then(data => {
-                        if(data["message"] === "Order successfully updated"){
-                            alert("Refund is issued to the buyer")
-                            setDecided(true);
-                        }
-                        else{
-                            alert(`Error deleting order: ${data["message"]}`)
-                        }
-                    })
-                }
-            })
+            if(data["message"] === "Order successfully updated"){
+                alert("Refund is issued to the buyer")
+                setDecided(true);
+            }
+            else{
+                alert(`Error updating order: ${data["message"]}`)
+            }
         })
         .catch((error) => console.log("Error: " + error))
+
+        
     }
 
     function deleteOrder() {
@@ -223,7 +159,7 @@ function OrderView(props) {
                             Update Date: {props.order.update_date}
                         </div>
                     </div>
-                    {props.user.account_type === "Admin"
+                    {JSON.parse(sessionStorage.getItem("user")).account_type === "Admin"
                         ? <div className="row">
                             <div className="seller-id">
                                 Seller Id: {props.order.seller_id}
@@ -235,17 +171,17 @@ function OrderView(props) {
                         : null
                     }
                 </div>
-                {props.user.user_id === props.order.seller_id || props.user.account_type === "Admin"
+                {JSON.parse(sessionStorage.getItem("user")).user_id === props.order.seller_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin"
                     ? <div className="order-buttons">
                         <button className="ship-order-button" onClick={shipOrder} disabled={decided || props.order.status === "Shipped" || props.order.status === "Refunded" || props.order.status === "Confirmed"}>Ship Order</button>
                         <button className="refund-order-button" onClick={refundOrder} disabled={decided || props.order.status === "Refunded" || props.order.status === "Shipped" || props.order.status === "Confirmed"}>Refund Order</button>
-                        <button className="delete-order-button" onClick={deleteOrder} disabled={decided || !(props.user.account_type === "Admin" || props.order.status === "Confirmed")}>Delete Order</button>
+                        <button className="delete-order-button" onClick={deleteOrder} disabled={decided || !(JSON.parse(sessionStorage.getItem("user")).account_type === "Admin" || props.order.status === "Confirmed")}>Delete Order</button>
                     </div>
                     : null
                 }
-                {props.user.user_id === props.order.buyer_id
+                {JSON.parse(sessionStorage.getItem("user")).user_id === props.order.buyer_id
                     ? <div className="order-buttons">
-                        <button className="confirm-order-button" onClick={confirmOrder} disabled={(decided || props.order.status === "Pending" || props.order.status === "Confirmed")}>Confirm Order</button>
+                        <button className="confirm-order-button" onClick={confirmOrder} disabled={(decided || props.order.status === "Pending" || props.order.status === "Confirmed")}>Confirm Status</button>
                     </div>
                     : null
                 }
@@ -257,7 +193,7 @@ function OrderView(props) {
                 <ProductView 
                     productData={result} 
                     isLoggedIn={false} 
-                    user={props.user} 
+                    user={JSON.parse(sessionStorage.getItem("user"))} 
                     onUserChange={props.onUserChange}
                 />
             </div>

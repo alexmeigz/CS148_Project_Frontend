@@ -27,7 +27,7 @@ function RecipeCall(props) {
         // alert("button clicked")
         evt.preventDefault();
 
-        let url = `https://api.edamam.com/search?q=${state.q}&app_id=394088d7&app_key=cc0cb85ce098f755f855195231d1fe9f&from=0&to=60`
+        let url = `https://api.edamam.com/search?q=${state.q}&app_id=e1a55240&app_key=abe181a8a1ffbd0a236f1aac3381a621&from=0&to=60`
         let newUrl = url;
         if (state.health !== "") {
             newUrl += `&health=${state.health}`
@@ -51,9 +51,12 @@ function RecipeCall(props) {
                 console.log(data)
                 if (data["more"]) {
                     setResults(data)
-                    state.showHideDemo = true;
+                    updateState({
+                        ...state,
+                        showHideDemo: true
+                    })
 
-                    alert(`${results["hits"][0]["recipe"]["shareAs"]}`)
+                    // alert(`${results["hits"][0]["recipe"]["shareAs"]}`)
                     // console.log(data)
 
                 }
@@ -73,7 +76,7 @@ function RecipeCall(props) {
                     <input className="form_field" type="text" value={state.q} name="q" onChange={handleChange} />
                 </div>
                 <div className="form_input">
-                    <label className="form_label" for="health"> Health: </label>
+                    <label className="form_label" for="health"> Health: (i.e. vegan) </label>
                     <input className="form_field" type="text" value={state.health} name="health" onChange={handleChange} />
                 </div>
                 {/* <div className="form_input">
@@ -81,7 +84,7 @@ function RecipeCall(props) {
                     <input className="form_field" type="text" value={state.calories} name="calories" onChange={handleChange} />
                 </div> */}
                 <div className="form_input">
-                    <label className="form_label" for="excluded"> Excluded: </label>
+                    <label className="form_label" for="excluded"> Excluded: (any ingredient) </label>
                     <input className="form_field" type="text" value={state.excluded} name="excluded" onChange={handleChange} />
                 </div>
                 <br /><br /><br />

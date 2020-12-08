@@ -12,6 +12,7 @@ import AccountInfoBar from "../common/AccountInfoBar";
 import ApplForm from "./CreateAppl";
 import ProfileView from "./ProfileView";
 import MyVendorProfileView from "./MyVendorProfileView";
+import MyPublicProfileView from "./MyPublicProfileView";
 
 import "./MyProfilePage.css";
 
@@ -22,47 +23,59 @@ function MyProfilePage (props) {
     const [isVendorApplicationView, setIsVendorApplicationView] = useState(false);
     // eslint-disable-next-line
     const [isVendorProfileView, setIsVendorProfileView] = useState(false);
+    // eslint-disable-next-line
+    const [isPublicProfileView, setIsPublicProfileView] = useState(false);
 
     function toggleView(e) {
         if (e.target.className === "vendor-application-button") {
             setIsProfileView(false);
             setIsVendorApplicationView(true);
             setIsVendorProfileView(false);
+            setIsPublicProfileView(false);
         } else if (e.target.className === "vendor-profile-button") {
             setIsProfileView(false);
             setIsVendorApplicationView(false);
             setIsVendorProfileView(true);
-        } else if (e.target.className === "back-button") {
+            setIsPublicProfileView(false);
+        }
+        else if (e.target.className === "public-profile-button") {
+            setIsProfileView(false);
+            setIsVendorApplicationView(false);
+            setIsVendorProfileView(false);
+            setIsPublicProfileView(true);
+        } 
+        else if (e.target.className === "back-button") {
             setIsProfileView(true);
             setIsVendorApplicationView(false);
             setIsVendorProfileView(false);
+            setIsPublicProfileView(false);
         }
         
     }
 
-    function handleLoginChange(value) {
+    function onLoginChange(value) {
         props.onLoginChange(value)
     }
 
-    function handleUserChange(value) {
+    function onUserChange(value) {
         props.onUserChange(value)
     }
 
     return (
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} />
-            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
+            <NavigationBar isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} onLoginChange={onLoginChange} user={JSON.parse(sessionStorage.getItem("user"))} />
+            {JSON.parse(sessionStorage.getItem("isLoggedIn")) ? <AccountInfoBar user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/> : null}
 
             <div>
                 <div className="button-bar">
                     {isProfileView
                         ? <div>
-                            {props.user.account_type !== "Business"
-                            // {props.user.account_type !== "Business"
+                            {JSON.parse(sessionStorage.getItem("user")).account_type !== "Business"
+                            // {JSON.parse(sessionStorage.getItem("user")).account_type !== "Business"
                                 ? <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button>
                                 : null
                             }
-                            {props.user.account_type === "Business" || props.user.account_type === "Home" || props.user.account_type === "Admin"
+                            {JSON.parse(sessionStorage.getItem("user")).account_type === "Business" || JSON.parse(sessionStorage.getItem("user")).account_type === "Home" || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin"
                                 ? <button className="vendor-profile-button" onClick={toggleView}>Vendor Profile</button>
                                 : null
                             }
@@ -73,15 +86,19 @@ function MyProfilePage (props) {
 
                 <div className="contents">
                     {isProfileView
-                        ? <ProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>
+                        ? <ProfileView isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/>
                         : null
                     }
                     {isVendorApplicationView
-                        ? <ApplForm isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>
+                        ? <ApplForm isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/>
                         : null
                     }
                     {isVendorProfileView
-                        ? <MyVendorProfileView isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>
+                        ? <MyVendorProfileView isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/>
+                        : null
+                    }
+                    {isPublicProfileView
+                        ? <MyPublicProfileView isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/>
                         : null
                     }
 

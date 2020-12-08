@@ -36,11 +36,34 @@ import ErrorPage from './components/pages/ErrorPage';
 //import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 import RecipeCall from './components/pages/RecipeCall'
-import RecipeCall2 from './components/pages/RecipeCall2';
-import RecipeCall3 from './components/pages/RecipeCall3';
+import Maps1 from "./components/pages/Maps1"
+
+// sessionStorage.setItem("isLoggedIn", JSON.stringify(false))
+// sessionStorage.setItem("user", JSON.stringify({
+//     user_id: 0,
+//     username: "Loading",
+//     password_hash: "",
+//     email: "Loading",
+//     account_type: "Loading",
+//     vendor_location: "Loading",
+//     credits: 0,
+//     profile_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif",
+//     vendor_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
+// }))
 
 function App() {
+    // sessionStorage.clear();
     // eslint-disable-next-line
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+
+    const [isLoading, setIsloading] = useState(true);
+
     
     // eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false); // testing conditional rendering
@@ -57,168 +80,231 @@ function App() {
         vendor_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
     })
 
-    function handleLoginChange(value) {
+    
+
+    function onLoginChange(value) {
+        sessionStorage.setItem("isLoggedIn", value)
         setIsLoggedIn(value);
     }
     // eslint-disable-next-line
-    function handleUserChange(value) {
+    function onUserChange(value) {
+        sessionStorage.setItem("user", JSON.stringify({
+            ...JSON.parse(sessionStorage.getItem("user")),
+            ...value
+        }))
         setUser({
             ...user,
             ...value
         });
     }
 
+
+    useEffect(() => {
+        // console.log(JSON.parse(sessionStorage.getItem("isLoggedIn")))
+        // console.log(JSON.parse(sessionStorage.getItem("user")))
+        const interval = setInterval(() => {
+            if (JSON.parse(sessionStorage.getItem("isLoggedIn")) && JSON.parse(sessionStorage.getItem("user")) !== 0) {
+                console.log("ping")
+                let url = `${server}/user/?user_id=${JSON.parse(sessionStorage.getItem("user")).user_id}`
+
+                fetch(url, 
+                    {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },           
+                    })
+                    .then(response => response.json()) 
+                    .then(data => {
+                    if(data["user_id"] === JSON.parse(sessionStorage.getItem("user"))["user_id"]){
+                        onUserChange(data)
+                    }
+                    else{
+                        alert(`Error logging in JSON.parse(sessionStorage.getItem("user")): ${data["message"]}`)
+                    }
+                    })
+                    .catch((error) => console.log("User login error: "+ error))
+            }
+        }, 60000);
+        return () => clearInterval(interval);
+    }, [server, onUserChange, isLoggedIn, user])
+
+    useEffect(() => {
+        if (!JSON.parse(sessionStorage.getItem("user"))) {
+            sessionStorage.setItem("isLoggedIn", JSON.stringify(false))
+            sessionStorage.setItem("user", JSON.stringify({
+                user_id: 0,
+                username: "Loading",
+                password_hash: "",
+                email: "Loading",
+                account_type: "Loading",
+                vendor_location: "Loading",
+                credits: 0,
+                profile_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif",
+                vendor_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
+            }))
+            window.location.reload()
+        } else {
+            setIsloading(false)
+        }
+    }, [])
+
+    if (isLoading) {
+        return <div><h1>Webpage loading</h1><p style={{textAlign: "center"}}>If you are not redirected in the next 5 seconds, please refresh the page!</p></div>;
+    }
+    
     return (
         // TODO: Change to new Nutriflix components
         <main>
             <Switch>
                 <Route path="/" exact>
                     <DefaultHomePage
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
                 <Route path="/posts">
                     <PostsPage
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
                 <Route path="/maps">
                     <MapsPage
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
                 <Route path="/vendors">
                     <VendorsPage
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
                 <Route path="/recipes">
                     <RecipesPage
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
                 <Route path="/products">
                     <ProductsPage
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
                 <Route path="/login">
                     <LoginPage
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
                 {/* <Route path="/logout">
                     <LogoutPage
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        JSON.parse(sessionStorage.getItem("user"))={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route> */}
                 <Route path="/contact-us">
                     <ContactUsPage
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
                 
                 <Route path="/submit-report">
                     <SubmitReportPage
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
 
 
                 {/* Must be signed in to access pages */}
-                {isLoggedIn
+                {JSON.parse(sessionStorage.getItem("isLoggedIn"))
                     ? (<Route path="/my-profile">
                         <MyProfilePage
-                            isLoggedIn={isLoggedIn}
-                            onLoginChange={handleLoginChange}
-                            user={user}
-                            onUserChange={handleUserChange}
+                            isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                            onLoginChange={onLoginChange}
+                            user={JSON.parse(sessionStorage.getItem("user"))}
+                            onUserChange={onUserChange}
                         />
                     </Route>)
                     : null
                 }
-                {isLoggedIn
+                {JSON.parse(sessionStorage.getItem("isLoggedIn"))
                     ? (<Route path="/my-products">
                         <MyProductsPage
-                            isLoggedIn={isLoggedIn}
-                            onLoginChange={handleLoginChange}
-                            user={user}
-                            onUserChange={handleUserChange}
+                            isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                            onLoginChange={onLoginChange}
+                            user={JSON.parse(sessionStorage.getItem("user"))}
+                            onUserChange={onUserChange}
                         />
                     </Route>)
                     : null
                 }
-                {isLoggedIn 
+                {JSON.parse(sessionStorage.getItem("isLoggedIn")) 
                     ? (<Route path="/admin-panel">
                         <AdminPage
-                            isLoggedIn={isLoggedIn}
-                            onLoginChange={handleLoginChange}
-                            user={user}
-                            onUserChange={handleUserChange}
+                            isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                            onLoginChange={onLoginChange}
+                            user={JSON.parse(sessionStorage.getItem("user"))}
+                            onUserChange={onUserChange}
                         />
                     </Route>)
                     : null
                 }
-                {isLoggedIn
+                {JSON.parse(sessionStorage.getItem("isLoggedIn"))
                     ? (<Route path="/my-orders">
                         <OrdersPage
-                            isLoggedIn={isLoggedIn}
-                            onLoginChange={handleLoginChange}
-                            user={user}
-                            onUserChange={handleUserChange}
+                            isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                            onLoginChange={onLoginChange}
+                            user={JSON.parse(sessionStorage.getItem("user"))}
+                            onUserChange={onUserChange}
                         />
                     </Route>)
                     : null
                 }
-                {isLoggedIn
+                {JSON.parse(sessionStorage.getItem("isLoggedIn"))
                     ? (<Route path="/vendor-orders">
                         <VendorOrdersPage
-                            isLoggedIn={isLoggedIn}
-                            onLoginChange={handleLoginChange}
-                            user={user}
-                            onUserChange={handleUserChange}
+                            isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                            onLoginChange={onLoginChange}
+                            user={JSON.parse(sessionStorage.getItem("user"))}
+                            onUserChange={onUserChange}
                         />
                     </Route>)
                     : null
                 }   
 
-                {!isLoggedIn
+                {!JSON.parse(sessionStorage.getItem("isLoggedIn"))
                     ? (<Route path="/create-user">
                         <CreateUserPage
-                            isLoggedIn={isLoggedIn}
-                            onLoginChange={handleLoginChange}
-                            user={user}
-                            onUserChange={handleUserChange}
+                            isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                            onLoginChange={onLoginChange}
+                            user={JSON.parse(sessionStorage.getItem("user"))}
+                            onUserChange={onUserChange}
                         />
                     </Route>)
                     : null
@@ -227,45 +313,35 @@ function App() {
 
                 <Route path="/vendor-apps">
                     <VendorApps
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
+
                 <Route path="/recipe-call">
                     <RecipeCall
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
 
-                <Route path="/recipe-call2">
-                    <RecipeCall2
+                <Route path="/google-maps1">
+                    <Maps1
                         isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
                         user={user}
-                        onUserChange={handleUserChange}
-                    />
-                </Route>
-
-                <Route path="/recipe-call3">
-                    <RecipeCall3
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
                     />
                 </Route>
 
                 <Route>
                     <ErrorPage
-                        isLoggedIn={isLoggedIn}
-                        onLoginChange={handleLoginChange}
-                        user={user}
-                        onUserChange={handleUserChange}
+                        isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}
+                        onLoginChange={onLoginChange}
+                        user={JSON.parse(sessionStorage.getItem("user"))}
+                        onUserChange={onUserChange}
                     />
                 </Route>
             </Switch>

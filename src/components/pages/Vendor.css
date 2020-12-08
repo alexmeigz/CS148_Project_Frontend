@@ -9,12 +9,13 @@
 
 .vendor_panel{
     float: left;
-    /* width: 70%; */
+    width: 100%;
     height: 100vh;
     overflow-y: scroll;
 }
 
 .my_vendor_panel{
+    /* margin: 10px; */
     /* float: left;
     width: 70%; */
     height: 100vh;
@@ -109,17 +110,6 @@
 
 .filter_label{
     font-size: 18px;
-}
-
-.vendor_panel_button {
-    background: none;
-    width: 100%;
-    border-width: 1px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-.vendor_panel_button:active {
-    border: none;
 }
 
 .vendor_back_button {

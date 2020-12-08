@@ -102,7 +102,7 @@ function ProductUpdatePanel(props) {
     }
 
     return (
-        <div>
+        <div className="update-form">
             <h1>Update Product</h1>
             <form onSubmit={submitUpdateProduct}>
                 <div className="form_input">

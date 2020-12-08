@@ -20,7 +20,7 @@ function ProductsList (props) {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
     if (process.env.NODE_ENV !== "development") {
-        server = "https://nutriflix-flask-backend.herokuapp.com//api"
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
     
     const url = `${server}/product/?display_all=True`
@@ -99,8 +99,8 @@ function ProductsList (props) {
         if (type === "product-pane") {
             setProductView(<ProductView 
                 productData={productData} 
-                isLoggedIn={props.isLoggedIn} 
-                user={props.user} 
+                isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} 
+                user={JSON.parse(sessionStorage.getItem("user"))} 
                 onUserChange={props.onUserChange}
             />);
         }
@@ -136,7 +136,7 @@ function ProductsList (props) {
                         Product Results (Total: {Object.keys(results).length})
                     </div>
                     {Object.values(results).map(product => (
-                        <button className="product_panel_button" onClick={(e) => changeView(e, "product-pane", {
+                        <button className="panel_button" onClick={(e) => changeView(e, "product-pane", {
                             name: product["product_name"],
                             price: product["price"],
                             list_date: product["list_date"],

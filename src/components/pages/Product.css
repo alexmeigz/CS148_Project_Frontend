@@ -106,17 +106,6 @@
     font-size: 18px;
 }
 
-.product_panel_button {
-    background: none;
-    width: 100%;
-    border-width: 1px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-.product_panel_button:active {
-    border: none;
-}
-
 .product_back_button {
     margin-top: 20px;
     margin-left: 20px;

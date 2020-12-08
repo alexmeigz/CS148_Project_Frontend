@@ -1,22 +1,15 @@
-// MyVendorProfileView.js
-// Engineer: Joseph Ng
+// MyPublicProfileView.js
+// Engineer: Alex Mei
 
 import React, { useState } from 'react';
 import "./MyProfilePage.css"
 import "./Vendor.css"
 
-import VendorProfileView from "./VendorProfileView";
+import PublicProfileView from "./PublicProfileView";
 
 
-function MyVendorProfileView(props) {
-    let server = "http://localhost:8118/api"
-    if (process.env.REACT_APP_REMOTE === "1") { 
-        server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    }
-    if (process.env.NODE_ENV !== "development") {
-        server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    }
-    
+function MyPublicProfileView(props) {
+
     const [settingsMode, setSettingsMode] = useState(false);
     const [newUserInfo, setNewUserInfo] = useState({
         ...JSON.parse(sessionStorage.getItem("user"))
@@ -25,7 +18,8 @@ function MyVendorProfileView(props) {
     function resetNewUserInfo() {
         setNewUserInfo({
             ...JSON.parse(sessionStorage.getItem("user")),
-            vendor_image_url: ""
+            instagram: "",
+            email: ""
         })
     }
 
@@ -35,7 +29,7 @@ function MyVendorProfileView(props) {
 
 
     // eslint-disable-next-line
-    function onUserChange(value) {
+    function handleUserChange(value) {
         props.onUserChange(value)
     }
 
@@ -48,13 +42,17 @@ function MyVendorProfileView(props) {
 
     function submitNewUserInfo(event) {
         let required_params = ["user_id"];
-        let updatable_params = ["vendor_image_url"];
+        let updatable_params = ["email", "instagram"];
 
         event.preventDefault();
-        
-
+        let server = "http://localhost:8118/api"
+        if (process.env.REACT_APP_REMOTE === "1") { 
+            server = "https://nutriflix-flask-backend.herokuapp.com/api"
+        }
+        if (process.env.NODE_ENV !== "development") {
+            server = "https://nutriflix-flask-backend.herokuapp.com/api"
+        }
         let url = `${server}/user/?`
-
 
         required_params.forEach((param, index) => {
             if (newUserInfo[param] === "") {
@@ -83,7 +81,7 @@ function MyVendorProfileView(props) {
               .then(data => {
               if(data["message"] === "User successfully updated"){
                 alert(`${data["message"]}`)
-                onUserChange(newUserInfo);
+                handleUserChange(newUserInfo);
               }
               else{
                 alert(`Error updating user info: ${data["message"]}`)
@@ -94,23 +92,29 @@ function MyVendorProfileView(props) {
 
     return (
         <div>
-            <div className="vendor-profile">
+            <div className="vendor-profile row">
                 <h1>
-                    Vendor Profile
-                    <h3>Info outlined in red shows how others will see your store:</h3>
+                    Public Profile
+                    <h3>Info outlined in red shows how others will see your profile:</h3>
                 </h1>
             </div>
             <div className="settings-pane">
                 {!settingsMode 
                     ? <div>
-                        <button className="change-info" onClick={(event) => {toggleView(); resetNewUserInfo()}}>Change Vendor Info/Settings</button>
+                        <button className="change-info" onClick={(event) => {toggleView(); resetNewUserInfo()}}> Update Profile Information </button>
                     </div>
                     : <div>
                         <button className="cancel-info" onClick={(event)=> {toggleView()}}>Cancel</button>
                         <button className="submit-info" onClick={(event)=> {toggleView(); submitNewUserInfo(event)}}>Submit Changes</button>
                         <div>
-                            <label className="form-label" for="vendor_image_url">New Vendor Profile Image URL: </label>         
-                            <input className="form-field" type="text" value={newUserInfo.vendor_image_url} name="vendor_image_url" onChange={handleNewUserChange} />
+                            <div>
+                                <label className="form-label" for="email"> Email </label>         
+                                <input className="form-field" type="text" value={newUserInfo.email} name="email" onChange={handleNewUserChange} />
+                            </div>
+                            <div>
+                                <label className="form-label" for="instagram"> Instagram </label>         
+                                <input className="form-field" type="text" value={newUserInfo.instagram} name="instagram" onChange={handleNewUserChange} />
+                            </div>
                             <br />
                         </div>
                     </div>
@@ -119,11 +123,11 @@ function MyVendorProfileView(props) {
             </div>
             
             <div className="vendor-info">
-                <VendorProfileView isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange} vendor_id={JSON.parse(sessionStorage.getItem("user")).user_id}/>
+                <PublicProfileView isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={handleUserChange} user_id={JSON.parse(sessionStorage.getItem("user")).user_id}/>
             </div>
         </div>
     )
 }
 
 
-export default MyVendorProfileView;
+export default MyPublicProfileView;

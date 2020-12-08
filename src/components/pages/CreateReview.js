@@ -9,7 +9,7 @@ function ReviewForm(props) {
       title: "",
       rating: "",
       image_url: "",
-      user_id: props.user["user_id"]
+      user_id: JSON.parse(sessionStorage.getItem("user"))["user_id"]
     })
 
     const [content, updateContent] = useState("")
@@ -38,7 +38,7 @@ function ReviewForm(props) {
           server = "https://nutriflix-flask-backend.herokuapp.com/api"
       }
       if (process.env.NODE_ENV !== "development") {
-          server = "https://nutriflix-flask-backend.herokuapp.com//api"
+          server = "https://nutriflix-flask-backend.herokuapp.com/api"
       }
     
       let url = `${server}/post/?`
@@ -67,7 +67,7 @@ function ReviewForm(props) {
             title: "",
             rating: "",
             image_url: "",
-            user_id: props.user["user_id"]
+            user_id: JSON.parse(sessionStorage.getItem("user"))["user_id"]
           })
           updateContent("")
         }
