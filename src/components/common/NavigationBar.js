@@ -11,7 +11,17 @@ function NavigationBar(props) {
     
     function onLoginChange(value) {
         props.onLoginChange(value)
-        // console.log(value);
+        sessionStorage.setItem("user", JSON.stringify({
+            user_id: 0,
+            username: "Loading",
+            password_hash: "",
+            email: "Loading",
+            account_type: "Loading",
+            vendor_location: "Loading",
+            credits: 0,
+            profile_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif",
+            vendor_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
+        }))
     }
 
     return (
