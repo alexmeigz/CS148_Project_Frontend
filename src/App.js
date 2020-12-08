@@ -151,7 +151,7 @@ function App() {
     }, [])
 
     if (isLoading) {
-        return <h1>Webpage loading</h1>;
+        return <div><h1>Webpage loading</h1><p style={{textAlign: "center"}}>If you are not redirected in the next 5 seconds, please refresh the page!</p></div>;
     }
     
     return (
