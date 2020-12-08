@@ -95,7 +95,7 @@ function RecipeView(props) {
                         setLiked(true);
                     }
                     else{
-                        alert(`Error creating reaction: ${data["message"]}`)
+                        alert(`${data["message"]}`)
                     }
                 })
                 .catch((error) => console.log("Reaction delete error: "+ error))
@@ -243,7 +243,7 @@ function RecipeView(props) {
                         }  
                     </div>
                     <div className="post-comments">
-                        <button className="comment-button" onClick={showComments}> {!showing ? `Show Comments (${props.postData["comments"]})`: "Hide Comments"} </button> 
+                        <button className="comment-button" onClick={showComments}> {!showing ? `Show Comments`: "Hide Comments"} </button> 
                     </div>
 
                     { showing && 
