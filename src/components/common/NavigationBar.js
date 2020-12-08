@@ -5,6 +5,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './NavigationBar.css'
+import logo from '../../assets/logo.png'
 
 function NavigationBar(props) {
     var accountType = null;
@@ -21,9 +22,8 @@ function NavigationBar(props) {
         <div>
             <ul className="navigation-bar">
                 <Link to="/">
-                    <li className="logo"><img
-                        src="https://ih1.redbubble.net/image.1047402521.8408/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
-                        alt="Logo" />
+                    <li className="logo">
+                        <img src={logo} alt="" />
                     </li>
                 </Link>
                 <li className="navigation-links">
@@ -39,8 +39,18 @@ function NavigationBar(props) {
                             : null
                         }
                         </li>
+                        <li>{(props.isLoggedIn)
+                                ? <Link to="/my-orders">My Orders</Link>
+                                : null
+                            }
+                        </li>
                         <li>{(props.isLoggedIn) && (accountType === "Home" || accountType === "Business" || accountType === "Admin")
                                 ? <Link to="/my-products">My Products</Link>
+                                : null
+                            }
+                        </li>
+                        <li>{(props.isLoggedIn) && (accountType === "Home" || accountType === "Business" || accountType === "Admin")
+                                ? <Link to="/vendor-orders">My Vendor Orders</Link>
                                 : null
                             }
                         </li>
@@ -59,7 +69,7 @@ function NavigationBar(props) {
 
                             <li>{!(props.isLoggedIn)
                                     ? <Link to="/login">Login</Link> // remove "onClick={() => handleLoginChange(true)}" when not testing
-                                    : <Link onClick={() => handleLoginChange(false)} to="/logout">Logout</Link>
+                                    : <Link onClick={() => handleLoginChange(false)} to="/">Logout</Link>
                                 }
                             </li>
                         </li>

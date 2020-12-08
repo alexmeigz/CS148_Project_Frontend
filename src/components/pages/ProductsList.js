@@ -15,8 +15,14 @@ import ProductView from "./ProductView";
 // import AccountInfoBar from "../common/AccountInfoBar"
 
 function ProductsList (props) {   
-    let server = "https://nutriflix-flask-backend.herokuapp.com/api"
-    // let server = "http://localhost:8118/api"
+    let server = "http://localhost:8118/api"
+    if (process.env.REACT_APP_REMOTE === "1") { 
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
+    }
+    if (process.env.NODE_ENV !== "development") {
+        server = "https://nutriflix-flask-backend.herokuapp.com//api"
+    }
+    
     const url = `${server}/product/?display_all=True`
     
     const [results, setResults] = useState({});
