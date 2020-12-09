@@ -23,7 +23,7 @@ function VendorPane(props) {
             <div className="vendor_description">
                 <div className="row">
                     <div className="vendor_name">
-                        Vendor Name: {result.username}
+                        Vendor Name: {result.vendor_name || "[No Name Listed]"}
                     </div>
                     <div className="vendor_email">
                         Email: {result.email}
