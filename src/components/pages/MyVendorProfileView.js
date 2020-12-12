@@ -16,7 +16,7 @@ function MyVendorProfileView(props) {
     if (process.env.NODE_ENV !== "development") {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
-    
+
     const [settingsMode, setSettingsMode] = useState(false);
     const [newUserInfo, setNewUserInfo] = useState({
         ...JSON.parse(sessionStorage.getItem("user"))
@@ -25,7 +25,8 @@ function MyVendorProfileView(props) {
     function resetNewUserInfo() {
         setNewUserInfo({
             ...JSON.parse(sessionStorage.getItem("user")),
-            vendor_image_url: ""
+            vendor_image_url: "",
+            vendor_name: ""
         })
     }
 
@@ -48,7 +49,7 @@ function MyVendorProfileView(props) {
 
     function submitNewUserInfo(event) {
         let required_params = ["user_id"];
-        let updatable_params = ["vendor_image_url"];
+        let updatable_params = ["vendor_image_url", "vendor_name"];
 
         event.preventDefault();
         
@@ -111,6 +112,9 @@ function MyVendorProfileView(props) {
                         <div>
                             <label className="form-label" for="vendor_image_url">New Vendor Profile Image URL: </label>         
                             <input className="form-field" type="text" value={newUserInfo.vendor_image_url} name="vendor_image_url" onChange={handleNewUserChange} />
+                            <br />
+                            <label className="form-label" for="vendor_name">New Vendor Name: </label>         
+                            <input className="form-field" type="text" value={newUserInfo.vendor_name} name="vendor_name" onChange={handleNewUserChange} />
                             <br />
                         </div>
                     </div>
