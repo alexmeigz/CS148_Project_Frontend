@@ -15,6 +15,8 @@ function Maps1(props) {
     const [show, setShow] = useState(false);
     const [restaurantResults, setRestaurantResults] = useState({});
     const [selectedCenter, setSelectedCenter] = useState(false);
+    const [query, setQuery] = useState("");
+    // const [reload, setReload] = useState(false);
     useEffect(() => {
         let newUrl = `https://developers.zomato.com/api/v2.1/search?lat=${state.latitude}&lon=${state.longitude}`
         fetch(newUrl,
@@ -36,16 +38,15 @@ function Maps1(props) {
             .catch((error) => console.log("Search error: " + error))
     }, [state])
     function handleChange(evt) {
+        evt.preventDefault();
         const name = evt.target.name
         const value = evt.target.value
-        updateState({
-            ...state,
-            [name]: value
-        })
+        setQuery(value)
     }
+
     const submitForm = (evt) => {
         evt.preventDefault();
-        let url = `https://developers.zomato.com/api/v2.1/locations?query=${state.q}`
+        let url = `https://developers.zomato.com/api/v2.1/locations?query=${query}`
         fetch(url,
             {
                 method: 'GET',
@@ -60,10 +61,12 @@ function Maps1(props) {
                 if (data["user_has_addresses"]) {
                     updateState({
                         ...state,
+                        q: query,
                         longitude: data["location_suggestions"][0]["longitude"],
                         latitude: data["location_suggestions"][0]["latitude"],
                         z: 12,
                     })
+                    setQuery("");
                 }
                 else {
                     alert(`Error with parameters`)
@@ -76,7 +79,7 @@ function Maps1(props) {
             <form onSubmit={submitForm}>
                 <div className="form_input">
                     <label className="form_label" for="q"> Search: </label>
-                    <input className="form_field" type="text" value={state.q} name="q" onChange={handleChange} />
+                    <input className="form_field" type="search" value={query} name="q" onChange={handleChange} />
                 </div>
                 <center><input className="form_submit" type="submit" value="Submit" /></center>
             </form>
@@ -95,6 +98,7 @@ function Maps1(props) {
                     defaultZoom={1}
                     zoom={state.z}
                 >
+                    {console.log(show)}
                     {/* <AnyReactComponent
                         lat={0}
                         lng={0}
