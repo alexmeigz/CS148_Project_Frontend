@@ -13,7 +13,7 @@ function AddReport(props) {
     }
 
     const [newInfo, setNewInfo] = useState({
-        ...props.reportData,
+        ...props.postData,
         report_info: ""
     })
 
@@ -34,12 +34,15 @@ function AddReport(props) {
 
         let url = `${server}/report/?`
 
-        requiredParams.forEach((param, index) => {
+        url += `&userReporter_id=${(JSON.parse(sessionStorage.getItem("user")).user_id)}`
+        url += `&reportedUser_id=${props.postData.user_id}`
+
+        /*requiredParams.forEach((param, index) => {
             if (newInfo[param] === "") {
                 newInfo[param] = props.postData[param]
             }
             url += `&${param}=${newInfo[param]}`
-        });
+        });*/
 
         console.log(url)
 
@@ -50,7 +53,7 @@ function AddReport(props) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
                 }, 
-                body: props.newInfo[report_info],          
+                body: newInfo["report_info"],          
             })
             .then(response => response.json()) 
                 .then(data => {
