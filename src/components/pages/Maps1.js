@@ -15,6 +15,7 @@ function Maps1(props) {
     const [show, setShow] = useState(false);
     const [restaurantResults, setRestaurantResults] = useState({});
     const [selectedCenter, setSelectedCenter] = useState(false);
+    // const [reload, setReload] = useState(false);
     useEffect(() => {
         let newUrl = `https://developers.zomato.com/api/v2.1/search?lat=${state.latitude}&lon=${state.longitude}`
         fetch(newUrl,
@@ -36,6 +37,7 @@ function Maps1(props) {
             .catch((error) => console.log("Search error: " + error))
     }, [state])
     function handleChange(evt) {
+        evt.preventDefault();
         const name = evt.target.name
         const value = evt.target.value
         updateState({
@@ -43,6 +45,14 @@ function Maps1(props) {
             [name]: value
         })
     }
+    // function reloadPage() {
+    //     updateState({
+    //         q: "",
+    //         longitude: 0.0,
+    //         latitude: 0.0,
+    //         z: 1,
+    //     })
+    // }
     const submitForm = (evt) => {
         evt.preventDefault();
         let url = `https://developers.zomato.com/api/v2.1/locations?query=${state.q}`
@@ -60,6 +70,7 @@ function Maps1(props) {
                 if (data["user_has_addresses"]) {
                     updateState({
                         ...state,
+                        // q: "",
                         longitude: data["location_suggestions"][0]["longitude"],
                         latitude: data["location_suggestions"][0]["latitude"],
                         z: 12,
@@ -76,7 +87,7 @@ function Maps1(props) {
             <form onSubmit={submitForm}>
                 <div className="form_input">
                     <label className="form_label" for="q"> Search: </label>
-                    <input className="form_field" type="text" value={state.q} name="q" onChange={handleChange} />
+                    <input className="form_field" type="search" value={state.q} name="q" onChange={handleChange} />
                 </div>
                 <center><input className="form_submit" type="submit" value="Submit" /></center>
             </form>
