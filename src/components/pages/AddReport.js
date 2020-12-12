@@ -30,8 +30,6 @@ function AddReport(props) {
     function submitReport(event) {
         event.preventDefault();
 
-        let requiredParams = ["userReporter_id", "reportedUser_id"]
-
         let url = `${server}/report/?`
 
         url += `&userReporter_id=${(JSON.parse(sessionStorage.getItem("user")).user_id)}`
@@ -57,7 +55,7 @@ function AddReport(props) {
             })
             .then(response => response.json()) 
                 .then(data => {
-                if(data["message"] === "Report created successfully!"){
+                if(data["message"] === "Report created successfully!" || data["message"] === "Report submitted successfully!"){
                     alert("Report created successfully!")
                     props.cancelReport()
                 }

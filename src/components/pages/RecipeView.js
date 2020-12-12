@@ -3,6 +3,7 @@
 
 import React, {useState} from "react";
 import AddComment from "./AddComment.js"
+import AddReport from "./AddReport"
 import CommentPane from "./CommentPane.js"
 import RecipeUpdatePanel from "./RecipeUpdatePanel.js"
 
@@ -21,7 +22,8 @@ function RecipeView(props) {
     const [numLikes, setLikes] =useState(props.postData["reacted_users"].length);
     const [comments, setComments] = useState({});
     const [showing, setShowing] = useState(false);
-    const [adding, setAdding] = useState(false);
+    const [addingComment, setAddingComment] = useState(false);
+    const [addingReport, setAddingReport] = useState(false)
 
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -104,7 +106,12 @@ function RecipeView(props) {
 
     function addComment(event) {
         event.preventDefault();
-        setAdding((prevAdding => !prevAdding));
+        setAddingComment((prevAdding => !prevAdding));
+        setUpdating(false);
+    }
+    function addReport(event) {
+        event.preventDefault();
+        setAddingReport((prevAdding => !prevAdding));
         setUpdating(false);
     }
 
@@ -265,15 +272,23 @@ function RecipeView(props) {
                     </div>
                 }
                 { props.isLoggedIn &&
-                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!addingComment ? "Add Comment": "Cancel Comment"}</button>
+                }
+                { props.isLoggedIn &&
+                    <button className="post-button" onClick={addReport} disabled={removed}>{!addingReport ? "Add Report": "Cancel Report"}</button>
                 }
 
                 {updating
                     ? <RecipeUpdatePanel postData={props.postData} cancelUpdate={() => setUpdating(false)}/>
                     : null
                 }
-                {adding ?
-                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                {addingComment ?
+                    <AddComment postData={props.postData} cancelComment={() => setAddingComment(false)}/>
+                :
+                    null
+                }
+                {addingReport ?
+                    <AddReport postData={props.postData} cancelComment={() => setAddingReport(false)}/>
                 :
                     null
                 }
