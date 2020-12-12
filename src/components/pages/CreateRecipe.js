@@ -9,7 +9,7 @@ function RecipeForm(props) {
       title: "",
       caption: "",
       image_url: "",
-      user_id: props.user["user_id"]
+      user_id: JSON.parse(sessionStorage.getItem("user"))["user_id"]
     })
 
     const [content, updateContent] = useState({
@@ -43,7 +43,7 @@ function RecipeForm(props) {
           server = "https://nutriflix-flask-backend.herokuapp.com/api"
       }
       if (process.env.NODE_ENV !== "development") {
-          server = "https://nutriflix-flask-backend.herokuapp.com//api"
+          server = "https://nutriflix-flask-backend.herokuapp.com/api"
       }
     
       let url = `${server}/post/?`
@@ -56,40 +56,48 @@ function RecipeForm(props) {
       let ingredients = JSON.stringify(content.ingredients.split("\n"))
       let instructions = JSON.stringify(content.instructions.split("\n"))
 
-      fetch(url, 
-        {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },    
-          body: JSON.stringify({
-            "ingredients" : ingredients,
-            "instructions" : instructions
-          })
-        })
-        .then(response => response.json()) 
-        .then(data => {
-          if(data["message"] === "Recipe Post created successfully!"){
-            alert(`${data["message"]}`)
-            //Need to add Redirect after creating Product
-            updateState({
-              type: "recipe",
-              title: "",
-              caption: "",
-              image_url: "",
-              user_id: props.user["user_id"]
+      if(ingredients === "[\"\"]"){
+        alert("ingredients cannot be empty")
+      }
+      else if(instructions === "[\"\"]"){
+        alert("instructions cannot be empty")
+      }
+      else{
+        fetch(url, 
+          {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },    
+            body: JSON.stringify({
+              "ingredients" : ingredients,
+              "instructions" : instructions
             })
-            updateContent({
-                "instructions": "",
-                "ingredients": ""
+          })
+          .then(response => response.json()) 
+          .then(data => {
+            if(data["message"] === "Recipe Post created successfully!"){
+              alert(`${data["message"]}`)
+              //Need to add Redirect after creating Product
+              updateState({
+                type: "recipe",
+                title: "",
+                caption: "",
+                image_url: "",
+                user_id: JSON.parse(sessionStorage.getItem("user"))["user_id"]
               })
-          }
-          else{
-            alert(`Error creating recipe: ${data["message"]}`)
-          }
-        })
-        .catch((error) => console.log("Post creation error: "+ error))
+              updateContent({
+                  "instructions": "",
+                  "ingredients": ""
+                })
+            }
+            else{
+              alert(`Error creating recipe: ${data["message"]}`)
+            }
+          })
+          .catch((error) => console.log("Post creation error: "+ error))
+        }
       }
 
     return (
@@ -102,7 +110,7 @@ function RecipeForm(props) {
         </div>
         
         <div className="form_input">
-          <label className="form_label" for="rating"> Recipe Caption: </label>         
+          <label className="form_label" for="caption"> Recipe Caption: </label>         
           <input className="form_field" type="text" value={state.caption} name="caption" onChange={handleChange} />
         </div>
 

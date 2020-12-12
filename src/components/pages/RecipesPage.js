@@ -6,17 +6,17 @@ import AccountInfoBar from "../common/AccountInfoBar";
 import RecipeCall from "./RecipeCall"
 
 function RecipesPage(props) {
-    function handleLoginChange(value) {
+    function onLoginChange(value) {
         props.onLoginChange(value)
     }
-    function handleUserChange(value) {
+    function onUserChange(value) {
         props.onUserChange(value)
     }
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} />
-            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange} /> : null}
+            <NavigationBar isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} onLoginChange={onLoginChange} user={JSON.parse(sessionStorage.getItem("user"))} />
+            {JSON.parse(sessionStorage.getItem("isLoggedIn")) ? <AccountInfoBar user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange} /> : null}
             <div className="container">
                 <h1>Search Recipes</h1>
 

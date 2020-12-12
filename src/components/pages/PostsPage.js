@@ -45,20 +45,20 @@ function PostsPage (props) {
         }
     }
 
-    function handleLoginChange(value) {
+    function onLoginChange(value) {
         props.onLoginChange(value)
     }
-    function handleUserChange(value) {
+    function onUserChange(value) {
         props.onUserChange(value)
     }
     return (
         // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} />
-            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
+            <NavigationBar isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} onLoginChange={onLoginChange} user={JSON.parse(sessionStorage.getItem("user"))} />
+            {JSON.parse(sessionStorage.getItem("isLoggedIn")) ? <AccountInfoBar user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/> : null}
 
             <div className="button-bar">
-                {props.isLoggedIn
+                {JSON.parse(sessionStorage.getItem("isLoggedIn"))
                     ? 
                     <div>
                         {isPostView
@@ -75,17 +75,17 @@ function PostsPage (props) {
             </div>
 
             { isPostView ?
-                <PostsList isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>
+                <PostsList isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/>
             : 
             <div>
                 { isBlog &&
-                    <BlogForm isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>    
+                    <BlogForm isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/>    
                 }
                 { isRecipe &&
-                    <RecipeForm isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>    
+                    <RecipeForm isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/>    
                 }
                 { isReview &&
-                    <ReviewForm isLoggedIn={props.isLoggedIn} user={props.user} onUserChange={handleUserChange}/>    
+                    <ReviewForm isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/>    
                 }
             </div>
                 

@@ -17,7 +17,7 @@ function ApplForm(props) {
         vendorType: "",
         reason: "",
         busLocation: "",
-        user_id: props.user["user_id"]
+        user_id: JSON.parse(sessionStorage.getItem("user"))["user_id"]
     })
     //Remember that updating state means we make a complete new copy and overwrite the exisiting state
     //Remember that React.useState on state objects requires that we copy the existing state upon each update (using the "spread" operator ...state) -- see below

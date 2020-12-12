@@ -2,32 +2,32 @@
 // Engineer: Joseph Ng
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import NavigationBar from '../common/NavigationBar';
 import ContactUsFooter from "../common/ContactUsFooter";
-import AccountInfoBar from "../common/AccountInfoBar"
+import AccountInfoBar from "../common/AccountInfoBar";
+import "./Error.css";
 
 function ErrorPage (props) {
 
-    function handleLoginChange(value) {
+    function onLoginChange(value) {
         props.onLoginChange(value)
     }
-    function handleUserChange(value) {
+    function onUserChange(value) {
         props.onUserChange(value)
     }
 
     return (
-        // TODO
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user} />
-            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
-
-            <img style={{width: "50%", marginLeft: "25%"}}
-                src="https://www.ideasmama.com/wp-content/uploads/pepega.jpg"
-                alt="Error"
-                
-            />
-            <h1>404: Page does not exist</h1>
+            <NavigationBar isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} onLoginChange={onLoginChange} user={JSON.parse(sessionStorage.getItem("user"))} />
+            {JSON.parse(sessionStorage.getItem("isLoggedIn")) ? <AccountInfoBar user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/> : null}
+            
+            <div className="container">
+                <h1 className="text"> Sorry! We couldn't find the page you were looking for. </h1>
+                <h1 className="text"> Would you like to browse some of our <Link to="./products" className="text"> delicious products </Link> instead? </h1>
+                <img className="error-image" src="https://i.imgur.com/TU6089W.jpg" alt=""/>
+            </div>
 
             <ContactUsFooter />
         </div>

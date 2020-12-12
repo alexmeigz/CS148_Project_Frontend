@@ -14,9 +14,9 @@ function AccountInfoBar(props) {
     return (
         <div>
             <ul className="account-info-bar">
-                <li className="account-type">Account Type: {props.user.account_type}</li>
+                <li className="account-type">Account Type: {JSON.parse(sessionStorage.getItem("user")).account_type}</li>
                 <li className="credits">
-                    Credits: ${props.user.credits}
+                    Credits: ${JSON.parse(sessionStorage.getItem("user")).credits}
                 </li>
             </ul>
         </div>

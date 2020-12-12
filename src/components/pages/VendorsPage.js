@@ -29,7 +29,7 @@ function VendorsPage (props) {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
     if (process.env.NODE_ENV !== "development") {
-        server = "https://nutriflix-flask-backend.herokuapp.com//api"
+        server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
 
     let url = `${server}/user/?display_all=True&filter=vendor`
@@ -75,18 +75,18 @@ function VendorsPage (props) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "vendor-pane" && vendorData && isListView) {
             setVendorView(<VendorProfileView 
-                isLoggedIn={props.isLoggedIn} 
-                user={props.user} 
+                isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} 
+                user={JSON.parse(sessionStorage.getItem("user"))} 
                 onUserChange={props.onUserChange} 
                 vendor={vendorData.vendor}
             />);
         }
     };
 
-    function handleLoginChange(value) {
+    function onLoginChange(value) {
         props.onLoginChange(value)
     }
-    function handleUserChange(value) {
+    function onUserChange(value) {
         props.onUserChange(value)
     }
 
@@ -95,8 +95,8 @@ function VendorsPage (props) {
     return (
     
         <div>
-            <NavigationBar isLoggedIn={props.isLoggedIn} onLoginChange={handleLoginChange} user={props.user}/>
-            {props.isLoggedIn ? <AccountInfoBar user={props.user} onUserChange={handleUserChange}/> : null}
+            <NavigationBar isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} onLoginChange={onLoginChange} user={JSON.parse(sessionStorage.getItem("user"))}/>
+            {JSON.parse(sessionStorage.getItem("isLoggedIn")) ? <AccountInfoBar user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/> : null}
 
             
             {!isListView
@@ -123,10 +123,10 @@ function VendorsPage (props) {
                         Vendor Results (Total: {Object.keys(results).length})
                     </div>
                     {Object.values(results).map(vendor => (
-                        <button className="vendor_panel_button" onClick={(e) => changeView(e, "vendor-pane", {
+                        <button className="panel_button" onClick={(e) => changeView(e, "vendor-pane", {
                             vendor: vendor
                         })}>
-                            <VendorPane user={props.user} onUserChange={handleUserChange} vendor={vendor}/>
+                            <VendorPane user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange} vendor={vendor}/>
                         </button>
                     ))}
                 </div>

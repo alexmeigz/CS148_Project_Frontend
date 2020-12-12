@@ -40,7 +40,6 @@ function PostsList (props) {
               newUrl += `&${f}=${filters[f]}`
             }
         }
-        console.log("Hello World: " + newUrl)
         fetch(newUrl, {
             method: 'GET',
             headers: {
@@ -67,28 +66,28 @@ function PostsList (props) {
     
     function changeView(event, type, postData) {
         setIsListView(prevIsListView => !prevIsListView);
-        if (type === "product-pane") {
+        if (type === "post-pane") {
             if(postData["post_type"] === "recipe"){
                 setPostView(<RecipeView 
                     postData={postData} 
-                    isLoggedIn={props.isLoggedIn} 
-                    user={props.user} 
+                    isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} 
+                    user={JSON.parse(sessionStorage.getItem("user"))} 
                     onUserChange={props.onUserChange}
                 />);
             }
             else if(postData["post_type"] === "review"){
                 setPostView(<ReviewView 
                     postData={postData} 
-                    isLoggedIn={props.isLoggedIn} 
-                    user={props.user} 
+                    isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} 
+                    user={JSON.parse(sessionStorage.getItem("user"))} 
                     onUserChange={props.onUserChange}
                 />);
             }
             else{
                 setPostView(<BlogView 
                     postData={postData} 
-                    isLoggedIn={props.isLoggedIn} 
-                    user={props.user} 
+                    isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} 
+                    user={JSON.parse(sessionStorage.getItem("user"))} 
                     onUserChange={props.onUserChange}
                 />);
             }
@@ -129,35 +128,41 @@ function PostsList (props) {
                         Post Results (Total: {Object.keys(results).length})
                     </div>
                     {Object.values(results).map(post => (
-                        <button className="product_panel_button" 
-                            onClick={(e) => changeView(e, "product-pane", post)}>
+                        <button className="panel_button" 
+                            onClick={(e) => changeView(e, "post-pane", post)}>
                             {post["post_type"] === "blog" &&
                                 <PostsPane 
                                     title={post["title"]} 
+                                    username={post["username"]}
+                                    comments={post["comments"]}
                                     image={post["image_url"]}
                                     caption={post["content"]}
                                     reacts={post["reacted_users"].length}
-                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
                                 />
                             }
                             {post["post_type"] === "review" &&
                                 <PostsPane 
                                     title={post["title"]} 
+                                    username={post["username"]}
+                                    comments={post["comments"]}
                                     image={post["image_url"]}
                                     caption={post["content"]}
                                     rating={post["rating"]}
                                     reacts={post["reacted_users"].length}
-                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
                                 />
                             }
                             {post["post_type"] === "recipe" &&
                                 <PostsPane 
                                     title={post["title"]} 
+                                    username={post["username"]}
+                                    comments={post["comments"]}
                                     image={post["image_url"]}
                                     caption={post["caption"]}
                                     ingredients={post["ingredients"]}
                                     instructions={post["instructions"]}
-                                    reacted={post["reacted_users"].includes(props.user.user_id)}
+                                    reacted={post["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")).user_id)}
                                     reacts={post["reacted_users"].length}
                                 />
                             }

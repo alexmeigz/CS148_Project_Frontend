@@ -61,7 +61,7 @@ function OrderPane(props) {
                         Update Date: {props.orderData.update_date}
                     </div>
                 </div>
-                {props.user.account_type === "Admin"
+                {JSON.parse(sessionStorage.getItem("user")).account_type === "Admin"
                     ? <div className="row">
                         <div className="seller-id">
                             Seller Id: {props.orderData.seller_id}

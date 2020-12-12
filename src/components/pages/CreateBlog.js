@@ -8,7 +8,7 @@ function BlogForm(props) {
       type: "blog",
       title: "",
       image_url: "",
-      user_id: props.user["user_id"]
+      user_id: JSON.parse(sessionStorage.getItem("user"))["user_id"]
     })
 
     const [content, updateContent] = useState("")
@@ -25,7 +25,6 @@ function BlogForm(props) {
           ...state,
           [name]: value
         })
-        console.log(state["title"])
       }
     }
 
@@ -65,7 +64,7 @@ function BlogForm(props) {
             type: "blog",
             title: "",
             image_url: "",
-            user_id: props.user["user_id"]
+            user_id: JSON.parse(sessionStorage.getItem("user"))["user_id"]
           })
           updateContent("")
         }

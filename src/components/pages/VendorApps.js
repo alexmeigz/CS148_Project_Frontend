@@ -34,7 +34,7 @@ function VendorApps (props) {
             })
             .then(response => response.json()) 
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 setResults(data)
             })
             .catch((error) => console.log("Error: " + error))
