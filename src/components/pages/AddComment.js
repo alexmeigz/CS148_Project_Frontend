@@ -30,9 +30,9 @@ function AddComment(props) {
     function submitComment(event) {
         event.preventDefault();
 
-        let requiredParams = ["post_id", "user_id", "com_info"]
+        let requiredParams = ["post_id", "com_info"]
 
-        let url = `${server}/comment/?`
+        let url = `${server}/comment/?user_id=${JSON.parse(sessionStorage.getItem("user")).user_id}`
 
         requiredParams.forEach((param, index) => {
             if (newInfo[param] === "") {

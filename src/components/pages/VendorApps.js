@@ -49,7 +49,6 @@ function VendorApps (props) {
     };
 
     function approveApplication(){
-        console.log(applicationData)
         const userurl = `/user/?user_id=${applicationData["user"]}&account_type=${applicationData["type"]}&vendor_name=${applicationData["name"]}&vendor_location=${applicationData["location"]}`
         const applicationurl = `/application/?id=${applicationData["id"]}`
         fetch(server+userurl, {
@@ -72,7 +71,6 @@ function VendorApps (props) {
             .then(response => response.json()) 
             .then(data => {
                 alert(data["message"])
-                //window.location.replace("/vendor-apps")
             })
             .catch((error) => console.log("Error: " + error))
         })
@@ -91,7 +89,6 @@ function VendorApps (props) {
         .then(response => response.json()) 
         .then(data => {
             alert(data["message"])
-            //window.location.replace("/vendor-apps")
         })
         .catch((error) => console.log("Error: " + error))
     }

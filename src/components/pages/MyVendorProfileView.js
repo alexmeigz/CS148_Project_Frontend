@@ -109,13 +109,13 @@ function MyVendorProfileView(props) {
                     : <div>
                         <button className="cancel-info" onClick={(event)=> {toggleView()}}>Cancel</button>
                         <button className="submit-info" onClick={(event)=> {toggleView(); submitNewUserInfo(event)}}>Submit Changes</button>
-                        <div>
-                            <label className="form-label" for="vendor_image_url">New Vendor Profile Image URL: </label>         
-                            <input className="form-field" type="text" value={newUserInfo.vendor_image_url} name="vendor_image_url" onChange={handleNewUserChange} />
-                            <br />
-                            <label className="form-label" for="vendor_name">New Vendor Name: </label>         
-                            <input className="form-field" type="text" value={newUserInfo.vendor_name} name="vendor_name" onChange={handleNewUserChange} />
-                            <br />
+                        <div className="form_input">
+                            <label className="form_label" for="vendor_image_url">New Vendor Profile Image URL: </label>         
+                            <input className="form_field" type="text" value={newUserInfo.vendor_image_url} name="vendor_image_url" onChange={handleNewUserChange} />
+                        </div>
+                        <div className="form_input">
+                            <label className="form_label" for="vendor_name">New Vendor Name: </label>         
+                            <input className="form_field" type="text" value={newUserInfo.vendor_name} name="vendor_name" onChange={handleNewUserChange} />
                         </div>
                     </div>
                 }

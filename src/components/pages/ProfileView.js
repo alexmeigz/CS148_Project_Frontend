@@ -120,8 +120,8 @@ function ProfileView(props) {
                     {!settingsMode 
                         ? null
                         : <div>
-                            <label className="form-label" for="profile_image_url">New Profile Image URL: </label>         
-                            <input className="form-field" type="text" value={newUserInfo.profile_image_url} name="profile_image_url" onChange={handleNewUserChange} />
+                            <label className="form_label" for="profile_image_url">New Profile Image URL: </label>         
+                            <input className="form_field" type="text" value={newUserInfo.profile_image_url} name="profile_image_url" onChange={handleNewUserChange} />
                             <br />
                         </div>
                     }

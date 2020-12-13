@@ -6,7 +6,6 @@ function RecipeCall(props) {
     const [state, updateState] = useState({
         q: "",
         health: "",
-        // calories: "",
         excluded: "",
         showHideDemo: false
     })
@@ -14,17 +13,16 @@ function RecipeCall(props) {
     const [results, setResults] = useState({});
     const [lock, setLock] = useState(false);
 
-    function handleChange(evt) { //updating form elements, nested function
-        const name = evt.target.name //defined in render
-        const value = evt.target.value //defined in render
-        //because we are using a single state object above to hold multiple properties, we must save off the current state first (b/c we are only updating part of the object).  To do this, we "spread" state via ...state and add it to the new copy of state that updateState is creating, followed by any updates we want:
+    function handleChange(evt) { 
+        const name = evt.target.name 
+        const value = evt.target.value 
         updateState({
             ...state,
             [name]: value
         })
     }
 
-    const submitForm = (evt) => {  //send creds to backend, nested arrow function
+    const submitForm = (evt) => {  
         evt.preventDefault();
         if(!lock){
             setLock(true);
@@ -59,7 +57,7 @@ function RecipeCall(props) {
     
                     }
                     else {
-                        alert(`Error with parameters`)
+                        alert(`API cannot process your search query. Please try again.`)
                     }
                 })
                 .catch((error) => console.log("Recipe call error: " + error))
