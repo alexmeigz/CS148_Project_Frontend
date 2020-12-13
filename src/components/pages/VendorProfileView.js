@@ -20,7 +20,7 @@ function VendorProfileView(props) {
             <div className="vendor-picture-pane">
                 <img className="vendor-picture"
                     src={displayInfo.vendor_image_url}
-                    alt="Vendor Profile"
+                    alt=""
                 />
                 <h1> Welcome to {displayInfo.vendor_name || "[No Name Listed]"}'s Store </h1>
             </div>

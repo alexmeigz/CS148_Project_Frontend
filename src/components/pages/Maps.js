@@ -79,12 +79,12 @@ function Maps(props) {
     }
     return (
         <div>
-            <form onSubmit={submitForm}>
-                <div className="form_input">
+            <form className="form_override" onSubmit={submitForm}>
+                <div className="form_input input_override">
                     <label className="form_label" for="q"> Search: </label>
                     <input className="form_field" type="search" value={query} name="q" onChange={handleChange} />
                 </div>
-                <center><input className="form_submit" type="submit" value="Submit" /></center>
+                <center><input className="form_submit submit_override" type="submit" value="Submit" /></center>
             </form>
             < div style={{ height: '100vh', width: '100%' }
             }>
@@ -101,26 +101,12 @@ function Maps(props) {
                     defaultZoom={1}
                     zoom={state.z}
                 >
-                    {console.log(show)}
-                    {/* <AnyReactComponent
-                        lat={0}
-                        lng={0}
-                        text="My Marker"
-                    /> */}
-
-                    {/* <Marker
-                        lat={0}
-                        lng={0}
-                        name="My Marker"
-                    > */}
-                    {/* </Marker> */}
 
                     {show &&
                         Object.values(restaurantResults["restaurants"]).map(rest => (
                             <Marker
                                 lat={parseFloat(rest["restaurant"]["location"]["latitude"])}
                                 lng={parseFloat(rest["restaurant"]["location"]["longitude"])}
-                                // name="My Marker"
                                 onClick={() => {
                                     console.log(rest)
                                     setSelectedCenter({

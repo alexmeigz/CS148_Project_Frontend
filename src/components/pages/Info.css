@@ -6,15 +6,7 @@
     border-radius: 15%;
 }
 
-/* form {
-    display: flex;
-    flex-direction: row;
+.form_override {
     height: 100%;
-} */
+} 
 
-.form_submit {
-    position: relative;
-    bottom: 53px;
-    left: 300px;
-    /* margin-bottom: -100px; */
-}

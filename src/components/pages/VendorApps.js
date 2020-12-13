@@ -50,8 +50,7 @@ function VendorApps (props) {
 
     function approveApplication(){
         console.log(applicationData)
-        // const url = `http://localhost:8118/api/`
-        const userurl = `/user/?user_id=${applicationData["user"]}&account_type=${applicationData["type"]}&vendor_name=${applicationData["name"]}`
+        const userurl = `/user/?user_id=${applicationData["user"]}&account_type=${applicationData["type"]}&vendor_name=${applicationData["name"]}&vendor_location=${applicationData["location"]}`
         const applicationurl = `/application/?id=${applicationData["id"]}`
         fetch(server+userurl, {
             method: 'PATCH',
@@ -136,7 +135,8 @@ function VendorApps (props) {
                                 type: application["vendorType"],
                                 reason: application["reason"],
                                 name: application["restName"],
-                                id: application["application_id"]
+                                id: application["application_id"],
+                                location: application["busLocation"]
                             })}>
                                 <ApplicationPane 
                                     user={application["user_id"]}
