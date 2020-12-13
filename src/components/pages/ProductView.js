@@ -27,11 +27,6 @@ function ProductView(props) {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
 
-    // eslint-disable-next-line
-    function login(event) {
-        event.preventDefault();
-        // TODO
-    }
     function addReport(event) {
         event.preventDefault();
         setAddingReport((prevAdding => !prevAdding));
