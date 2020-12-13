@@ -103,12 +103,14 @@ function BlogView(props) {
     function addComment(event) {
         event.preventDefault();
         setAddingComment((prevAdding => !prevAdding));
+        setAddingReport(false);
         setUpdating(false);
     }
     function addReport(event) {
         event.preventDefault();
         setAddingReport((prevAdding => !prevAdding));
         setUpdating(false);
+        setAddingComment(false);
     }
 
     function updatePost(event) {
@@ -197,7 +199,7 @@ function BlogView(props) {
                         </div>
                     }
                 </div>
-                {(JSON.parse(sessionStorage.getItem("user")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).user_id.account_type === "Admin")) &&
+                {(JSON.parse(sessionStorage.getItem("user")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin")) &&
                     <div>
                         <button className="post-button" onClick={removePost} disabled={removed}>{!removed ? "Remove Post": "Removed!"}</button>
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>
@@ -273,7 +275,7 @@ function BlogView(props) {
                         </div>
                     }
                 </div>
-                {(JSON.parse(sessionStorage.getItem("user")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).user_id.account_type === "Admin")) &&
+                {(JSON.parse(sessionStorage.getItem("user")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin")) &&
                     <div>
                         <button className="post-button" onClick={removePost} disabled={removed}>{!removed ? "Remove Post": "Removed!"}</button>
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>
