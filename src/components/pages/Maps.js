@@ -1,3 +1,6 @@
+// MapsPage.js
+// Engineer: Sriya Aluru
+
 import React, { useEffect, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Marker from './Marker.tsx'
@@ -5,7 +8,7 @@ import "./Info.css";
 
 const AnyReactComponent = ({ text }) => <div className="info">{text}</div>;
 
-function Maps1(props) {
+function Maps(props) {
     const [state, updateState] = useState({
         q: "",
         longitude: 0.0,
@@ -39,7 +42,7 @@ function Maps1(props) {
     }, [state])
     function handleChange(evt) {
         evt.preventDefault();
-        const name = evt.target.name
+        //const name = evt.target.name
         const value = evt.target.value
         setQuery(value)
     }
@@ -155,4 +158,4 @@ function Maps1(props) {
         </div >
     );
 }
-export default Maps1;
+export default Maps;

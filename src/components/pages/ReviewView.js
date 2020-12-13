@@ -128,8 +128,8 @@ function ReviewView(props) {
             })
             .then(response => response.json()) 
                 .then(data => {
-                if(data["message"] === "Post successfully removed"){
-                    alert("Post successfully removed")
+                if(data["message"] === "Post successfully removed. Please refresh to see updates."){
+                    alert("Post successfully removed. Please refresh to see updates.")
                     setRemoved(true);
                 }
                 else{

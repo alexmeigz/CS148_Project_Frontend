@@ -115,12 +115,12 @@ function RecipeForm(props) {
         </div>
 
         <div className="form_input">
-          <label className="form_label" for="ingredients"> Recipe Ingredients: </label>         
+          <label className="form_label" for="ingredients"> Recipe Ingredients: (quantity unit ingredient; one per line) </label>         
           <textarea className="form_field textarea" type="text" value={content.ingredients} name="ingredients" onChange={handleChange} />
         </div>
 
         <div className="form_input">
-          <label className="form_label" for="instructions"> Recipe Instructions: </label>         
+          <label className="form_label" for="instructions"> Recipe Instructions: (one instruction per line) </label>         
           <textarea className="form_field textarea" type="text" value={content.instructions} name="instructions" onChange={handleChange} />
         </div>
 

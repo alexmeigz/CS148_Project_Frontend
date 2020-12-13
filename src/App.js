@@ -1,5 +1,5 @@
 // App.js
-// Modified by: Joseph Ng
+// Modified by: Joseph Ng, Alex Mei, Sriya Aluru, Pranav Acharya
 
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react';
@@ -16,7 +16,6 @@ import RecipesPage from './components/pages/RecipesPage';
 import PostsPage from './components/pages/PostsPage';
 import ProductsPage from './components/pages/ProductsPage';
 import LoginPage from "./components/pages/LoginPage";
-// import LogoutPage from "./components/pages/LogoutPage";
 import ContactUsPage from "./components/pages/ContactUsPage";
 import MyProfilePage from "./components/pages/MyProfilePage";
 import MyProductsPage from "./components/pages/MyProductsPage";
@@ -36,7 +35,6 @@ import ErrorPage from './components/pages/ErrorPage';
 //import ProductForm from './components/pages/CreateProduct';
 //import LoggedInHomePage from './components/pages/LoggedInHomePage';
 import RecipeCall from './components/pages/RecipeCall'
-import Maps1 from "./components/pages/Maps1"
 
 // sessionStorage.setItem("isLoggedIn", JSON.stringify(false))
 // sessionStorage.setItem("user", JSON.stringify({
@@ -326,13 +324,6 @@ function App() {
                         onLoginChange={onLoginChange}
                         user={JSON.parse(sessionStorage.getItem("user"))}
                         onUserChange={onUserChange}
-                    />
-                </Route>
-
-                <Route path="/google-maps1">
-                    <Maps1
-                        isLoggedIn={isLoggedIn}
-                        user={user}
                     />
                 </Route>
 

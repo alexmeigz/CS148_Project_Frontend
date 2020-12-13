@@ -77,8 +77,8 @@ function BlogUpdatePanel(props) {
             })
             .then(response => response.json()) 
                 .then(data => {
-                if(data["message"] === "Post successfully updated"){
-                    alert("Post successfully updated")
+                if(data["message"] === "Post successfully updated. Please refresh to see updates."){
+                    alert("Post successfully updated. Please refresh to see updates.")
                     props.cancelUpdate()
                 }
                 else{
