@@ -80,7 +80,7 @@ function ApplForm(props) {
 
                 <div className="form_input">
                     <label className="form_label" for="reason"> Reason: </label>
-                    <input className="form_field" type="text" value={state.reason} name="reason" onChange={handleChange} />
+                    <textarea className="form_field" type="text" value={state.reason} name="reason" onChange={handleChange} />
                     <br />
                 </div>
 
