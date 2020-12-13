@@ -191,6 +191,8 @@ function BlogView(props) {
                         <div className="row comments">
                             {Object.values(comments).map(comment => (
                                 <CommentPane 
+                                    comment_id={comment["comment_id"]}
+                                    user_id={comment["user_id"]}
                                     content={comment["com_info"]}
                                     username={comment["username"]}
                                     date={comment["com_date"]}
@@ -267,6 +269,8 @@ function BlogView(props) {
                         <div className="row comments">
                             {Object.values(comments).map(comment => (
                                 <CommentPane 
+                                    comment_id={comment["comment_id"]}
+                                    user_id={comment["user_id"]}
                                     content={comment["com_info"]}
                                     username={comment["username"]}
                                     date={comment["com_date"]}
