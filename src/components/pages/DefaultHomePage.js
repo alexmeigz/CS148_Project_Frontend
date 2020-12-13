@@ -38,6 +38,7 @@ function DefaultHomePage (props) {
 
     function onLoginChange(value) {
         props.onLoginChange(value)
+        setNavBarHeight(0)
     }
 
     function onUserChange(value) {
