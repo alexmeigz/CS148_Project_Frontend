@@ -119,7 +119,7 @@ function VendorsPage (props) {
                 <form onSubmit={submitForm}>
                     <div className="form_input input_override">
                         <label className="form_label" for="q"> Search: </label>
-                        <input className="form_field" type="text" value={filters.vendor_name} name="q" onChange={(event) => {setFilters({vendor_name: `${event.target.value}`})}} />
+                        <input className="form_field" type="search" value={filters.vendor_name} name="q" onChange={(event) => {setFilters({vendor_name: `${event.target.value}`})}} />
                     </div>
                     <center><input className="form_submit submit_override" type="submit" value="Submit" /></center>
                 </form>

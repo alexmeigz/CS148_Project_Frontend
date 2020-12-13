@@ -22,8 +22,8 @@ function ProductUpdatePanel(props) {
         location: "",
         frequency: ""
     })
-    console.log(props.productData)
-    console.log(newInfo)
+    // console.log(props.productData)
+    // console.log(newInfo)
 
 
     function handleChange(evt) { //updating form elements, nested function
@@ -77,7 +77,7 @@ function ProductUpdatePanel(props) {
             }
         });
 
-        console.log(url)
+        // console.log(url)
 
         fetch(url, 
             {

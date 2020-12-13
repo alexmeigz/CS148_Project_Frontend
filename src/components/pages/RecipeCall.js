@@ -68,7 +68,6 @@ function RecipeCall(props) {
         else{
             alert("Due to API limitations, please do not search more than once per minute!")
         }
-
     }
 
     return (

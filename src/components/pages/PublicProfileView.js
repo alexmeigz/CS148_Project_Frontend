@@ -11,7 +11,7 @@ function PublicProfileView(props) {
             ...JSON.parse(sessionStorage.getItem("user"))
         }
     )
-    console.log(displayInfo)
+    // console.log(displayInfo)
     
     return (
         <div className="view-pane">

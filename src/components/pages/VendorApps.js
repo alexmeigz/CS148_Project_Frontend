@@ -19,7 +19,7 @@ function VendorApps (props) {
     if (process.env.NODE_ENV !== "development") {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
-    console.log(server)
+    // console.log(server)
 
     useEffect(() => {
         if (isListView) {

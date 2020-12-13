@@ -1,14 +1,15 @@
 // NavigationBar.js
 // Engineer: Joseph Ng
 
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 
 import './NavigationBar.css'
 import logo from '../../assets/logo.png'
 
 function NavigationBar(props) {
-    
+    const navBar = useRef()
+
     function onLoginChange(value) {
         props.onLoginChange(value)
         sessionStorage.setItem("user", JSON.stringify({
@@ -24,8 +25,19 @@ function NavigationBar(props) {
         }))
     }
 
+    useEffect(() =>{
+        // console.log(navBar.current.offsetHeight)
+        const interval = setInterval(() => {
+        if (props.setNavBarHeight) {
+            props.setNavBarHeight(navBar.current.offsetHeight)
+            // console.log(navBar.current.offsetHeight)
+        }
+        }, 100);
+        return () => clearInterval(interval);
+    });
+
     return (
-        <div>
+        <div ref={navBar}>
             <ul className="navigation-bar">
                 <Link to="/">
                     <li className="logo">

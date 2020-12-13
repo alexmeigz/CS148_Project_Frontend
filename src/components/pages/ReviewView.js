@@ -49,7 +49,7 @@ function ReviewView(props) {
             })
             .then(response => response.json()) 
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 setComments(data)
                 setShowing(true)
             })

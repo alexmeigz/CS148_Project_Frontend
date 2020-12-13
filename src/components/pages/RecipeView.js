@@ -12,7 +12,7 @@ import heart from "../../assets/heart.png";
 import heart_default from "../../assets/heart_default.png";
 
 function RecipeView(props) {
-    console.log(props.postData["ingredients"].replace("{", "[").replace("}", "]"))
+    // console.log(props.postData["ingredients"].replace("{", "[").replace("}", "]"))
     let parsedIngredients = JSON.parse(props.postData["ingredients"].replace("{", "[").replace("}", "]"))
     let parsedInstructions = JSON.parse(props.postData["instructions"].replace("{", "[").replace("}", "]"))
     
@@ -48,7 +48,7 @@ function RecipeView(props) {
             })
             .then(response => response.json()) 
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 setComments(data)
                 setShowing(true)
             })

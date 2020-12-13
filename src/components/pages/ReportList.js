@@ -32,7 +32,7 @@ function ReportList (props) {
         })
         .then(response => response.json()) 
         .then(data => {
-            console.log(data)
+            // console.log(data)
             setResults(data)
         })
         .catch((error) => console.log("Error: " + error))
@@ -46,7 +46,7 @@ function ReportList (props) {
     };
 
     function banUser(){
-        console.log(reportData)
+        // console.log(reportData)
         // const url = `http://localhost:8118/api/`
         const userurl = `/user/?user_id=${reportData["reportedUser_id"]}`
         const reporturl = `/report/?report_id=${reportData["report_id"]}`
@@ -79,7 +79,7 @@ function ReportList (props) {
     //Delete report
     function deleteReport(){
         const url = `${server}/report/?report_id=${reportData["report_id"]}`
-        console.log(url)
+        // console.log(url)
         fetch(url, {
             method: 'DELETE',
             headers: {

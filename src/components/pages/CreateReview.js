@@ -26,7 +26,7 @@ function ReviewForm(props) {
           ...state,
           [name]: value
         })
-        console.log(state["title"])
+        // console.log(state["title"])
       }
     }
 

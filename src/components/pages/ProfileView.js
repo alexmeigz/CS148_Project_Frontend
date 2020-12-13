@@ -84,7 +84,7 @@ function ProfileView(props) {
             }
         });
         
-        console.log(url);
+        // console.log(url);
         fetch(url, 
             {
               method: 'PATCH',
@@ -115,7 +115,7 @@ function ProfileView(props) {
                 <div className="profile-picture-pane">
                     <img className="profile-picture"
                         src={JSON.parse(sessionStorage.getItem("user")).profile_image_url}
-                        alt="Profile"
+                        alt=""
                     />
                     {!settingsMode 
                         ? null
