@@ -10,12 +10,14 @@ import React, {useState} from "react";
 // import ProductPane from "./ProductPane.js"
 
 import ProductUpdatePanel from "./ProductUpdatePanel"
+import AddProductReport from "./AddProductReport.js"
 import "./ProductView.css"
 
 function ProductView(props) {
     const [purchased, setPurchased] = useState(false);
     const [removed, setRemoved] = useState(false);
     const [updating, setUpdating] = useState(false);
+    const [addingReport, setAddingReport] = useState(false)
 
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -29,6 +31,11 @@ function ProductView(props) {
     function login(event) {
         event.preventDefault();
         // TODO
+    }
+    function addReport(event) {
+        event.preventDefault();
+        setAddingReport((prevAdding => !prevAdding));
+        setUpdating(false);
     }
 
     function updateProduct(event) {
@@ -161,10 +168,19 @@ function ProductView(props) {
             </div>
             : null
             }
+            { props.isLoggedIn &&
+                    <button className="post-button" onClick={addReport} disabled={removed}>{!addingReport ? "Add Report": "Cancel Report"}</button>
+            }
+
 
             {updating
             ? <ProductUpdatePanel productData={props.productData} cancelUpdate={() => setUpdating(false)}/>
             : null
+            }
+            {addingReport ?
+                    <AddProductReport productData={props.productData} cancelComment={() => setAddingReport(false)}/>
+                :
+                    null
             }
             
         </div>

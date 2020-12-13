@@ -3,6 +3,7 @@
 
 import React, {useState} from "react";
 import AddComment from "./AddComment.js"
+import AddReport from "./AddReport.js"
 import CommentPane from "./CommentPane.js"
 import BlogUpdatePanel from "./BlogUpdatePanel.js"
 
@@ -13,7 +14,8 @@ import heart_default from "../../assets/heart_default.png";
 function BlogView(props) {
     const [removed, setRemoved] = useState(false);
     const [updating, setUpdating] = useState(false);
-    const [adding, setAdding] = useState(false);
+    const [addingComment, setAddingComment] = useState(false);
+    const [addingReport, setAddingReport] = useState(false)
     const [liked, setLiked] = useState(props.postData["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")) && JSON.parse(sessionStorage.getItem("user")).user_id));
     const [numLikes, setLikes] =useState(props.postData["reacted_users"].length);
     const [comments, setComments] = useState({});
@@ -100,13 +102,19 @@ function BlogView(props) {
 
     function addComment(event) {
         event.preventDefault();
-        setAdding((prevAdding => !prevAdding));
+        setAddingComment((prevAdding => !prevAdding));
+        setUpdating(false);
+    }
+    function addReport(event) {
+        event.preventDefault();
+        setAddingReport((prevAdding => !prevAdding));
         setUpdating(false);
     }
 
     function updatePost(event) {
         event.preventDefault();
-        setAdding(false);
+        setAddingComment(false);
+        setAddingReport(false);
         setUpdating((prevUpdating => !prevUpdating));
     }
 
@@ -196,7 +204,10 @@ function BlogView(props) {
                     </div>
                 }
                 { props.isLoggedIn &&
-                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!addingComment ? "Add Comment": "Cancel Comment"}</button>
+                }
+                { props.isLoggedIn &&
+                    <button className="post-button" onClick={addReport} disabled={removed}>{!addingReport ? "Add Report": "Cancel Report"}</button>
                 }
 
                 {updating
@@ -204,8 +215,13 @@ function BlogView(props) {
                     : null
                 }
 
-                {adding ?
-                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                {addingComment ?
+                    <AddComment postData={props.postData} cancelComment={() => setAddingComment(false)}/>
+                :
+                    null
+                }
+                {addingReport ?
+                    <AddReport postData={props.postData} cancelComment={() => setAddingReport(false)}/>
                 :
                     null
                 }
@@ -264,7 +280,10 @@ function BlogView(props) {
                     </div>
                 }
                 { JSON.parse(sessionStorage.getItem("isLoggedIn")) &&
-                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!addingComment ? "Add Comment": "Cancel Comment"}</button>
+                }
+                { JSON.parse(sessionStorage.getItem("isLoggedIn")) &&
+                    <button className="post-button" onClick={addReport} disabled={removed}>{!addingReport ? "Add Report": "Cancel Report"}</button>
                 }
 
                 {updating
@@ -272,8 +291,13 @@ function BlogView(props) {
                 : null
                 }
 
-                {adding ?
-                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                {addingComment ?
+                    <AddComment postData={props.postData} cancelComment={() => setAddingComment(false)}/>
+                :
+                    null
+                }
+                {addingReport ?
+                    <AddReport postData={props.postData} cancelComment={() => setAddingReport(false)}/>
                 :
                     null
                 }

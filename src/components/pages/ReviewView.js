@@ -3,6 +3,7 @@
 
 import React, {useState} from "react";
 import AddComment from "./AddComment.js"
+import AddReport from "./AddReport.js"
 import CommentPane from "./CommentPane.js"
 import ReviewUpdatePanel from "./ReviewUpdatePanel.js"
 
@@ -22,7 +23,8 @@ function ReviewView(props) {
     const [numLikes, setLikes] =useState(props.postData["reacted_users"].length);
     const [comments, setComments] = useState({});
     const [showing, setShowing] = useState(false);
-    const [adding, setAdding] = useState(false);
+    const [addingComment, setAddingComment] = useState(false);
+    const [addingReport, setAddingReport] = useState(false)
 
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -105,12 +107,19 @@ function ReviewView(props) {
 
     function addComment(event) {
         event.preventDefault();
-        setAdding((prevAdding => !prevAdding));
+        setAddingComment((prevAdding => !prevAdding));
+        setUpdating(false);
+    }
+    function addReport(event) {
+        event.preventDefault();
+        setAddingReport((prevAdding => !prevAdding));
         setUpdating(false);
     }
 
     function updatePost(event) {
         event.preventDefault();
+        setAddingComment(false);
+        setAddingReport(false);
         setUpdating((prevUpdating => !prevUpdating));
     }
 
@@ -220,7 +229,7 @@ function ReviewView(props) {
                     </div>
                 }
                 { props.isLoggedIn &&
-                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!addingComment ? "Add Comment": "Cancel Comment"}</button>
                 }
 
                 {updating
@@ -228,8 +237,13 @@ function ReviewView(props) {
                     : null
                 }
 
-                {adding ?
-                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                {addingComment ?
+                    <AddComment postData={props.postData} cancelComment={() => setAddingComment(false)}/>
+                :
+                    null
+                }
+                {addingReport ?
+                    <AddReport postData={props.postData} cancelComment={() => setAddingReport(false)}/>
                 :
                     null
                 }
@@ -310,7 +324,10 @@ function ReviewView(props) {
                     </div>
                 }
                 { props.isLoggedIn &&
-                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!addingComment ? "Add Comment": "Cancel Comment"}</button>
+                }
+                { JSON.parse(sessionStorage.getItem("isLoggedIn")) &&
+                    <button className="post-button" onClick={addReport} disabled={removed}>{!addingReport ? "Add Report": "Cancel Report"}</button>
                 }
 
                 {updating
@@ -318,8 +335,13 @@ function ReviewView(props) {
                     : null
                 }
 
-                {adding ?
-                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                {addingComment ?
+                    <AddComment postData={props.postData} cancelComment={() => setAddingComment(false)}/>
+                :
+                    null
+                }
+                {addingReport ?
+                    <AddReport postData={props.postData} cancelComment={() => setAddingReport(false)}/>
                 :
                     null
                 }
