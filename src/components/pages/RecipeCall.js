@@ -12,6 +12,7 @@ function RecipeCall(props) {
     })
 
     const [results, setResults] = useState({});
+    const [lock, setLock] = useState(false);
 
     function handleChange(evt) { //updating form elements, nested function
         const name = evt.target.name //defined in render
@@ -24,47 +25,50 @@ function RecipeCall(props) {
     }
 
     const submitForm = (evt) => {  //send creds to backend, nested arrow function
-        // alert("button clicked")
         evt.preventDefault();
-
-        let url = `https://api.edamam.com/search?q=${state.q}&app_id=e1a55240&app_key=abe181a8a1ffbd0a236f1aac3381a621&from=0&to=60`
-        let newUrl = url;
-        if (state.health !== "") {
-            newUrl += `&health=${state.health}`
+        if(!lock){
+            setLock(true);
+            let url = `https://api.edamam.com/search?q=${state.q}&app_id=e1a55240&app_key=abe181a8a1ffbd0a236f1aac3381a621&from=0&to=60`
+            let newUrl = url;
+            if (state.health !== "") {
+                newUrl += `&health=${state.health}`
+            }
+            if (state.excluded !== "") {
+                newUrl += `&excluded=${state.excluded}`
+            }
+            fetch(newUrl,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if (data["more"]) {
+                        setResults(data)
+                        updateState({
+                            ...state,
+                            showHideDemo: true
+                        })
+    
+                        // alert(`${results["hits"][0]["recipe"]["shareAs"]}`)
+                        // console.log(data)
+    
+                    }
+                    else {
+                        alert(`Error with parameters`)
+                    }
+                })
+                .catch((error) => console.log("Recipe call error: " + error))
+            setTimeout(() => {  setLock(false); }, 30000);
         }
-        if (state.excluded !== "") {
-            newUrl += `&excluded=${state.excluded}`
+        else{
+            alert("Due to API limitations, please do not search more than once per minute!")
         }
-        // if (state.calories !== "") {
-        //     newUrl += `&calories=${state.calories}`
-        // }
-        fetch(newUrl,
-            {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                if (data["more"]) {
-                    setResults(data)
-                    updateState({
-                        ...state,
-                        showHideDemo: true
-                    })
 
-                    // alert(`${results["hits"][0]["recipe"]["shareAs"]}`)
-                    // console.log(data)
-
-                }
-                else {
-                    alert(`Error with parameters`)
-                }
-            })
-            .catch((error) => console.log("Recipe call error: " + error))
     }
 
     return (

@@ -251,7 +251,7 @@ function RecipeView(props) {
                             {Object.values(comments).map(comment => (
                                 <CommentPane 
                                     content={comment["com_info"]}
-                                    userID={comment["user_id"]}
+                                    username={comment["username"]}
                                     date={comment["com_date"]}
                                     />
                             ))}

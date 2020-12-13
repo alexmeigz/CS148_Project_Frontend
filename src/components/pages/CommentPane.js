@@ -9,7 +9,7 @@ function CommentPane(props) {
     return (
         <div className="comment-pane">
             <div className="row">
-                {props.userID}: {props.content}
+                {props.username}: {props.content}
             </div>
             <div className="row">
                 {props.date}
