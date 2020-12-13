@@ -1,7 +1,7 @@
 // DefaultHomePage.js
 // Engineer: Joseph Ng
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
 import "./DefaultHomePage.css"
@@ -14,7 +14,27 @@ import products from "../../assets/products.jpeg";
 
 
 function DefaultHomePage (props) {
-    // TODO: get account info from backend
+    const [navBarHeight, setNavBarHeight] = useState(0)
+    const [welcomeStyle, setWelcomeStyle] = useState(
+        // {position: "absolute",
+        // top: "600px",
+        // left: "75%"}
+    )
+    const [recipeStyle, setRecipeStyle] = useState(
+        // {position: "absolute",
+        // top: "600px",
+        // left: "25%"}
+    )
+    const [productStyle, setProductStyle] = useState(
+        // {position: "absolute",
+        // top: "600px",
+        // left: "75%"}
+    )
+    const [mapStyle, setMapStyle] = useState(
+        // {position: "absolute",
+        // top: "600px",
+        // left: "75%"}
+    )
 
     function onLoginChange(value) {
         props.onLoginChange(value)
@@ -23,10 +43,39 @@ function DefaultHomePage (props) {
     function onUserChange(value) {
         props.onUserChange(value)
     }
+
+    useEffect(() =>{
+        let accountInfoHeight = 0;
+        if (JSON.parse(sessionStorage.getItem("isLoggedIn"))){
+            accountInfoHeight = 50;
+        }
+        setWelcomeStyle({
+            top: `${150 + navBarHeight + accountInfoHeight}px`,
+            left: "50%"
+        })
+        setRecipeStyle({
+            position: "absolute",
+            top: `${570 + navBarHeight + accountInfoHeight}px`,
+            left: "25%"
+        })
+        setProductStyle({
+            position: "absolute",
+            top: `${570 + navBarHeight + accountInfoHeight}px`,
+            left: "75%"
+        })
+        setMapStyle({
+            position: "absolute",
+            top: `${1100 + navBarHeight + accountInfoHeight}px`,
+            left: "50%"
+        })
+
+        
+    }, [navBarHeight]);
+
     return (
         // TODO: add text on top of images
         <div className="background">
-            <NavigationBar isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} onLoginChange={onLoginChange} user={JSON.parse(sessionStorage.getItem("user"))} />
+            <NavigationBar isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} onLoginChange={onLoginChange} user={JSON.parse(sessionStorage.getItem("user"))} setNavBarHeight={setNavBarHeight}/>
             {JSON.parse(sessionStorage.getItem("isLoggedIn")) ? <AccountInfoBar user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={onUserChange}/> : null}
             
             <img className="banner"
@@ -34,18 +83,18 @@ function DefaultHomePage (props) {
                 alt=""
             />
 
-            <h1 className="home-header welcome"> Welcome! </h1>
+            <h1 className="home-header welcome" style={welcomeStyle}> Welcome! </h1>
             
-            {/* <hr/> */}
+            {/* {console.log(navBarHeight)} */}
 
             <Link to="/recipes" className="recipes">
                 <img src={recipes} alt=""/>
-                <h1 className="home-header">Recipes</h1>
+                <h1 className="home-header" style={recipeStyle}>Recipes</h1>
             </Link>
 
             <Link to="/products" className="products">
                 <img src={products} alt=""/>
-                <h1 className="home-header">Products</h1>
+                <h1 className="home-header" style={productStyle}>Products</h1>
             </Link>
 
             <Link to="/maps" className="maps">
@@ -53,7 +102,7 @@ function DefaultHomePage (props) {
                     src="https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=2000&h=1047&url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2016%2F08%2Fparadise-beach-santa-barbara-california-santabarbara0815-2000.jpg"
                     alt=""
                 />
-                <h1 className="home-header">Maps</h1>
+                <h1 className="home-header" style={mapStyle}>Maps</h1>
             </Link>
 
             <ContactUsFooter />
