@@ -83,7 +83,7 @@ function LoginForm(props) {
 
         <div className="form_input">
           <label className="form_label" for="password_hash"> Password: </label>  
-          <input className="form_field" type="text" value={state.password_hash} name="password_hash" onChange={handleChange} />
+          <input className="form_field" type="password" value={state.password_hash} name="password_hash" onChange={handleChange} />
         </div>
         
         
