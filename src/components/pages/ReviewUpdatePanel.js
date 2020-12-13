@@ -65,7 +65,7 @@ function ReviewUpdatePanel(props) {
         else{
             body = props.postData.content;
         }
-        console.log(url)
+        // console.log(url)
 
         fetch(url, 
             {

@@ -84,7 +84,7 @@ function ProfileView(props) {
             }
         });
         
-        console.log(url);
+        // console.log(url);
         fetch(url, 
             {
               method: 'PATCH',

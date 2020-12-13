@@ -41,7 +41,7 @@ function AddComment(props) {
             url += `&${param}=${newInfo[param]}`
         });
 
-        console.log(url)
+        // console.log(url)
 
         fetch(url, 
             {

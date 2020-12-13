@@ -115,7 +115,7 @@ function Maps1(props) {
                                 lng={parseFloat(rest["restaurant"]["location"]["longitude"])}
                                 // name="My Marker"
                                 onClick={() => {
-                                    console.log(rest)
+                                    // console.log(rest)
                                     setSelectedCenter({
                                         lat: parseFloat(rest["restaurant"]["location"]["latitude"]),
                                         lng: parseFloat(rest["restaurant"]["location"]["longitude"]),

@@ -48,7 +48,7 @@ function RecipeCall(props) {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 if (data["more"]) {
                     setResults(data)
                     updateState({

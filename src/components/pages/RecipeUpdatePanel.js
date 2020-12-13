@@ -66,8 +66,8 @@ function RecipeUpdatePanel(props) {
             body["instructions"] = JSON.stringify(newInstructions.split("\n"));;
         }
 
-        console.log(url)
-        console.log(body)
+        // console.log(url)
+        // console.log(body)
 
         fetch(url, 
             {
