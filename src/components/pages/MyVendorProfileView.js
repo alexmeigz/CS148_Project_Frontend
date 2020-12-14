@@ -83,7 +83,7 @@ function MyVendorProfileView(props) {
             .then(response => response.json()) 
               .then(data => {
               if(data["message"] === "User successfully updated"){
-                alert(`${data["message"]}`)
+                alert(`User successfully updated. Please refresh the screen to see updates.`)
                 onUserChange(newUserInfo);
               }
               else{

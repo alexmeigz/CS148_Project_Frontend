@@ -61,7 +61,7 @@ function Maps(props) {
             })
             .then(response => response.json())
             .then(data => {
-                if (data["user_has_addresses"]) {
+                if (data["user_has_addresses"] && data["location_suggestions"].length > 0) {
                     updateState({
                         ...state,
                         q: query,
@@ -72,7 +72,7 @@ function Maps(props) {
                     setQuery("");
                 }
                 else {
-                    alert(`Error with parameters`)
+                    alert(`Search query is invalid. Please try again.`)
                 }
             })
             .catch((error) => console.log("Search error: " + error))
@@ -108,7 +108,6 @@ function Maps(props) {
                                 lat={parseFloat(rest["restaurant"]["location"]["latitude"])}
                                 lng={parseFloat(rest["restaurant"]["location"]["longitude"])}
                                 onClick={() => {
-                                    console.log(rest)
                                     setSelectedCenter({
                                         lat: parseFloat(rest["restaurant"]["location"]["latitude"]),
                                         lng: parseFloat(rest["restaurant"]["location"]["longitude"]),

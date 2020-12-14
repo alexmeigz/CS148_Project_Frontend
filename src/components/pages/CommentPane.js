@@ -29,7 +29,7 @@ function CommentPane(props) {
             .then(response => response.json()) 
                 .then(data => {
                 if(data["message"] === "Comment successfully removed"){
-                    alert("Comment successfully removed!")
+                    alert("Comment successfully removed. Please refresh to see updates.")
                     // window.location.reload()
                 }
                 else{
