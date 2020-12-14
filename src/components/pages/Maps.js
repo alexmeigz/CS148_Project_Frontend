@@ -61,7 +61,8 @@ function Maps(props) {
             })
             .then(response => response.json())
             .then(data => {
-                if (data["user_has_addresses"] && data["location_suggestions"].length) {
+                console.log(data);
+                if (data["user_has_addresses"] && data["location_suggestions"].length > 0) {
                     updateState({
                         ...state,
                         q: query,
