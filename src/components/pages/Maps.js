@@ -83,7 +83,7 @@ function Maps(props) {
             <form className="form_override" onSubmit={submitForm}>
                 <div className="form_input input_override">
                     <label className="form_label" for="q"> Search: </label>
-                    <input className="form_field" type="search" value={query} name="q" onChange={handleChange} />
+                    <input className="form_field" type="text" value={query} name="q" onChange={handleChange} />
                 </div>
                 <center><input className="form_submit submit_override" type="submit" value="Submit" /></center>
             </form>
