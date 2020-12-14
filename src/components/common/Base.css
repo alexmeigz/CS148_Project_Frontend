@@ -77,8 +77,8 @@ a:hover{
 
 .form_field{
     float: left;
-    width: 35%;
-    padding-right: calc(65%-200px);
+    width: 50%;
+    padding-right: calc(50%-200px);
 }
 
 .form_submit{
@@ -112,4 +112,13 @@ textarea{
     float: left;
     width: 800px;
     margin: 20px;
+}
+
+.input_override {
+    width: 80% !important;
+}
+
+.submit_override {
+    float: left;
+    margin: 5px 0 5px 0 !important;
 }

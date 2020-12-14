@@ -13,7 +13,6 @@ function ApplForm(props) {
     //updateState (name it anything you want) is a function we'll use to update this state object below
     const [state, updateState] = useState({
         restName: "",
-        // subscription: "",
         vendorType: "",
         reason: "",
         busLocation: "",

@@ -19,12 +19,11 @@ function VendorApps (props) {
     if (process.env.NODE_ENV !== "development") {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
-    console.log(server)
+    // console.log(server)
 
     useEffect(() => {
         if (isListView) {
             const url = `${server}/application/?display_all=True`
-            // const url = `http://localhost:8118/api/application/?display_all=True`
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -50,9 +49,7 @@ function VendorApps (props) {
     };
 
     function approveApplication(){
-        console.log(applicationData)
-        // const url = `http://localhost:8118/api/`
-        const userurl = `/user/?user_id=${applicationData["user"]}&account_type=${applicationData["type"]}`
+        const userurl = `/user/?user_id=${applicationData["user"]}&account_type=${applicationData["type"]}&vendor_name=${applicationData["name"]}&vendor_location=${applicationData["location"]}`
         const applicationurl = `/application/?id=${applicationData["id"]}`
         fetch(server+userurl, {
             method: 'PATCH',
@@ -74,7 +71,6 @@ function VendorApps (props) {
             .then(response => response.json()) 
             .then(data => {
                 alert(data["message"])
-                //window.location.replace("/vendor-apps")
             })
             .catch((error) => console.log("Error: " + error))
         })
@@ -93,7 +89,6 @@ function VendorApps (props) {
         .then(response => response.json()) 
         .then(data => {
             alert(data["message"])
-            //window.location.replace("/vendor-apps")
         })
         .catch((error) => console.log("Error: " + error))
     }
@@ -137,7 +132,8 @@ function VendorApps (props) {
                                 type: application["vendorType"],
                                 reason: application["reason"],
                                 name: application["restName"],
-                                id: application["application_id"]
+                                id: application["application_id"],
+                                location: application["busLocation"]
                             })}>
                                 <ApplicationPane 
                                     user={application["user_id"]}

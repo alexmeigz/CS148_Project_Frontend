@@ -1,85 +1,147 @@
-import React, { useState, useEffect } from "react";
-import {
-    withGoogleMap,
-    withScriptjs,
-    GoogleMap,
-    Marker,
-    InfoWindow
-} from "react-google-maps";
-import * as parkData from "./skateboard-parks.json";
-import mapStyles from "./mapStyles";
+// MapsPage.js
+// Engineer: Sriya Aluru
 
-function Map() {
-    const [selectedPark, setSelectedPark] = useState(null);
+import React, { useEffect, useState } from 'react';
+import GoogleMapReact from 'google-map-react';
+import Marker from './Marker.tsx'
+import "./Info.css";
 
+const AnyReactComponent = ({ text }) => <div className="info">{text}</div>;
+
+function Maps(props) {
+    const [state, updateState] = useState({
+        q: "",
+        longitude: 0.0,
+        latitude: 0.0,
+        z: 1,
+    })
+    const [show, setShow] = useState(false);
+    const [restaurantResults, setRestaurantResults] = useState({});
+    const [selectedCenter, setSelectedCenter] = useState(false);
+    const [query, setQuery] = useState("");
+    // const [reload, setReload] = useState(false);
     useEffect(() => {
-        const listener = e => {
-            if (e.key === "Escape") {
-                setSelectedPark(null);
-            }
-        };
-        window.addEventListener("keydown", listener);
+        let newUrl = `https://developers.zomato.com/api/v2.1/search?lat=${state.latitude}&lon=${state.longitude}`
+        fetch(newUrl,
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'user-key': 'b0a63821c480eabed3ce36ee8033df7d'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data["results_found"] !== 0) {
+                    setRestaurantResults(data)
+                    setShow(true)
+                }
+            })
+            .catch((error) => console.log("Search error: " + error))
+    }, [state])
+    function handleChange(evt) {
+        evt.preventDefault();
+        //const name = evt.target.name
+        const value = evt.target.value
+        setQuery(value)
+    }
 
-        return () => {
-            window.removeEventListener("keydown", listener);
-        };
-    }, []);
-
+    const submitForm = (evt) => {
+        evt.preventDefault();
+        let url = `https://developers.zomato.com/api/v2.1/locations?query=${query}`
+        fetch(url,
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'user-key': 'b0a63821c480eabed3ce36ee8033df7d'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data["user_has_addresses"]) {
+                    updateState({
+                        ...state,
+                        q: query,
+                        longitude: data["location_suggestions"][0]["longitude"],
+                        latitude: data["location_suggestions"][0]["latitude"],
+                        z: 12,
+                    })
+                    setQuery("");
+                }
+                else {
+                    alert(`Error with parameters`)
+                }
+            })
+            .catch((error) => console.log("Search error: " + error))
+    }
     return (
-        <GoogleMap
-            defaultZoom={10}
-            defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
-            defaultOptions={{ styles: mapStyles }}
-        >
-            {parkData.features.map(park => (
-                <Marker
-                    key={park.properties.PARK_ID}
-                    position={{
-                        lat: park.geometry.coordinates[1],
-                        lng: park.geometry.coordinates[0]
+        <div>
+            <form className="form_override" onSubmit={submitForm}>
+                <div className="form_input input_override">
+                    <label className="form_label" for="q"> Search: </label>
+                    <input className="form_field" type="search" value={query} name="q" onChange={handleChange} />
+                </div>
+                <center><input className="form_submit submit_override" type="submit" value="Submit" /></center>
+            </form>
+            < div style={{ height: '100vh', width: '100%' }
+            }>
+                <GoogleMapReact
+                    bootstrapURLKeys={{ key: 'AIzaSyBZP0ZV1R148SNRp2uxco36NbK-675hKAE' }}
+                    defaultCenter={{
+                        lat: 0,
+                        lng: 0
                     }}
-                    onClick={() => {
-                        setSelectedPark(park);
+                    center={{
+                        lat: state.latitude,
+                        lng: state.longitude
                     }}
-                    icon={{
-                        url: `/skateboarding.svg`,
-                        scaledSize: new window.google.maps.Size(25, 25)
-                    }}
-                />
-            ))}
-
-            {selectedPark && (
-                <InfoWindow
-                    onCloseClick={() => {
-                        setSelectedPark(null);
-                    }}
-                    position={{
-                        lat: selectedPark.geometry.coordinates[1],
-                        lng: selectedPark.geometry.coordinates[0]
-                    }}
+                    defaultZoom={1}
+                    zoom={state.z}
                 >
-                    <div>
-                        <h2>{selectedPark.properties.NAME}</h2>
-                        <p>{selectedPark.properties.DESCRIPTIO}</p>
-                    </div>
-                </InfoWindow>
-            )}
-        </GoogleMap>
+
+                    {show &&
+                        Object.values(restaurantResults["restaurants"]).map(rest => (
+                            <Marker
+                                lat={parseFloat(rest["restaurant"]["location"]["latitude"])}
+                                lng={parseFloat(rest["restaurant"]["location"]["longitude"])}
+                                onClick={() => {
+                                    console.log(rest)
+                                    setSelectedCenter({
+                                        lat: parseFloat(rest["restaurant"]["location"]["latitude"]),
+                                        lng: parseFloat(rest["restaurant"]["location"]["longitude"]),
+                                        name: rest["restaurant"]["name"],
+                                        url: rest["restaurant"]["url"],
+                                        cuisine: rest["restaurant"]["cuisines"],
+                                        rating: rest["restaurant"]["user_rating"]["aggregate_rating"],
+                                        address: rest["restaurant"]["location"]["address"]
+                                    });
+                                }}
+                            >
+                            </Marker>
+                        ))
+                    }
+                    {
+                        selectedCenter &&
+                        <AnyReactComponent className="info"
+                            lat={selectedCenter.lat}
+                            lng={selectedCenter.lng}
+                            text={
+                                <div >
+                                    <a href={selectedCenter.url}><h2>{selectedCenter.name}</h2></a>
+                                    <h2>Cuisine: {selectedCenter.cuisine}</h2>
+                                    <h2>Rating: {selectedCenter.rating}</h2>
+                                    <h2>Location: {selectedCenter.address} </h2>
+                                </div>
+                            }
+                        />
+                    }
+
+                </GoogleMapReact>
+            </div >
+        </div >
     );
 }
-
-const MapWrapped = withScriptjs(withGoogleMap(Map));
-
-export default function Maps() {
-    return (
-        <div style={{ width: "100vw", height: "100vh" }}>
-            <MapWrapped
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${'AIzaSyBZP0ZV1R148SNRp2uxco36NbK-675hKAE'
-                    }`}
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `100%` }} />}
-                mapElement={<div style={{ height: `100%` }} />}
-            />
-        </div>
-    );
-}
+export default Maps;

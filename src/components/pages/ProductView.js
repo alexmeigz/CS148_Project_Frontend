@@ -10,12 +10,14 @@ import React, {useState} from "react";
 // import ProductPane from "./ProductPane.js"
 
 import ProductUpdatePanel from "./ProductUpdatePanel"
+import AddProductReport from "./AddProductReport.js"
 import "./ProductView.css"
 
 function ProductView(props) {
     const [purchased, setPurchased] = useState(false);
     const [removed, setRemoved] = useState(false);
     const [updating, setUpdating] = useState(false);
+    const [addingReport, setAddingReport] = useState(false)
 
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -25,15 +27,16 @@ function ProductView(props) {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
 
-    // eslint-disable-next-line
-    function login(event) {
+    function addReport(event) {
         event.preventDefault();
-        // TODO
+        setAddingReport((prevAdding => !prevAdding));
+        setUpdating(false);
     }
 
     function updateProduct(event) {
         event.preventDefault();
         setUpdating((prevUpdating => !prevUpdating));
+        setAddingReport(false);
     }
 
     function removeProduct(event) {
@@ -145,26 +148,27 @@ function ProductView(props) {
             : null
             }
 
-            {/* {!JSON.parse(sessionStorage.getItem("isLoggedIn"))
-            ? <div>
-                <button className="login-button" onClick={login} disabled={true}>Login to Purchase Product, use top right login button.</button> 
-            </div>
-            : null
-            } */}
-
-
             {/* TODO: Waiting for product model to get updated */}
             {JSON.parse(sessionStorage.getItem("isLoggedIn")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.productData.vendor_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin")
             ? <div>
                 <button className="remove-product" onClick={removeProduct} disabled={removed}>{!removed ? "Remove Product": "Removed!"}</button>
-                <button className="update-product" onClick={updateProduct} disabled={removed}>{!updating ? "Update Product": "Cancel Updating Product"}</button>
+                <button className="update-product" onClick={updateProduct} disabled={removed}>{!updating ? "Update Product": "Cancel Update"}</button>
             </div>
             : null
             }
+            { props.isLoggedIn &&
+                    <button className="post-button" onClick={addReport} disabled={removed}>{!addingReport ? "Add Report": "Cancel Report"}</button>
+            }
+
 
             {updating
             ? <ProductUpdatePanel productData={props.productData} cancelUpdate={() => setUpdating(false)}/>
             : null
+            }
+            {addingReport ?
+                    <AddProductReport productData={props.productData} cancelComment={() => setAddingReport(false)}/>
+                :
+                    null
             }
             
         </div>

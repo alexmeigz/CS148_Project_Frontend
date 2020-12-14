@@ -84,7 +84,7 @@ function ProfileView(props) {
             }
         });
         
-        console.log(url);
+        // console.log(url);
         fetch(url, 
             {
               method: 'PATCH',
@@ -115,13 +115,13 @@ function ProfileView(props) {
                 <div className="profile-picture-pane">
                     <img className="profile-picture"
                         src={JSON.parse(sessionStorage.getItem("user")).profile_image_url}
-                        alt="Profile"
+                        alt=""
                     />
                     {!settingsMode 
                         ? null
                         : <div>
-                            <label className="form-label" for="profile_image_url">New Profile Image URL: </label>         
-                            <input className="form-field" type="text" value={newUserInfo.profile_image_url} name="profile_image_url" onChange={handleNewUserChange} />
+                            <label className="form_label" for="profile_image_url">New Profile Image URL: </label>         
+                            <input className="form_field" type="text" value={newUserInfo.profile_image_url} name="profile_image_url" onChange={handleNewUserChange} />
                             <br />
                         </div>
                     }

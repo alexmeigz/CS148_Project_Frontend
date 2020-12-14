@@ -3,6 +3,7 @@
 
 import React, {useState} from "react";
 import AddComment from "./AddComment.js"
+import AddReport from "./AddReport"
 import CommentPane from "./CommentPane.js"
 import RecipeUpdatePanel from "./RecipeUpdatePanel.js"
 
@@ -11,7 +12,7 @@ import heart from "../../assets/heart.png";
 import heart_default from "../../assets/heart_default.png";
 
 function RecipeView(props) {
-    console.log(props.postData["ingredients"].replace("{", "[").replace("}", "]"))
+    // console.log(props.postData["ingredients"].replace("{", "[").replace("}", "]"))
     let parsedIngredients = JSON.parse(props.postData["ingredients"].replace("{", "[").replace("}", "]"))
     let parsedInstructions = JSON.parse(props.postData["instructions"].replace("{", "[").replace("}", "]"))
     
@@ -21,7 +22,8 @@ function RecipeView(props) {
     const [numLikes, setLikes] =useState(props.postData["reacted_users"].length);
     const [comments, setComments] = useState({});
     const [showing, setShowing] = useState(false);
-    const [adding, setAdding] = useState(false);
+    const [addingComment, setAddingComment] = useState(false);
+    const [addingReport, setAddingReport] = useState(false)
 
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -46,7 +48,7 @@ function RecipeView(props) {
             })
             .then(response => response.json()) 
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 setComments(data)
                 setShowing(true)
             })
@@ -104,12 +106,22 @@ function RecipeView(props) {
 
     function addComment(event) {
         event.preventDefault();
-        setAdding((prevAdding => !prevAdding));
+        setAddingComment((prevAdding => !prevAdding));
+        setAddingReport(false);
         setUpdating(false);
+    }
+    
+    function addReport(event) {
+        event.preventDefault();
+        setAddingReport((prevAdding => !prevAdding));
+        setUpdating(false);
+        setAddingComment(false);
     }
 
     function updatePost(event) {
         event.preventDefault();
+        setAddingComment(false);
+        setAddingReport(false);
         setUpdating((prevUpdating => !prevUpdating));
     }
 
@@ -127,8 +139,8 @@ function RecipeView(props) {
             })
             .then(response => response.json()) 
                 .then(data => {
-                if(data["message"] === "Post successfully removed"){
-                    alert("Post successfully removed")
+                if(data["message"] === "Post successfully removed. Please refresh to see updates."){
+                    alert("Post successfully removed. Please refresh to see updates.")
                     setRemoved(true);
                 }
                 else{
@@ -250,30 +262,40 @@ function RecipeView(props) {
                         <div className="row comments">
                             {Object.values(comments).map(comment => (
                                 <CommentPane 
+                                    comment_id={comment["comment_id"]}
+                                    user_id={comment["user_id"]}
                                     content={comment["com_info"]}
-                                    userID={comment["user_id"]}
+                                    username={comment["username"]}
                                     date={comment["com_date"]}
                                     />
                             ))}
                         </div>
                     }
                 </div>
-                {(JSON.parse(sessionStorage.getItem("user")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).user_id.account_type === "Admin")) &&
+                {(JSON.parse(sessionStorage.getItem("user")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin")) &&
                     <div>
                         <button className="post-button" onClick={removePost} disabled={removed}>{!removed ? "Remove Post": "Removed!"}</button>
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>
                     </div>
                 }
                 { props.isLoggedIn &&
-                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!addingComment ? "Add Comment": "Cancel Comment"}</button>
+                }
+                { props.isLoggedIn &&
+                    <button className="post-button" onClick={addReport} disabled={removed}>{!addingReport ? "Add Report": "Cancel Report"}</button>
                 }
 
                 {updating
                     ? <RecipeUpdatePanel postData={props.postData} cancelUpdate={() => setUpdating(false)}/>
                     : null
                 }
-                {adding ?
-                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                {addingComment ?
+                    <AddComment postData={props.postData} cancelComment={() => setAddingComment(false)}/>
+                :
+                    null
+                }
+                {addingReport ?
+                    <AddReport postData={props.postData} cancelComment={() => setAddingReport(false)}/>
                 :
                     null
                 }

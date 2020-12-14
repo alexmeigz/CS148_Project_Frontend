@@ -1,9 +1,9 @@
-// AddComment.js
-// Engineer: Alex Mei
+// AddReport.js
+// Engineer: Pranav Acharya
 
 import React, {useState} from "react";
 
-function AddComment(props) {
+function AddReport(props) {
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
@@ -14,7 +14,7 @@ function AddComment(props) {
 
     const [newInfo, setNewInfo] = useState({
         ...props.postData,
-        com_info: ""
+        report_info: ""
     })
 
     function handleChange(evt) { 
@@ -27,21 +27,22 @@ function AddComment(props) {
       })
     }
 
-    function submitComment(event) {
+    function submitReport(event) {
         event.preventDefault();
 
-        let requiredParams = ["post_id", "com_info"]
+        let url = `${server}/report/?`
 
-        let url = `${server}/comment/?user_id=${JSON.parse(sessionStorage.getItem("user")).user_id}`
+        url += `&userReporter_id=${(JSON.parse(sessionStorage.getItem("user")).user_id)}`
+        url += `&reportedUser_id=${props.postData.user_id}`
 
-        requiredParams.forEach((param, index) => {
+        /*requiredParams.forEach((param, index) => {
             if (newInfo[param] === "") {
                 newInfo[param] = props.postData[param]
             }
             url += `&${param}=${newInfo[param]}`
-        });
+        });*/
 
-        // console.log(url)
+        console.log(url)
 
         fetch(url, 
             {
@@ -49,29 +50,30 @@ function AddComment(props) {
                 headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-                },           
+                }, 
+                body: newInfo["report_info"],          
             })
             .then(response => response.json()) 
                 .then(data => {
-                if(data["message"] === "Comment created successfully!"){
-                    alert("Comment created successfully!")
-                    props.cancelComment()
+                if(data["message"] === "Report created successfully!" || data["message"] === "Report submitted successfully!"){
+                    alert("Report created successfully!")
+                    props.cancelReport()
                 }
                 else{
-                    alert(`Error creating comment: ${data["message"]}`)
+                    alert(`Error creating report: ${data["message"]}`)
                 }
             })
-            .catch((error) => console.log("Comment creation error: " + error))
+            .catch((error) => console.log("Report creation error: " + error))
 
     }
 
     return (
         <div className="update-form">
-            <h1> Add Comment </h1>
-            <form onSubmit={submitComment}>
+            <h1> Add Report </h1>
+            <form onSubmit={submitReport}>
                 <div className="form_input">
-                    <label className="form_label" for="com_info"> Comment: </label>         
-                    <textarea className="form_field" type="text" value={newInfo.com_info} name="com_info" onChange={handleChange} />
+                    <label className="form_label" for="report_info"> Report: </label>         
+                    <textarea className="form_field" type="text" value={newInfo.report_info} name="report_info" onChange={handleChange} />
                 </div>
                 
                 <input className="form_submit" type="submit" value="Submit" />
@@ -80,4 +82,4 @@ function AddComment(props) {
     )
 }
 
-export default AddComment;
+export default AddReport;

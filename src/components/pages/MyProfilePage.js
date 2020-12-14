@@ -71,7 +71,6 @@ function MyProfilePage (props) {
                     {isProfileView
                         ? <div>
                             {JSON.parse(sessionStorage.getItem("user")).account_type !== "Business"
-                            // {JSON.parse(sessionStorage.getItem("user")).account_type !== "Business"
                                 ? <button className="vendor-application-button" onClick={toggleView}>Vendor Application</button>
                                 : null
                             }

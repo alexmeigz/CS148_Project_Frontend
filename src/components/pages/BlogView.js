@@ -3,6 +3,7 @@
 
 import React, {useState} from "react";
 import AddComment from "./AddComment.js"
+import AddReport from "./AddReport.js"
 import CommentPane from "./CommentPane.js"
 import BlogUpdatePanel from "./BlogUpdatePanel.js"
 
@@ -13,7 +14,8 @@ import heart_default from "../../assets/heart_default.png";
 function BlogView(props) {
     const [removed, setRemoved] = useState(false);
     const [updating, setUpdating] = useState(false);
-    const [adding, setAdding] = useState(false);
+    const [addingComment, setAddingComment] = useState(false);
+    const [addingReport, setAddingReport] = useState(false)
     const [liked, setLiked] = useState(props.postData["reacted_users"].includes(JSON.parse(sessionStorage.getItem("user")) && JSON.parse(sessionStorage.getItem("user")).user_id));
     const [numLikes, setLikes] =useState(props.postData["reacted_users"].length);
     const [comments, setComments] = useState({});
@@ -42,7 +44,7 @@ function BlogView(props) {
             })
             .then(response => response.json()) 
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 setComments(data)
                 setShowing(true)
             })
@@ -100,13 +102,21 @@ function BlogView(props) {
 
     function addComment(event) {
         event.preventDefault();
-        setAdding((prevAdding => !prevAdding));
+        setAddingComment((prevAdding => !prevAdding));
+        setAddingReport(false);
         setUpdating(false);
+    }
+    function addReport(event) {
+        event.preventDefault();
+        setAddingReport((prevAdding => !prevAdding));
+        setUpdating(false);
+        setAddingComment(false);
     }
 
     function updatePost(event) {
         event.preventDefault();
-        setAdding(false);
+        setAddingComment(false);
+        setAddingReport(false);
         setUpdating((prevUpdating => !prevUpdating));
     }
 
@@ -124,8 +134,8 @@ function BlogView(props) {
             })
             .then(response => response.json()) 
                 .then(data => {
-                if(data["message"] === "Post successfully removed"){
-                    alert("Post successfully removed")
+                if(data["message"] === "Post successfully removed. Please refresh to see updates."){
+                    alert("Post successfully removed. Please refresh to see updates.")
                     setRemoved(true);
                 }
                 else{
@@ -181,22 +191,27 @@ function BlogView(props) {
                         <div className="row comments">
                             {Object.values(comments).map(comment => (
                                 <CommentPane 
+                                    comment_id={comment["comment_id"]}
+                                    user_id={comment["user_id"]}
                                     content={comment["com_info"]}
-                                    userID={comment["user_id"]}
+                                    username={comment["username"]}
                                     date={comment["com_date"]}
                                     />
                             ))}
                         </div>
                     }
                 </div>
-                {(JSON.parse(sessionStorage.getItem("user")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).user_id.account_type === "Admin")) &&
+                {(JSON.parse(sessionStorage.getItem("user")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin")) &&
                     <div>
                         <button className="post-button" onClick={removePost} disabled={removed}>{!removed ? "Remove Post": "Removed!"}</button>
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>
                     </div>
                 }
                 { props.isLoggedIn &&
-                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!addingComment ? "Add Comment": "Cancel Comment"}</button>
+                }
+                { props.isLoggedIn &&
+                    <button className="post-button" onClick={addReport} disabled={removed}>{!addingReport ? "Add Report": "Cancel Report"}</button>
                 }
 
                 {updating
@@ -204,8 +219,13 @@ function BlogView(props) {
                     : null
                 }
 
-                {adding ?
-                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                {addingComment ?
+                    <AddComment postData={props.postData} cancelComment={() => setAddingComment(false)}/>
+                :
+                    null
+                }
+                {addingReport ?
+                    <AddReport postData={props.postData} cancelComment={() => setAddingReport(false)}/>
                 :
                     null
                 }
@@ -249,22 +269,27 @@ function BlogView(props) {
                         <div className="row comments">
                             {Object.values(comments).map(comment => (
                                 <CommentPane 
+                                    comment_id={comment["comment_id"]}
+                                    user_id={comment["user_id"]}
                                     content={comment["com_info"]}
-                                    userID={comment["user_id"]}
+                                    username={comment["username"]}
                                     date={comment["com_date"]}
                                     />
                             ))}
                         </div>
                     }
                 </div>
-                {(JSON.parse(sessionStorage.getItem("user")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).user_id.account_type === "Admin")) &&
+                {(JSON.parse(sessionStorage.getItem("user")) && (JSON.parse(sessionStorage.getItem("user")).user_id === props.postData.user_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin")) &&
                     <div>
                         <button className="post-button" onClick={removePost} disabled={removed}>{!removed ? "Remove Post": "Removed!"}</button>
                         <button className="post-button" onClick={updatePost} disabled={removed}>{!updating ? "Update Post": "Cancel Update"}</button>
                     </div>
                 }
                 { JSON.parse(sessionStorage.getItem("isLoggedIn")) &&
-                    <button className="post-button" onClick={addComment} disabled={removed}>{!adding ? "Add Comment": "Cancel Comment"}</button>
+                    <button className="post-button" onClick={addComment} disabled={removed}>{!addingComment ? "Add Comment": "Cancel Comment"}</button>
+                }
+                { JSON.parse(sessionStorage.getItem("isLoggedIn")) &&
+                    <button className="post-button" onClick={addReport} disabled={removed}>{!addingReport ? "Add Report": "Cancel Report"}</button>
                 }
 
                 {updating
@@ -272,8 +297,13 @@ function BlogView(props) {
                 : null
                 }
 
-                {adding ?
-                    <AddComment postData={props.postData} cancelComment={() => setAdding(false)}/>
+                {addingComment ?
+                    <AddComment postData={props.postData} cancelComment={() => setAddingComment(false)}/>
+                :
+                    null
+                }
+                {addingReport ?
+                    <AddReport postData={props.postData} cancelComment={() => setAddingReport(false)}/>
                 :
                     null
                 }

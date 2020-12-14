@@ -18,7 +18,7 @@ function VendorsPage (props) {
     const [results, setResults] = useState({})
     // eslint-disable-next-line
     const [filters, setFilters] = useState({
-        account_type: null
+        vendor_name: ""
     });
 
     const [isListView, setIsListView] = useState(true);
@@ -32,11 +32,17 @@ function VendorsPage (props) {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
 
-    let url = `${server}/user/?display_all=True&filter=vendor`
+    let url = `${server}/user/?display_all=True`
 
     useEffect(() => {
         if (isListView) {
-            fetch(url, {
+            // let newUrl = url;
+            // if (filters.vendor_name !== "") {
+            //     newUrl += `&vendor_name=${filters.vendor_name}`
+            // } else {
+            //     newUrl += "&filter=vendor"
+            // }
+            fetch(url + "&filter=vendor", {
                 method: 'GET',
                 headers: {
                 'Accept': 'application/json',
@@ -46,16 +52,20 @@ function VendorsPage (props) {
             .then(response => response.json()) 
             .then(data => {
                 setResults(data)
+                // console.log(data)
             })
             .catch((error) => console.log("Error: " + error))
         }
     }, [isListView, url])
 
     // eslint-disable-next-line
-    function filter(param, value){
+    function submitForm(event){
+        event.preventDefault();
         let newUrl = url;
-        if(value != null){
-            newUrl += `&account_type=${param}`
+        if (filters.vendor_name !== "") {
+            newUrl += `&vendor_name=${filters.vendor_name}`
+        } else {
+            newUrl += "&filter=vendor"
         }
         fetch(newUrl, {
             method: 'GET',
@@ -67,6 +77,7 @@ function VendorsPage (props) {
         .then(response => response.json()) 
         .then(data => {
             setResults(data)
+            // console.log(data)
         })
         .catch((error) => console.log("Fetch Failure (is server up?): "+ error))
     }
@@ -105,19 +116,13 @@ function VendorsPage (props) {
             </div>
             : <div className="container">
                 <h1>Vendors</h1>
-                {/* <div className="side_panel">
-                    <div className="title">
-                        Filters
+                <form onSubmit={submitForm}>
+                    <div className="form_input input_override">
+                        <label className="form_label" for="q"> Search: </label>
+                        <input className="form_field" type="search" value={filters.vendor_name} name="q" onChange={(event) => {setFilters({vendor_name: `${event.target.value}`})}} />
                     </div>
-                    <div className="filters"> 
-                        <FilterOption name="Home Vendor" param="Home" value="" 
-                            filters={filters} changeFilter={setFilters} onChange={filter} field={filters.account_type} 
-                        />
-                        <FilterOption name="Business Vendor" param="Business" value="true" 
-                            filters={filters} changeFilter={setFilters} onChange={filter} field={filters.account_type}
-                        />
-                    </div>
-                </div> */}
+                    <center><input className="form_submit submit_override" type="submit" value="Submit" /></center>
+                </form>
                 <div className="vendor_panel">
                     <div className="title">
                         Vendor Results (Total: {Object.keys(results).length})

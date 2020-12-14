@@ -20,9 +20,9 @@ function VendorProfileView(props) {
             <div className="vendor-picture-pane">
                 <img className="vendor-picture"
                     src={displayInfo.vendor_image_url}
-                    alt="Vendor Profile"
+                    alt=""
                 />
-                <h1> Welcome to {displayInfo.username}'s Store </h1>
+                <h1> Welcome to {displayInfo.vendor_name || "[No Name Listed]"}'s Store </h1>
             </div>
             <div className="vendor-details">
                 <MyProductsList isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))} user={JSON.parse(sessionStorage.getItem("user"))} onUserChange={props.onUserChange} vendor_id={displayInfo.user_id}/>

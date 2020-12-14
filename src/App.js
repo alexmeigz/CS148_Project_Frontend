@@ -1,13 +1,10 @@
 // App.js
-// Modified by: Joseph Ng
+// Modified by: Joseph Ng, Alex Mei, Sriya Aluru, Pranav Acharya
 
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-// import NavigationBar from './components/common/NavigationBar';
-// import ContactUsFooter from "./components/common/ContactUsFooter";
-// import AccountInfoBar from "./components/common/AccountInfoBar";
 
 import DefaultHomePage from './components/pages/DefaultHomePage';
 import MapsPage from './components/pages/MapsPage';
@@ -16,7 +13,6 @@ import RecipesPage from './components/pages/RecipesPage';
 import PostsPage from './components/pages/PostsPage';
 import ProductsPage from './components/pages/ProductsPage';
 import LoginPage from "./components/pages/LoginPage";
-// import LogoutPage from "./components/pages/LogoutPage";
 import ContactUsPage from "./components/pages/ContactUsPage";
 import MyProfilePage from "./components/pages/MyProfilePage";
 import MyProductsPage from "./components/pages/MyProductsPage";
@@ -31,29 +27,13 @@ import SubmitReportPage from "./components/pages/SubmitReportPage";
 
 
 import ErrorPage from './components/pages/ErrorPage';
-// import ContactUsFooter from './components/common/ContactUsFooter';
 
-//import ProductForm from './components/pages/CreateProduct';
-//import LoggedInHomePage from './components/pages/LoggedInHomePage';
 import RecipeCall from './components/pages/RecipeCall'
-import Maps1 from "./components/pages/Maps1"
 
-// sessionStorage.setItem("isLoggedIn", JSON.stringify(false))
-// sessionStorage.setItem("user", JSON.stringify({
-//     user_id: 0,
-//     username: "Loading",
-//     password_hash: "",
-//     email: "Loading",
-//     account_type: "Loading",
-//     vendor_location: "Loading",
-//     credits: 0,
-//     profile_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif",
-//     vendor_image_url: "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
-// }))
+
 
 function App() {
-    // sessionStorage.clear();
-    // eslint-disable-next-line
+    
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
@@ -64,10 +44,8 @@ function App() {
 
     const [isLoading, setIsloading] = useState(true);
 
-    
-    // eslint-disable-next-line
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // testing conditional rendering
-    // eslint-disable-next-line
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState({
         user_id: 0,
         username: "Loading",
@@ -104,7 +82,7 @@ function App() {
         // console.log(JSON.parse(sessionStorage.getItem("user")))
         const interval = setInterval(() => {
             if (JSON.parse(sessionStorage.getItem("isLoggedIn")) && JSON.parse(sessionStorage.getItem("user")) !== 0) {
-                console.log("ping")
+                // console.log("ping")
                 let url = `${server}/user/?user_id=${JSON.parse(sessionStorage.getItem("user")).user_id}`
 
                 fetch(url, 
@@ -326,13 +304,6 @@ function App() {
                         onLoginChange={onLoginChange}
                         user={JSON.parse(sessionStorage.getItem("user"))}
                         onUserChange={onUserChange}
-                    />
-                </Route>
-
-                <Route path="/google-maps1">
-                    <Maps1
-                        isLoggedIn={isLoggedIn}
-                        user={user}
                     />
                 </Route>
 

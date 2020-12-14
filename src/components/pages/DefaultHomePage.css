@@ -60,16 +60,17 @@
     font-family: 'Lovers Quarrel', cursive;
     font-weight: 100;
 }
-
+/* 
 .welcome{
     top: 200px;
     left: 50%;
-}
+} */
+/* 
 .recipes h1 {
     position: absolute;
     top: 600px;
     left: 25%;
-}
+} */
 
 .products img {
     position: relative;
@@ -94,11 +95,11 @@
     opacity: 100%;
 } */
 
-.products h1 {
+/* .products h1 {
     position: absolute;
     top: 600px;
     left: 75%;
-}
+} */
 
 .maps img {
     position: relative;
@@ -123,8 +124,8 @@
     opacity: 100%;
 } */
 
-.maps h1 {
+/* .maps h1 {
     position: absolute;
     top: 1100px;
     left: 50%;
-}
+} */

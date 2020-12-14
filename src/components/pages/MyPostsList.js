@@ -32,7 +32,7 @@ function MyPostsList (props) {
         
         if (isListView) {
             let newUrl = `${server}/post/?display_all=True&user_id=${user_id}`
-            console.log(newUrl)
+            // console.log(newUrl)
             fetch(newUrl, {
                 method: 'GET',
                 headers: {
