@@ -65,6 +65,13 @@
     text-align: right;
 }
 
+.vendor_email {
+    margin: 10px 10px 10px 20px;
+    float: left;
+    width: calc(85% - 30px);
+    font-size: 18px;
+}
+
 .vendor_caption{
     margin: 10px 10px 30px 10px;
     float: left;
