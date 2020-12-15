@@ -4,7 +4,7 @@
     float: left;
     width: 70%;
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 

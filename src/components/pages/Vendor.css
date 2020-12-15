@@ -11,7 +11,7 @@
     float: left;
     width: 100%;
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .my_vendor_panel{
@@ -19,7 +19,7 @@
     /* float: left;
     width: 70%; */
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .title{
