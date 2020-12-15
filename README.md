@@ -30,20 +30,30 @@ See package.json for a full list of libraries.
 Sprint 1: MVP
 1. A user can log in and log out safely to access pages based on their permissions.
 2. Any logged in user can update their private profile settings.
-3. Any logged in user can manage their credits and use them to buy vendor products. (They can also manage their subscriptions.)
-4. Any logged in user can use the map feature to search for restaurants and vendors.
+3. Any logged in user can manage their credits and use them to buy vendor products.
+4. Any logged in user can use the map feature to search for restaurants.
 5. Any logged in non-business vendor can apply to become a vendor. (Admin users can review these applications and approve or deny.)
 6. Any logged in vendor can manage their own products.
 
 Sprint 2: High Priority
 1. Any logged in user can search for recipes from other users and external databases.
-2. Any user can retrieve the public profile of other users to obtain contact information. 
-3. Any logged in business vendors can manage their locations on the map.
-4. Any logged in user can manage their own posts and respond to others’ posts.
-5. Any logged in user can report other users for suspicious activity. (Admin users can review these reports and take appropriate action.)
+2. Any user can retrieve the public profile of vendors to obtain contact information. 
+3. Any logged in user can manage their own posts and respond to others’ posts.
+4. Any logged in user can report other users for suspicious activity. (Admin users can review these reports and take appropriate action.)
 
 ### Known Issues
-None.
+- Search bars are case sensitive.
+- Using the '&' character will break numerous API queries.
+- Maps may show not properly formatted location (not restaurant) pop ups (from base Google component).
+- Two consecutive updates without refreshing will result in only the most recent update saving.
+- Nutrition does not update if a recipe's ingredients or instructions update.
+- Minor CSS Styling issues.
+- Clearing cookies while using the app will cause the app to not work properly. 
+- Requests may take a few seconds to process.
+- Maps API may not work correctly for international cities.
+- Recipes API may not exclude ingredients or filter by health tags properly. 
+- May not be able to create an account after logging in.
+- Nutrition Facts may not be accurate.
 
 ### License
 Apache 2.0

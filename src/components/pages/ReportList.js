@@ -11,6 +11,7 @@ function ReportList (props) {
     const [results, setResults] = useState({});
     const [isListView, setIsListView] = useState(true);
     const [reportData, setReportData] = useState({})
+    const [removed, setRemoved] = useState(false);
 
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -21,7 +22,6 @@ function ReportList (props) {
     }
 
     useEffect(() => {
-        // const url = `https://nutriflix-flask-backend.herokuapp.com/api/application/?display_all=True`
         const url = `${server}/report/?display_all=True`
         fetch(url, {
             method: 'GET',
@@ -42,6 +42,7 @@ function ReportList (props) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "product-pane") {
             setReportData(reportData);
+            setRemoved(false)
         }
     };
 
@@ -57,6 +58,7 @@ function ReportList (props) {
         .then(response => response.json()) 
         .then(data => {
             alert(data["message"])
+            setRemoved(true)
         })
         .catch((error) => console.log("Error: " + error))
     }
@@ -73,6 +75,7 @@ function ReportList (props) {
         .then(response => response.json()) 
         .then(data => {
             alert(data["message"])
+            setRemoved(true)
         })
         .catch((error) => console.log("Error: " + error))
     }
@@ -85,8 +88,8 @@ function ReportList (props) {
                 <h1> Review Application </h1>
                 {<ReportView reportData={reportData} />}
                 <button className="product_back_button" onClick={(e) => changeView(e, "product-view")}> Back </button>
-                <button className="product_back_button" onClick={() => banUser()}> Ban Reported User </button>
-                <button className="product_back_button" onClick={() => deleteReport()}> Delete Report</button>
+                <button className="product_back_button" disabled={removed} onClick={() => banUser()}> Ban User </button>
+                <button className="product_back_button" disabled={removed} onClick={() => deleteReport()}> Delete Report</button>
             </div>
 
             : <div>

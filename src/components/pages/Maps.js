@@ -129,7 +129,7 @@ function Maps(props) {
                             lng={selectedCenter.lng}
                             text={
                                 <div >
-                                    <a href={selectedCenter.url}><h2>{selectedCenter.name}</h2></a>
+                                    <a href={selectedCenter.url} target="_blank" rel="noopener noreferrer"><h2>{selectedCenter.name}</h2></a>
                                     <h2>Cuisine: {selectedCenter.cuisine}</h2>
                                     <h2>Rating: {selectedCenter.rating}</h2>
                                     <h2>Location: {selectedCenter.address} </h2>
