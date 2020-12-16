@@ -11,14 +11,14 @@
     float: left;
     width: 70%;
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .my_product_panel{
     /* float: left;
     width: 70%; */
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .title{
@@ -35,7 +35,8 @@
     margin: 10px;
     float: left;
     width: 200px;
-    height: auto;
+    height: 200px;
+    object-fit: cover;
 }
 
 .product_description {

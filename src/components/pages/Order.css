@@ -28,7 +28,7 @@
 .order-panel{
     /* float: left; */
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 

@@ -11,7 +11,7 @@
     float: left;
     width: 100%;
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .my_vendor_panel{
@@ -19,7 +19,7 @@
     /* float: left;
     width: 70%; */
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .title{
@@ -63,6 +63,13 @@
     width: calc(15% - 20px);
     font-size: 24px;
     text-align: right;
+}
+
+.vendor_email {
+    margin: 10px 10px 10px 20px;
+    float: left;
+    width: calc(85% - 30px);
+    font-size: 18px;
 }
 
 .vendor_caption{

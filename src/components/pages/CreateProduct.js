@@ -84,7 +84,7 @@ function ProductForm(props) {
         </div>
         
         <div className="form_input">
-          <label className="form_label" for="subscription"> Subscription Product? </label>         
+          <label className="form_label" for="subscription"> Subscription Product? (True or False) </label>         
           <input className="form_field" type="text" value={state.subscription} name="subscription" onChange={handleChange} />
         </div>
         

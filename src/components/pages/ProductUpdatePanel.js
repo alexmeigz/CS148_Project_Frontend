@@ -90,7 +90,7 @@ function ProductUpdatePanel(props) {
             .then(response => response.json()) 
                 .then(data => {
                 if(data["message"] === "Product successfully updated"){
-                    alert("Product successfully updated")
+                    alert("Product successfully updated. Please refresh the screen to see updates.")
                     props.cancelUpdate()
                 }
                 else{

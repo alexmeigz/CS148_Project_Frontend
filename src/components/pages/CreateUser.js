@@ -91,7 +91,7 @@ function UserForm(props) {
         </div>
         {/*Have this vendor location field come only if account_type == vendor*/}
         <div className="form_input">
-          <label className="form_label" for="vendor_location"> Vendor Location: </label>         
+          <label className="form_label" for="vendor_location"> Location: </label>         
           <input className="form_field" type="text" value={state.vendor_location} name="vendor_location" onChange={handleChange} />
           <br /> 
         </div>

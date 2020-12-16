@@ -11,6 +11,7 @@ function VendorApps (props) {
     const [results, setResults] = useState({});
     const [isListView, setIsListView] = useState(true);
     const [applicationData, setApplicationData] = useState({})
+    const [removed, setRemoved] = useState(false);
 
     let server = "http://localhost:8118/api"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -19,7 +20,6 @@ function VendorApps (props) {
     if (process.env.NODE_ENV !== "development") {
         server = "https://nutriflix-flask-backend.herokuapp.com/api"
     }
-    // console.log(server)
 
     useEffect(() => {
         if (isListView) {
@@ -33,7 +33,6 @@ function VendorApps (props) {
             })
             .then(response => response.json()) 
             .then(data => {
-                // console.log(data)
                 setResults(data)
             })
             .catch((error) => console.log("Error: " + error))
@@ -45,6 +44,7 @@ function VendorApps (props) {
         setIsListView(prevIsListView => !prevIsListView);
         if (type === "product-pane") {
             setApplicationData(applicationData);
+            setRemoved(false);
         }
     };
 
@@ -71,6 +71,7 @@ function VendorApps (props) {
             .then(response => response.json()) 
             .then(data => {
                 alert(data["message"])
+                setRemoved(true)
             })
             .catch((error) => console.log("Error: " + error))
         })
@@ -89,21 +90,21 @@ function VendorApps (props) {
         .then(response => response.json()) 
         .then(data => {
             alert(data["message"])
+            setRemoved(true)
         })
         .catch((error) => console.log("Error: " + error))
     }
 
     return (
         <div className="container">
-            {/* clicking/back button toggles between product list view and individual product display */}
             {!isListView
 
             ? <div>   
                 <h1> Review Application </h1>
                 {<ApplicationView applicationData={applicationData} />}
                 <button className="product_back_button" onClick={(e) => changeView(e, "product-view")}> Back </button>
-                <button className="product_back_button" onClick={() => approveApplication()}> Approve </button>
-                <button className="product_back_button" onClick={() => denyApplication()}> Deny </button>
+                <button className="product_back_button" disabled={removed} onClick={() => approveApplication()}> Approve </button>
+                <button className="product_back_button" disabled={removed} onClick={() => denyApplication()}> Deny </button>
             </div>
 
             : <div>

@@ -61,7 +61,7 @@ function Maps(props) {
             })
             .then(response => response.json())
             .then(data => {
-                if (data["user_has_addresses"]) {
+                if (data["user_has_addresses"] && data["location_suggestions"].length > 0) {
                     updateState({
                         ...state,
                         q: query,
@@ -72,7 +72,7 @@ function Maps(props) {
                     setQuery("");
                 }
                 else {
-                    alert(`Error with parameters`)
+                    alert(`Search query is invalid. Please try again.`)
                 }
             })
             .catch((error) => console.log("Search error: " + error))
@@ -82,7 +82,7 @@ function Maps(props) {
             <form className="form_override" onSubmit={submitForm}>
                 <div className="form_input input_override">
                     <label className="form_label" for="q"> Search: </label>
-                    <input className="form_field" type="search" value={query} name="q" onChange={handleChange} />
+                    <input className="form_field" type="text" value={query} name="q" onChange={handleChange} />
                 </div>
                 <center><input className="form_submit submit_override" type="submit" value="Submit" /></center>
             </form>
@@ -108,7 +108,6 @@ function Maps(props) {
                                 lat={parseFloat(rest["restaurant"]["location"]["latitude"])}
                                 lng={parseFloat(rest["restaurant"]["location"]["longitude"])}
                                 onClick={() => {
-                                    console.log(rest)
                                     setSelectedCenter({
                                         lat: parseFloat(rest["restaurant"]["location"]["latitude"]),
                                         lng: parseFloat(rest["restaurant"]["location"]["longitude"]),
@@ -130,7 +129,7 @@ function Maps(props) {
                             lng={selectedCenter.lng}
                             text={
                                 <div >
-                                    <a href={selectedCenter.url}><h2>{selectedCenter.name}</h2></a>
+                                    <a href={selectedCenter.url} target="_blank" rel="noopener noreferrer"><h2>{selectedCenter.name}</h2></a>
                                     <h2>Cuisine: {selectedCenter.cuisine}</h2>
                                     <h2>Rating: {selectedCenter.rating}</h2>
                                     <h2>Location: {selectedCenter.address} </h2>

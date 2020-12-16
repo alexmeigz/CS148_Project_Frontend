@@ -55,7 +55,7 @@ function ProductView(props) {
             .then(response => response.json()) 
                 .then(data => {
                 if(data["message"] === "Product successfully removed"){
-                    alert("Product successfully removed")
+                    alert("Product successfully removed. Please refresh the screen to see updates.")
                     setRemoved(true);
                 }
                 else{
@@ -108,7 +108,7 @@ function ProductView(props) {
 
     return (
         <div className="product-pane">
-            <img className="product-image" alt="Product"
+            <img className="product-image" alt=""
                 src={props.productData["image_url"] !== null 
                     ? props.productData["image_url"]
                     : "https://longsshotokan.com/wp-content/uploads/2017/04/default-image-620x600.jpg"
@@ -143,7 +143,7 @@ function ProductView(props) {
 
             {JSON.parse(sessionStorage.getItem("isLoggedIn")) && (JSON.parse(sessionStorage.getItem("user")).user_id !== props.productData.vendor_id || JSON.parse(sessionStorage.getItem("user")).account_type === "Admin")
             ? <div>
-                <button className="purchase-product" onClick={purchaseProduct} disabled={purchased}>{!purchased ? "Purchase Product": "Purchased!"}</button>
+                <button className="purchase-product" onClick={purchaseProduct} disabled={purchased || removed}>{!purchased ? "Purchase Product": "Purchased!"}</button>
             </div>
             : null
             }
